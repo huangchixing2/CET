@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:background="@color/cet_main_bg_color"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+        <TextView
+            android:id="@+id/cockpit_tab"
+            android:textSize="14sp"
+            android:textColor="@color/cet_main_nor_color"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+<com.baidu.mapapi.map.MapView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+</com.baidu.mapapi.map.MapView>
+</LinearLayout>

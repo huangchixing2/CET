@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/cet_main_bg_color">
+
+        <ImageView
+            android:id="@+id/equipment_collect_add_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/arrow_icon_left" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/cet_equipment_add"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/equipment_collect_add_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:text="@string/cet_equipment_collect_save"
+            android:textColor="@color/cet_main_select_color"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/equipment_collect_add_city_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/equipment_collect_add_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/cet_equipment_collect_city"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/equipment_collect_add_city_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/equipment_collect_add_city"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/arrow_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/equipment_collect_add_country_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/equipment_collect_add_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/cet_equipment_collect_county"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/equipment_collect_add_country_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/equipment_collect_add_country"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/arrow_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/equipment_collect_add_powersupply_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/equipment_collect_add_powersupply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/cet_equipment_collect_powersupply"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/equipment_collect_add_powersupply_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/equipment_collect_add_powersupply"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/arrow_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/equipment_collect_add_type_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/equipment_collect_add_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/cet_equipment_collect_type"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/equipment_collect_add_type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/equipment_collect_add_type"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/arrow_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/equipment_collect_add_route_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/equipment_collect_add_route"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/cet_equipment_collect_route"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/equipment_collect_add_route_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/equipment_collect_add_route"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/equipment_collect_add_zonearea_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/equipment_collect_add_zonearea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/cet_equipment_collect_zonearea"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/equipment_collect_add_zonearea_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/equipment_collect_add_zonearea"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/equipment_collect_add_sim_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/equipment_collect_add_sim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/cet_equipment_collect_SIM"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/equipment_collect_add_sim_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/equipment_collect_add_sim"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/equipment_collect_add_vender_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/equipment_collect_add_vender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/cet_equipment_collect_vender"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/equipment_collect_add_vender_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/equipment_collect_add_vender"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/arrow_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/equipment_collect_add_model_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/equipment_collect_add_model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/cet_equipment_collect_model"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/equipment_collect_add_model_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/equipment_collect_add_model"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/arrow_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/equipment_collect_add_phases_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/equipment_collect_add_phases"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/cet_equipment_collect_phases"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/equipment_collect_add_phases_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/equipment_collect_add_phases"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/arrow_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/equipment_collect_add_capacity_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/equipment_collect_add_capacity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/cet_equipment_collect_capacity"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/equipment_collect_add_capacity_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/equipment_collect_add_capacity"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/arrow_icon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+</LinearLayout>

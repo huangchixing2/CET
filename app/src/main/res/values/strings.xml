@@ -1,3 +1,410 @@
 <resources>
     <string name="app_name">CET</string>
+    <string name="img">img</string>
+    <string name="pull_to_refresh_pull_label">下拉可以刷新</string>
+    <string name="pull_to_refresh_release_label">松开即可刷新</string>
+    <string name="pull_to_refresh_refreshing_label">正在刷新…</string>
+    <string name="pull_to_refresh_get_more_label">上拉加载更多</string>
+    <string name="pull_to_refresh_release_more_label">松开即可加载</string>
+    <string name="pull_to_refresh_refreshing_more_label">正在加载…</string>
+
+    <!-- Just use standard Pull Down String when pulling up. These can be set for languages which require it -->
+    <string name="pull_to_refresh_from_bottom_pull_label">@string/pull_to_refresh_get_more_label</string>
+    <string name="pull_to_refresh_from_bottom_release_label">@string/pull_to_refresh_release_more_label</string>
+    <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_more_label</string>
+    <string name="main_home">推荐</string>
+    <string name="main_loan_list">理财</string>
+    <string name="no_more_msg">没有更多数据！</string>
+    <string name="main_my_prof">资产</string>
+    <string name="main_more">更多</string>
+    <string name="phone_num">手机号</string>
+    <string name="data_loading_please_wait">数据加载中，请稍后&#8230;</string>
+    <string name="data_loading_failure_please_retry">数据加载失败，点击重试！</string>
+    <string name="password">密码</string>
+    <string name="set_login_password">设置您的登录密码</string>
+    <string name="confirm_login_password">确认登录密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="complete">完成</string>
+    <string name="free_register">免费注册</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="login">登录</string>
+    <string name="login_pwd">登录密码</string>
+    <string name="next_step">下一步</string>
+    <string name="complete_regist">完    成</string>
+    <string name="lockscreen_access_pattern_start">"开始绘制图案"</string>
+    <string name="lockscreen_access_pattern_cleared">"图案已清除"</string>
+    <string name="lockscreen_access_pattern_cell_added">"已添加单元格"</string>
+    <string name="lockscreen_access_pattern_detected">"图案绘制完成"</string>
+    <string name="lockpattern_retry_button_text">"重试"</string>
+    <string name="lockpattern_continue_button_text">"继续"</string>
+    <string name="lockpattern_confirm_button_text">"确认"</string>
+    <string name="lockpattern_recording_intro_header">"绘制解锁图案"</string>
+    <string name="lockpattern_settings_help_how_to_record">"如何绘制解锁图案"</string>
+    <string name="lockpattern_recording_incorrect_too_short">"至少连接4个点，请重试"</string>
+    <string name="lockpattern_pattern_entered_header">"图案已记录"</string>
+    <string name="lockpattern_need_to_confirm">"请再次绘制解锁图案"</string>
+    <string name="lockpattern_need_to_unlock_wrong">"与上次输入不一致，请重试"</string>
+    <string name="lockpattern_pattern_confirmed_header">"确认保存新解锁图案"</string>
+    <string name="lockpattern_recording_inprogress">"完成后松开手指"</string>
+    <string name="gesture_password_guide_creat_btn">创建手势密码</string>
+    <string name="gesture_retry_setting_psw">重新设置手势密码</string>
+    <string name="gesture_forget_psw">忘记手势密码</string>
+    <string name="gesture_other_account_login">其他账号登录</string>
+    <!-- 登录 -->
+    <string name="login_login">登&#160;&#160;录</string>
+    <!-- 注册 -->
+    <string name="register">注册</string>
+    <string name="register_tip0">请输入手机号注册或登录</string>
+    <string name="register_tip1">一起好不会在任何地方泄露您的号码</string>
+    <string name="register_tip2">注册视为同意一起好理财协议</string>
+    <string name="register_step2_send_sms_tip">已向%1$s发送短信，请注意查收</string>
+    <string name="find_login_pwd_tip">已向%1$s发送短信，请注意查收</string>
+    <string name="register_step3_set_pwd_tip">设置一下密码以保证您的账号安全</string>
+    <!-- 风控保障信息 -->
+    <string name="risk_controll_brand">品&#160;&#160;&#160;牌：</string>
+    <string name="risk_controll_brand_type">品牌型号：</string>
+    <string name="risk_controll_car_color">车身颜色：</string>
+    <string name="risk_controll_fuel">燃&#160;&#160;&#160;料：</string>
+    <string name="risk_controll_cc">排&#160;&#160;&#160;量：</string>
+    <string name="risk_controll_run_distance">行驶公里数：</string>
+    <string name="risk_controll_buy_time">购买时间：</string>
+    <string name="risk_controll_buy_price">购买价格：</string>
+    <string name="risk_controll_evaluated_price">评&#160;估&#160;价：</string>
+    <string name="risk_controll_evaluated_check">评估审核：</string>
+    <string name="risk_controll_guaranty_style">担保方式：</string>
+    <string name="risk_controll_related_data">相关资料图片：</string>
+    <!-- 项目信息 -->
+    <string name="project_info_loaction">所在地</string>
+    <string name="project_info_loan_use">贷款用途</string>
+    <string name="project_info_payback_type">还款方式</string>
+    <string name="project_info_borrower_basic_info">借款人基本情况描述：</string>
+    <string name="project_info_loan_contract">打款记录及合同：</string>
+    <!-- 投资详情 -->
+    <string name="tender_detail_product_name">产品名称：</string>
+    <string name="tender_detail_tender_amount">购买金额：</string>
+    <string name="tender_detail_tender_date">购买时间：</string>
+    <string name="tender_detail_end_date">完成时间：</string>
+    <string name="tender_detail_pay_type">付款方式：</string>
+    <string name="tender_detail_status">状态：</string>
+    <string name="tender_detail_order_num">交易订单号：</string>
+    <string name="tender_detail_tip1">• 募集成功次日开始计算收益</string>
+    <string name="tender_detail_tip2">• 到期自动还款至您的账户余额</string>
+    <!-- 实时财务 -->
+    <string name="finance_title">实时财务</string>
+    <string name="finance_recycle_list">回收列表</string>
+    <string name="finance_total_income">累计为用户赚取收益(元)</string>
+    <string name="finance_total_deal">本年成交总额(元)</string>
+    <string name="finance_payment_of_reserve">风险准备金(元)</string>
+    <string name="finance_unrecovered_money">未回收风险准备金(元)</string>
+    <string name="finance_recycling_money">待回收金额(元)</string>
+    <string name="finance_recycled_money">已回收金额(元)</string>
+    <string name="finance_recovered_money">已回收风险准备金(元)</string>
+    <string name="finance_bad_rate">坏账率</string>
+    <string name="finance_bad_detal_amount">坏账总金额(元)</string>
+    <string name="finance_overdue_rate">逾期率</string>
+    <string name="finance_overdue_amount">逾期总金额(元)</string>
+    <string name="finance_overdue_unpay_amount">逾期未归还金额(元)</string>
+    <string name="finance_charitable_funds">慈善基金总额(元)</string>
+    <string name="finance_today_amount">今日成交(元)</string>
+    <string name="finance_yesterday_amount">昨日成交(元)</string>
+    <string name="finance_thismonth_amount">本月成交(元)</string>
+    <string name="finance_prevmonth_amount">上月成交(元)</string>
+    <string name="recycle_list_this_week_amount">一周内应归还总额：</string>
+    <string name="recycle_list_returned">已归还：</string>
+    <string name="recycle_list_unreturn">未归还：</string>
+    <string name="recycle_list_return_date">应归还日期：</string>
+    <string name="recycle_list_return_money">应归还金额</string>
+    <string name="recycle_list_overdue_collection">逾期催收</string>
+    <string name="recycle_list_repayment_screenshot">还款截图</string>
+
+    <!-- 提现1 -->
+    <string name="drawcash1_bank_tip1">为了安全考虑，必须体现至绑定银行卡上</string>
+    <string name="drawcash1_drawcash_enable_money">账户当前可用余额:</string>
+    <string name="drawcash1_drawcash_money">输入提现金额</string>
+    <string name="drawcash1_deal_pwd">交易密码</string>
+    <string name="drawcash1_forget_deal_pwd">忘记交易密码</string>
+    <string name="drawcash1_tip">如需自动投标功能，请保留¥50在账户中</string>
+    <string name="max">最大</string>
+    <!-- 提现2 -->
+    <string name="drawcash2_drawcash_money">本次提现金额</string>
+    <string name="drawcash2_drawcash_fee">单笔手续费</string>
+    <string name="drawcash2_service_fee">服务费</string>
+    <string name="drawcash2_take_service_fee">收取服务费部分</string>
+    <string name="drawcash2_balance">提现后账户可用余额</string>
+    <string name="drawcash2_use_score">积分抵扣手续费</string>
+    <string name="drawcash2_available_score">可用积分：</string>
+    <string name="drawcash2_need_score">需要：</string>
+    <string name="drawcash2_commit">确认提现</string>
+    <string name="drawcash_result_fail">提现申请提交失败</string>
+    <string name="drawcash_result_dealing">等待处理</string>
+
+    <!-- 充值记录 -->
+    <string name="recharge_record_title">充值记录</string>
+    <string name="recharge_record_charge">充值</string>
+    <string name="recharge_record_pay">支  付</string>
+    <!-- 充值 -->
+    <string name="recharge_title">充值</string>
+    <string name="recharge_money">单笔金额应大于1元</string>
+    <string name="recharge_useable_money">账户当前可用余额:</string>
+    <string name="recharge_recharged_money">充值后金额</string>
+    <string name="recharge_choose_bank">选择银行</string>
+    <string name="recharge_next_step">下一步</string>
+    <string name="recharge_tips">一起好温馨提示</string>
+    <string name="recharge_tips_content">充值未投标而申请提现，要收取提现金额1%的服务费，您确定要进行充值？</string>
+    <string name="recharge_tips2">友情提示：\n
+1、所有投标保证金将由第三方平台托管。\n
+2、即时充值所产生的费用，由一起好平台承担。\n
+3、请使用本人常用银行卡充值提现，以免造成不便。\n
+4、如果充值金额没有及时到账，请确定银行扣款后联系客服核实。\n
+5、充值进来的资金，若不投资，24小时后才可提现，收取0.5%服务费。</string>
+
+    <string name="drawch_tips2">友情提示：\n
+1、投资回款提现2元/笔，单笔上限100万元。可用积分抵扣提现费用： 白金、金牌160分，银牌200分。\n
+2、提现于每日下午三点集中处理，如您使用的是六大银行（工行、建行、招行、中行、农行、交行）银行卡，处理成功后一般2小时内到账；非六大行提现需要T+1个工作日，周六、周日及法定节假日顺延。\n
+3、具体到账时间以第三方及银行处理为准。</string>
+
+    <string name="recharge_tips2_content">近期标量较少，请谨慎充值，以免资金闲置</string>
+    <!-- 选择充值银行 -->
+    <string name="choose_recharge_bank_title">选择充值银行</string>
+    <string name="pay_webview_complete">完成支付</string>
+    <!-- 资金记录 -->
+    <string name="funds_record_total_asserts">总资产(元)</string>
+    <string name="funds_record_amount_balance">账户余额</string>
+    <string name="funds_record_wait_money">待收金额</string>
+
+    <!-- 邀请有奖记录 -->
+    <string name="invite_reward_record_total_reward">已得奖励总额</string>
+    <string name="invite_reward_record_total_num">累计人数</string>
+    <string name="invite_reward_record_success_num">成功人数</string>
+    <string name="my_invest_wait_amount">待回收金额(元)</string>
+    <string name="my_invest_wait_interest">待收利息</string>
+    <string name="my_invest_wait_principal">待收本金</string>
+    <string name="my_invest_next_repay_date">下一还款日:</string>
+    <string name="my_invest_return_principal_and_interest">回收本息(元)</string>
+    <!-- 修改登录密码 -->
+    <string name="old_login_pwd">原登录密码</string>
+    <string name="new_login_pwd">新登录密码</string>
+    <string name="confirm_new_login_pwd">确认新登录密码</string>
+    <string name="confirm_new_pwd">确认新密码</string>
+    <string name="modify">修改</string>
+    <string name="setting">设置</string>
+    <!-- 修改支付密码 -->
+    <string name="old_pay_pwd">原支付密码</string>
+    <string name="new_pay_pwd">新支付密码</string>
+    <string name="confirm_new_pay_pwd">确认支付密码</string>
+    <string name="setting_new_pay_pwd">设置支付密码</string>
+    <string name="find_pay_pwd">找回支付密码</string>
+    <string name="find_pay_pwd_promt">已向%1$s发送短信，请注意查收</string>
+    <string name="find_pay_pwd_promt_new">已向%1$s发送短信，请注意查收</string>
+    <string name="bind_bank_tip">重要提示：安全支付需要绑定银行卡。首次使用时，系统会自动将该卡绑定为提现银行卡。使用安全支付充值的资金只能通过该卡提现。绑定后将无法变更。请尽可能使用支付额度与快捷性较高的银行卡。</string>
+    <string name="real_name">真实姓名</string>
+    <string name="id_card">身份证号码</string>
+    <string name="bank_card">银行卡号</string>
+    <string name="bank_reserved_phonenum">银行卡预留手机号码</string>
+    <string name="bind_bankcard_tip">提交视为同意一起好理财协议</string>
+    <string name="bid_apr">预期年化:</string>
+    <string name="auto_bid_waring">在自动投标中，您可根据自己的风险\n偏好、投资习惯在自动投标中设置各\n种条件，若有符合相对条件的借款出\n现，将由程序自动完成投标。</string>
+    <string name="bid_deadline">期限范围 (月)</string>
+    <string name="auto_bit_bt1">开启一键式自动投标(推荐)</string>
+    <string name="auto_bit_bt2">开启自助式自动投标</string>
+    <string name="bid_available_money">可投金额（元）</string>
+    <string name="bid_purchase_amount_money">每次投标金额 (元)</string>
+    <string name="bid_account_balance">账户余额：</string>
+    <string name="bid_tip">注：系统将优先使用账户余额进行购买。</string>
+    <string name="bid_tip2">一起好理财为本理财产品提供100%本息保障</string>
+    <string name="bid_purchase_amount">请输入购买金额</string>
+    <string name="bid_income_time">预计产生收益时间：</string>
+    <string name="bid_income_expect">预计收益：</string>
+    <string name="bid_send_sms_tip">已向尾号%1$s的手机发送连连支付的验证短信，请在输入框中填写验证码。验证码30分钟内有效。</string>
+    <string name="bid_agreement">确认视为同意服务协议</string>
+    <string name="drawcash_success_drawcash_money">提现金额（元）</string>
+    <string name="drawcash_success_available_money">账户可用余额（元）</string>
+    <string name="drawcash_success_lookup_record">查看提现记录</string>
+    <string name="drawcash_success_tips">六大银行：工行、建行、招行、中行、农行、交行提现为T+0到账（注：提现在每天下午3点集中进行处理，审核成功后，正常情况下2小时内到账，具体到账时间以银行为准）\n其他银行：提现为T+1到账（注：周六、周日及法定节假日顺延）。</string>
+    <string name="drawcash_result_card_num">卡号</string>
+    <string name="drawcash_result_bank">银行</string>
+    <string name="drawcash_result_status">状态</string>
+    <string name="drawcash_realmoney">实际到账金额</string>
+    <!-- 首页 -->
+    <string name="home_reward_amount">额外赠送%1$s元现金红包</string>
+    <string name="home_reward_coupon">额外赠送%1$s元代金劵</string>
+    <string name="home_reward_redbag">额外赠送%1$s元理财红包</string>
+    <string name="home_reward">送%1$s元</string>
+    <string name="share_content">一起好理财\n我在一起好理财赚了不少，12%的高收益会让你停都停不下来！现在注册理财还送话费和现金，赶紧来试试吧！</string>
+    <string name="bind_card_warn">一旦绑定此卡充值成功后，系统将该卡默认为提现银行卡，后续无法变更，请尽可能使用支付额度与便捷性较高的银行卡。</string>
+
+    <!-- 发布债权 -->
+    <string name="publish_loan_buy_price">购买价格：</string>
+    <string name="publish_loan_trans_price">转让价格：</string>
+    <string name="publish_loan_trans_discount">折扣率：</string>
+    <string name="publish_loan_loss_income">转让损失收益：</string>
+    <string name="publish_loan_final_income">转让后可获得：</string>
+    <string name="pay_pwd">支付密码</string>
+    <string name="publish_loan">发布债权</string>
+    <string name="publish_loan_remain_deadline">剩余期数：</string>
+
+    <!-- 承接债权 -->
+    <string name="carry_on_loan_income">承接收益：</string>
+    <string name="carry_on_loan_trans_interest">待结算利息：</string>
+    <string name="carry_on_loan_price">承接价格：</string>
+    <string name="carry_on_loan_wait_insterest">预估收益：</string>
+    <string name="carry_on_loan_wait_insterest_date">预计产生收益时间：</string>
+    <string name="carry_on_loan">承接</string>
+
+    <!-- 理财产品 -->
+    <string name="loan_list_tab_carfinance">车金融</string>
+    <string name="loan_list_tab_platinum">白金专区</string>
+    <string name="loan_list_tab_goodwin">好稳赢</string>
+    <string name="loan_list_tab_transfer">债权转让</string>
+    <string name="loan_list_item_income">预期年化</string>
+    <string name="loan_list_item_limit">期限</string>
+    <string name="loan_list_item_investment">起投</string>
+    <string name="_300_">盈鑫宝300号</string>
+
+    <string-array name="questions">
+        <item>你父亲的姓名是？</item>
+        <item>你的学号（或工号）是？</item>
+        <item>你母亲的姓名是？</item>
+        <item>你家乡的地址是？</item>
+        <item>你中学的班主任是？</item>
+        <item>我爱人的生日是什么？</item>
+        <item>我初中学校校名是什么？</item>
+        <item>我爱人的名字是什么？</item>
+        <item>自定义问题</item>
+    </string-array>
+
+    <!-- 邮箱认证 -->
+    <string name="email_authed">您已通过邮箱认证</string>
+    <string name="email_authed_title">邮箱认证</string>
+    <string name="email_authed_account">邮箱账号</string>
+    <string name="email_authed_authcode_sended">邮箱验证码已经发送成功，如果没有收到，可以重新发送！</string>
+    <string name="email_authed_send">发送</string>
+    <string name="email_authed_commit">提交</string>
+    <string name="register_activity_get_authcode">获取验证码</string>
+    <string name="login_activity_email_authcode">邮箱验证码</string>
+    <string name="phone_authed_modify_email">修改邮箱号</string>
+
+    <!-- 增加银行卡 -->
+    <string name="add_bank_title">增加银行卡</string>
+    <string name="add_bank_open_account">开户银行</string>
+    <string name="add_bank_cardnum">银行卡号</string>
+    <string name="add_bank_province">省份</string>
+    <string name="add_bank_city">城市</string>
+    <string name="add_bank_branch_name">支行名称</string>
+    <string name="add_bank_handinput">手工输入</string>
+    <string name="add_bank_warn">注：银行卡必须是开户名为本人的储蓄卡。</string>
+    <string name="invest_record_invest_loan_num">借款编号：</string>
+    <string name="invest_record_uname">贷款人：</string>
+    <string name="forget_psw_authcode">手机验证码</string>
+    <string name="forget_psw_get_authcode">获取验证码</string>
+    <string name="personal_info_save">保存</string>
+    <string name="bank_manage_set_default">设为默认</string>
+    <string name="bank_manage_delete">删除</string>
+    <string name="bank_manage_title">银行卡管理</string>
+    <string name="bank_manage_add">添加</string>
+    <string name="scan">扫一扫</string>
+    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
+    <string name="http_request_error">网络请求失败！</string>
+    <string name="transfer_post_transfer_details">1、因债权人个人原因急需资金，可以将债权进行转让。\n2、有效投资15天后方可进行债权转让，转让次数不设限制。\n3、承接标不能进行二次转让。\n4、72小时若无人承接，则该转让失败；若转让成功，承接人回款时无需支付首期利息管理费。\n5、关于投标积分：按天计算，转让日之后的积分归承接人所有，若债权人积分不足，则不能转让。\n6、承接人需要支付的金额及转让人所获得的收入：\n&#160;&#160;&#160;&#160;若转让日期在首期还款日(含)或投标日期在2013年1月25日(含)之前，则：\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;承接价格=剩余本金+待结算利息的三分之二\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;转让收入=剩余本金+待结算利息的三分之一\n&#160;&#160;&#160;&#160;若转让日期在首期还款日之后，则：\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;承接价格=剩余本金+当期待结算利息&#8211;首期所得利息(未扣利息管理费)的三分之一\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;转让收入=剩余本金+当期待结算利息&#8211;首期所得利息(未扣利息管理费)的三分之二\n举例如下：\n比如：投资1万，年利率24%，期限12个月，按月付息，到期还本。\n &#160;&#160;&#160;&#160;第一种情况：转让日期在首期还款日(含)之前：假设第20天转让，待结算利息为：133.33元。\n &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;如果你现在转让，你只能得到剩余本金+待结算利息的三分之一44.44元=10000+44.44=10044.44元。\n &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;承接人半个月可以得到前面的44.44，加后首期后10天66.66元收益。另外44.44元进垫付准备金。\n&#160;&#160;&#160;&#160;第二种情况：转让日期在首期还款日之后，假设第45天转让，\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;当期待结算利息为：100元，首期所得利息(未扣利息管理费)为：200元。如果你现在转让，\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;你可以得到剩余本金+待结算利息&#8211;首期利息的三分之二133.33元=10000+100&#8211;133.33=9966.67元。\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;承接人可以得到66.66元(将在承接价格里扣除)，另外66.66进垫付准备金。</string>
+    <string name="feedback_hint_text">感谢您对一起好的关注，请在此处写下您的建议，我们会认真听取！</string>
+    <string name="feedback_submit">提    交</string>
+    <string name="question_total_amount">待收总额=待收本金+待收收益。</string>
+    <string name="question_received_amount">用于理财还未收回的本金。</string>
+    <string name="question_received_revenue">用于理财还未收回的利息。</string>
+    <string name="question_account_balance">账户余额=可用余额+冻结余额。</string>
+    <string name="question_available_balance">可用于提现和投资的金额。</string>
+    <string name="question_freezing_amount">冻结余额是您当前暂时不能使用的金额，冻结总额包括投标冻结、提现冻结。</string>
+    <string name="question_total_assets">总资产=待收总额+账户余额。</string>
+    <string name="question_available_credit">可用授信是当您的可用余额不足时，可以用来抢占投标的可用授信额度。必须先进行实名认证，各会员等级的初始授信额度如下：白金会员：10万元，金牌会员：5万元，银牌会员：1万元，</string>
+    <string name="regist_recommend">推荐人的手机号（选填）</string>
+    <string name="push_setting_tips">开启或关闭一起好理财客户端新消息提醒服务。</string>
+    <string name="update_system_tips">您的系统版本过低，可能无法正常使用，请升级手机系统为最新版本</string>
+    <string name="public_loan_waring">当前自动投标未处于关闭状态下,若转让成功将可能使这部分资金再次投资到其他项目。您确定现在要发布债权转让吗?</string>
+
+    <string name="income_calculator">收益计算器</string>
+    <string name="reserve_bank_phonenum">银行预留手机号</string>
+
+    <string name="voice_sms">若长时间未收到短信，可点击<font color="#0066ff"><b>获取语音验证码</b></font></string>
+
+    <string name="cet_cockpit">驾驶舱</string>
+    <string name="cet_data">数据</string>
+    <string name="cet_equipment">设备</string>
+    <string name="cet_my">我的</string>
+    <string name="cet_cockpit_install_num">安装数量</string>
+    <string name="cet_cockpit_online_num">在线数量</string>
+    <string name="cet_cockpit_usable_num">可用数量</string>
+    <string name="cet_cockpit_sim_arrearage">Sim欠费</string>
+    <string name="cet_cockpit_dysfunction">功能异常</string>
+    <string name="cet_cockpit_power_cut">停电</string>
+
+    <string name="cet_data_count">统计</string>
+    <string name="cet_data_realtime">实时</string>
+    <string name="cet_data_trend">趋势</string>
+
+    <string name="cet_equipment_collect">汇总</string>
+    <string name="cet_equipment_working_condition">工况</string>
+
+    <string name="cet_login_username">请输入用户名</string>
+    <string name="cet_login_psw">请输入密码</string>
+    <string name="cet_login_regist">注册</string>
+    <string name="cet_login_forget_psw">忘记密码</string>
+    <string name="cet_login_login">登录</string>
+    <string name="cet_my_accountmanger">账号管理</string>
+    <string name="cet_my_abount">关于</string>
+    <string name="cet_my_login_out">退出登录</string>
+    <string name="cet_search_hint">搜索感兴趣的内容</string>
+    <string name="cet_count_nor">正常</string>
+    <string name="cet_count_abnor">异常</string>
+    <string name="cet_count_num">调整次数:%1$s</string>
+    <string name="cet_count_statu">调压:%1$s</string>
+    <string name="cet_count_svc">无功补偿:%1$s</string>
+    <string name="cet_realtime_input">输入端:</string>
+    <string name="cet_realtime_output">输出端:</string>
+    <string name="cet_realtime_avoltage">A相电压:%1$s</string>
+    <string name="cet_realtime_bvoltage">B相电压:%1$s</string>
+    <string name="cet_realtime_cvoltage">C相电压:%1$s</string>
+    <string name="cet_realtime_acurrent">A相电流:%1$s</string>
+    <string name="cet_realtime_bcurrent">B相电流:%1$s</string>
+    <string name="cet_realtime_ccurrent">C相电流:%1$s</string>
+    <string name="cet_realtime_apower">A相功率因数:%1$s</string>
+    <string name="cet_realtime_bpower">B相功率因数:%1$s</string>
+    <string name="cet_realtime_cpower">C相功率因数:%1$s</string>
+    <string name="cet_realtime_voltage_adjust">调压档位:%1$s</string>
+    <string name="cet_realtime_nopower">无功投入:%1$s</string>
+    <string name="cet_trend_voltage">电压</string>
+    <string name="cet_trend_current">电流</string>
+    <string name="cet_trend_power">功率因数</string>
+    <string name="cet_equipment_type">类型</string>
+    <string name="cet_equipment_group">组合查询</string>
+    <string name="cet_equipment_all_select">全选</string>
+    <string name="cet_equipment_add">新 增</string>
+    <string name="cet_equipment_edit">编 辑</string>
+    <string name="cet_equipment_del">删 除</string>
+    <string name="cet_equipment_collect_save">保存</string>
+    <string name="cet_equipment_collect_city">地市:</string>
+    <string name="cet_equipment_collect_county">区县:</string>
+    <string name="cet_equipment_collect_powersupply">供电所:</string>
+    <string name="cet_equipment_collect_type">类型:</string>
+    <string name="cet_equipment_collect_route">线路:</string>
+    <string name="cet_equipment_collect_zonearea">台区:</string>
+    <string name="cet_equipment_collect_SIM">SIM卡:</string>
+    <string name="cet_equipment_collect_vender">厂家:</string>
+    <string name="cet_equipment_collect_model">型号:</string>
+    <string name="cet_equipment_collect_phases">相数:</string>
+    <string name="cet_equipment_collect_capacity">容量:</string>
+    <string name="cet_equipment_collect_online">在线</string>
+    <string name="cet_equipment_collect_out">退出</string>
+    <string name="cet_my_collect_update_contact">修改联系方式</string>
+    <string name="cet_my_collect_update_psw">修改密码</string>
+    <string name="cet_my_set_contact">设置联系方式</string>
+    <string name="cet_my_set_complete">完 成</string>
+    <string name="cet_my_old_psw">旧密码</string>
+    <string name="cet_my_set_old_psw">请填写旧密码</string>
+    <string name="cet_my_new_psw">新密码</string>
+    <string name="cet_my_input_new_psw">至少8个字符，包含字母和数字</string>
+    <string name="cet_my_confirm_psw">确认密码</string>
+    <string name="cet_my_input_new_psw_again">再次输入新密码</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

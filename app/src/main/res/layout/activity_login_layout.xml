@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/cet_logo"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/login_username"
+            style="@style/input_edit_bg_style"
+            android:layout_marginTop="@dimen/margin_15"
+            android:hint="@string/cet_login_username"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/login_psw"
+            style="@style/input_edit_bg_style"
+            android:layout_marginTop="@dimen/margin_15"
+            android:hint="@string/cet_login_psw"
+            android:inputType="textPassword" />
+        <RelativeLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/login_regist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cet_login_regist"
+                android:layout_alignParentLeft="true"
+                android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/login_forget_psw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cet_login_forget_psw"
+                android:layout_alignParentRight="true"
+                android:textSize="15sp"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/login_login"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/round_corner_blue_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_15"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16"
+            android:text="@string/cet_login_login"/>
+    </LinearLayout>
+</LinearLayout>

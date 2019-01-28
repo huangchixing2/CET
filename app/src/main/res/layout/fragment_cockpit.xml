@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_bg_color"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@color/cet_main_nor_color"
+        android:background="@color/cet_main_bg_color"
+        android:text="@string/cet_cockpit"/>
+    <ImageView
+        android:id="@+id/cet_cockpit_iv"
+        android:layout_marginTop="20dp"
+        android:layout_width="220dp"
+        android:layout_height="110dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/cet_cockpit_main_bg"/>
+
+    <GridView
+        android:id="@+id/cockpit_gridview"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:horizontalSpacing="0dp"
+        android:numColumns="3"
+        android:verticalSpacing="25dp"
+        >
+    </GridView>
+
+</LinearLayout>

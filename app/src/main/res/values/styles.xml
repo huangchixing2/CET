@@ -8,4 +8,59 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="main_tab_style">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:drawablePadding">3dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="main_tab_bottom">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+
+    <style name="input_edit_bg_style" parent="@style/black_default_textStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">55dip</item>
+        <item name="android:background">@drawable/cet_input_bg_focus</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">@dimen/padding_8</item>
+        <item name="android:paddingRight">@dimen/padding_8</item>
+        <item name="android:textColorHint">@color/gray_hint_text_color</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <!-- 基本字体样式 -->
+    <style name="base_textStyle">
+        <item name="android:textColor">@color/deep_black_text_color2</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <!-- 默认黑色字体样式 -->
+    <style name="black_default_textStyle" parent="@style/base_textStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">false</item>
+    </style>
+    <style name="trend_tab_bottom">
+        <item name="android:background">@drawable/trend_rb_bg</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
 </resources>

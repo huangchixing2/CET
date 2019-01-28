@@ -1,0 +1,133 @@
+package com.electric.cet.mobile.android.pq.ui.activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+import com.electric.cet.mobile.android.pq.R;
+import com.electric.cet.mobile.android.pq.ui.activity.BaseFragmentActivity;
+import com.electric.cet.mobile.android.pq.ui.fragments.CockpitFragment;
+import com.electric.cet.mobile.android.pq.ui.fragments.DataFragment;
+import com.electric.cet.mobile.android.pq.ui.fragments.EquipmentFragment;
+import com.electric.cet.mobile.android.pq.ui.fragments.MyFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnCheckedChangeListener {
+    private List<Fragment> fragments = new ArrayList<Fragment>();
+    private int currentFragPos = 0;
+    private RadioGroup mRadioGroup;
+    private RadioButton cockpitRb;
+    private RadioButton dataRb;
+    private RadioButton equipmentRb;
+    private RadioButton myRb;
+    private RadioButton selectRb;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        initFragments();
+        initData();
+        initView();
+        Intent intent = new Intent();
+        intent.setClass(this,LoginActivity.class);
+        startActivity(intent);
+    }
+
+    private void initFragments(){
+        fragments.add(new CockpitFragment());
+        fragments.add(new DataFragment());
+        fragments.add(new EquipmentFragment());
+        fragments.add(new MyFragment());
+    }
+
+    private void initData(){
+
+    }
+
+    private void initView(){
+        mRadioGroup = (RadioGroup) findViewById(R.id.main_radio);
+        cockpitRb = (RadioButton) findViewById(R.id.main_cockpit_tab);
+        dataRb = (RadioButton) findViewById(R.id.main_data_tab);
+        equipmentRb = (RadioButton) findViewById(R.id.main_equipment_tab);
+        myRb = (RadioButton) findViewById(R.id.main_my_tab);
+        selectRb = cockpitRb;
+        // 显示第一个tab
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.main_content, fragments.get(0),
+                        fragments.get(0).getClass().getName())
+                .commitAllowingStateLoss();
+        mRadioGroup.setOnCheckedChangeListener(this);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+            case R.id.main_cockpit_tab:
+                selectRb = cockpitRb;
+                currentFragPos = 0;
+                onTabchecked(0);
+                break;
+            case R.id.main_data_tab:
+                selectRb = dataRb;
+                currentFragPos = 1;
+                onTabchecked(1);
+                break;
+            case R.id.main_equipment_tab:
+                selectRb = equipmentRb;
+                currentFragPos = 2;
+                onTabchecked(2);
+                break;
+            case R.id.main_my_tab:
+                selectRb = myRb;
+                currentFragPos = 3;
+                onTabchecked(3);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 切换tab
+     *
+     * @param pos
+     *            tab的位置
+     */
+    private void onTabchecked(int pos) {
+        Fragment fragment = fragments.get(pos);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (fragment.isAdded()) {
+            fragment.onResume();
+        } else {
+            ft.add(R.id.main_content, fragment, fragment.getClass().getName());
+        }
+        showTab(pos);
+        ft.commitAllowingStateLoss();
+    }
+
+    /**
+     * 显示指定的tab，隐藏其他tab
+     *
+     * @param pos
+     */
+    private void showTab(int pos) {
+        for (int i = 0; i < fragments.size(); i++) {
+            Fragment fragment = fragments.get(i);
+            FragmentTransaction ft = getSupportFragmentManager()
+                    .beginTransaction();
+            if (pos == i) {
+                ft.show(fragment);
+            } else {
+                ft.hide(fragment);
+            }
+            ft.commitAllowingStateLoss();
+        }
+    }
+}
