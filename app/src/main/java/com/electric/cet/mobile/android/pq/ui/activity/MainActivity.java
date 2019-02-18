@@ -2,8 +2,10 @@ package com.electric.cet.mobile.android.pq.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -27,6 +29,8 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
     private RadioButton myRb;
     private RadioButton selectRb;
 
+    private DataFragment data_fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +45,8 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
 
     private void initFragments(){
         fragments.add(new CockpitFragment());
-        fragments.add(new DataFragment());
+        data_fragment = new DataFragment();
+        fragments.add(data_fragment);
         fragments.add(new EquipmentFragment());
         fragments.add(new MyFragment());
     }
@@ -128,6 +133,16 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
                 ft.hide(fragment);
             }
             ft.commitAllowingStateLoss();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("MainActivity","requestCode->"+requestCode+"resultCode->"+resultCode);
+        if(resultCode == 1002){
+            dataRb.setChecked(true);
+            data_fragment.getHandler().sendEmptyMessage(1002);
         }
     }
 }

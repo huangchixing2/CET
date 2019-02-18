@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -44,7 +46,7 @@ public class EquipmentCollectAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.equipment_collect_adapter_item_layout, null);
@@ -52,7 +54,7 @@ public class EquipmentCollectAdapter extends BaseAdapter {
             holder.cb = (CheckBox) convertView.findViewById(R.id.equipment_collect_item_cb);
             holder.address = (TextView) convertView.findViewById(R.id.equipment_collect_item_address);
             holder.type = (TextView) convertView.findViewById(R.id.equipment_collect_item_type);
-            holder.statu = (TextView) convertView.findViewById(R.id.equipment_collect_item_statu);
+            holder.statu = (ImageView) convertView.findViewById(R.id.equipment_collect_item_statu);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -62,12 +64,18 @@ public class EquipmentCollectAdapter extends BaseAdapter {
         }else{
             holder.cb.setChecked(false);
         }
+        holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                list.get(position).setSle(isChecked);
+            }
+        });
         holder.address.setText(list.get(position).getAddress());
         holder.type.setText(list.get(position).getType());
         if(list.get(position).isStatu()){
-            holder.statu.setText(context.getResources().getString(R.string.cet_equipment_collect_online));
+            holder.statu.setImageResource(R.mipmap.equipment_online);
         }else{
-            holder.statu.setText(context.getResources().getString(R.string.cet_equipment_collect_out));
+            holder.statu.setImageResource(R.mipmap.equipment_offline);
         }
         return convertView;
     }
@@ -76,6 +84,6 @@ public class EquipmentCollectAdapter extends BaseAdapter {
         CheckBox cb;
         TextView address;
         TextView type;
-        TextView statu;
+        ImageView statu;
     }
 }

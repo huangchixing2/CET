@@ -4,22 +4,64 @@
     android:layout_height="match_parent"
     android:background="@color/main_bg_color"
     android:orientation="vertical">
+
     <RelativeLayout
-        android:background="@color/cet_main_bg_color"
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:layout_height="45dp"
+        android:background="@color/cet_main_bg_color">
+
         <TextView
             android:id="@+id/cockpit_tab"
-            android:textSize="14sp"
-            android:textColor="@color/cet_main_nor_color"
-            android:layout_marginLeft="15dp"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="安装数量"
+            android:textStyle="bold"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:id="@+id/cet_cockpit_mapview_rg"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/cet_search_bg"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/cet_cockpit_map_rb"
+                style="@style/trend_tab_bottom"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/cet_cockpit_map"
+                android:textColor="@drawable/trend_tab_text"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/cet_cockpit_list_rb"
+                style="@style/trend_tab_bottom"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/cet_cockpit_list"
+                android:textColor="@drawable/trend_tab_text"
+                android:textSize="14sp" />
+        </RadioGroup>
     </RelativeLayout>
-<com.baidu.mapapi.map.MapView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
-</com.baidu.mapapi.map.MapView>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/cet_mapview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.baidu.mapapi.map.MapView>
+
+    <ListView
+        android:id="@+id/cet_mapview_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 </LinearLayout>

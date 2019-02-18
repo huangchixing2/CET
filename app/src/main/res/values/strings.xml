@@ -341,7 +341,7 @@
     <string name="cet_data_realtime">实时</string>
     <string name="cet_data_trend">趋势</string>
 
-    <string name="cet_equipment_collect">汇总</string>
+    <string name="cet_equipment_collect">台账</string>
     <string name="cet_equipment_working_condition">工况</string>
 
     <string name="cet_login_username">请输入用户名</string>
@@ -404,6 +404,12 @@
     <string name="cet_my_input_new_psw">至少8个字符，包含字母和数字</string>
     <string name="cet_my_confirm_psw">确认密码</string>
     <string name="cet_my_input_new_psw_again">再次输入新密码</string>
+    <string name="cet_cockpit_map">地图</string>
+    <string name="cet_cockpit_list">列表</string>
+    <string name="cet_equipment_install_address">安装地点</string>
+    <string name="cet_equipment_title_type">类型</string>
+    <string name="cet_equipment_title_statu">状态</string>
+    <string name="cet_equipment_detail">详情</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.electric.cet.mobile.android.pq.R;
@@ -51,7 +52,7 @@ public class EquipmentWorkingAdapter extends BaseAdapter {
             holder.cb = (CheckBox) convertView.findViewById(R.id.equipment_working_item_cb);
             holder.address = (TextView) convertView.findViewById(R.id.equipment_working_item_address);
             holder.type = (TextView) convertView.findViewById(R.id.equipment_working_item_type);
-            holder.statu = (TextView) convertView.findViewById(R.id.equipment_working_item_statu);
+            holder.statu = (ImageView) convertView.findViewById(R.id.equipment_working_item_statu);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -64,9 +65,9 @@ public class EquipmentWorkingAdapter extends BaseAdapter {
         holder.address.setText(list.get(position).getAddress());
         holder.type.setText(list.get(position).getType());
         if(list.get(position).isStatu()){
-            holder.statu.setText(context.getResources().getString(R.string.cet_equipment_collect_online));
+            holder.statu.setImageResource(R.mipmap.equipment_online);
         }else{
-            holder.statu.setText(context.getResources().getString(R.string.cet_equipment_collect_out));
+            holder.statu.setImageResource(R.mipmap.equipment_offline);
         }
         return convertView;
     }
@@ -74,6 +75,6 @@ public class EquipmentWorkingAdapter extends BaseAdapter {
         CheckBox cb;
         TextView address;
         TextView type;
-        TextView statu;
+        ImageView statu;
     }
 }

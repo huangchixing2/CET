@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -16,11 +17,13 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.model.EquipmentCollectModel;
 import com.electric.cet.mobile.android.pq.model.EquipmentWorkingModel;
 import com.electric.cet.mobile.android.pq.ui.activity.EquipmentCollectAddActivity;
+import com.electric.cet.mobile.android.pq.ui.activity.EquipmentDetailActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.BasePagerAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentCollectAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentWorkingAdapter;
@@ -41,9 +44,9 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private ViewPager viewPager;
     private BasePagerAdapter pagerAdapter;
 
-    private TextView add_tv;
-    private TextView edit_tv;
-    private TextView del_tv;
+    private ImageView add_tv;
+    private ImageView edit_tv;
+    private ImageView del_tv;
     private CheckBox all_cb;
 
     private ListView collect_lv;
@@ -79,6 +82,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
                 .findViewById(R.id.cet_equipment_collect_tab);
         workingRB = (RadioButton) view
                 .findViewById(R.id.cet_equipment_working_tab);
+        equipmentRadioGroup.setOnCheckedChangeListener(this);
         tabLineLayout = (LinearLayout) view
                 .findViewById(R.id.cet_equipment_tab_line_layout);
         tablineImg = (ImageView) view.findViewById(R.id.cet_equipment_list_tab_line_img);
@@ -142,9 +146,17 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         collect_lv = (ListView) view.findViewById(R.id.cet_equipment_collect_lv);
         collectAdapter = new EquipmentCollectAdapter(getActivity(),getCollectData());
         collect_lv.setAdapter(collectAdapter);
-        add_tv = (TextView) view.findViewById(R.id.cet_equipment_collect_add);
-        edit_tv = (TextView) view.findViewById(R.id.cet_equipment_collect_edit);
-        del_tv = (TextView) view.findViewById(R.id.cet_equipment_collect_del);
+        collect_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent  = new Intent();
+                intent.setClass(getActivity(),EquipmentDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+        add_tv = (ImageView) view.findViewById(R.id.cet_equipment_collect_add);
+        edit_tv = (ImageView) view.findViewById(R.id.cet_equipment_collect_edit);
+        del_tv = (ImageView) view.findViewById(R.id.cet_equipment_collect_del);
         all_cb = (CheckBox) view.findViewById(R.id.cet_equipment_collect_all_cb);
         add_tv.setOnClickListener(this);
         edit_tv.setOnClickListener(this);
@@ -161,6 +173,14 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         working_lv = (ListView) view.findViewById(R.id.cet_equipment_working_lv);
         workingAdapter = new EquipmentWorkingAdapter(getActivity(),getWorkingData());
         working_lv.setAdapter(workingAdapter);
+        working_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent  = new Intent();
+                intent.setClass(getActivity(),EquipmentDetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private List<EquipmentCollectModel> getCollectData(){
@@ -247,13 +267,38 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
                 startActivity(editIntent);
                 break;
             case R.id.cet_equipment_collect_del:
-                Intent delIntent = new Intent();
-                delIntent.setClass(getActivity(),EquipmentCollectAddActivity.class);
-                startActivity(delIntent);
+                if(!isSelectedItem()){
+                    Toast.makeText(getActivity(),"请选择后删除",Toast.LENGTH_SHORT).show();
+                }else{
+                    deleteSelectedData();
+                }
                 break;
                default:
                    break;
         }
+    }
+
+    private void deleteSelectedData(){
+        List<EquipmentCollectModel> stayList = new ArrayList<>();
+        for(int i = 0;i<collectList.size();i++){
+            if(!collectList.get(i).isSle()){
+                stayList.add(collectList.get(i));
+            }
+        }
+        collectList.clear();
+        collectList.addAll(stayList);
+        collectAdapter.notifyDataSetChanged();
+    }
+
+    private boolean isSelectedItem(){
+        boolean isSelected = false;
+        for(int i = 0;i<collectList.size();i++){
+            if(collectList.get(i).isSle()){
+                isSelected = true;
+                continue;
+            }
+        }
+        return isSelected;
     }
 
     private void allSelectedFreshen(boolean isSelected){

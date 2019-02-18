@@ -3,6 +3,8 @@ package com.electric.cet.mobile.android.pq.ui.fragments;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -49,9 +51,22 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     private ViewPager viewPager;
     private BasePagerAdapter pagerAdapter;
 
-    private ListView count_lv;
+//    private ListView count_lv;
 
     private int baseDistance;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1002:
+                    countRB.setChecked(true);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,9 +80,9 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         views = new ArrayList<View>();
         View countView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_data_count_layout, null);
-        count_lv = (ListView) countView.findViewById(R.id.cet_data_count_lv);
-        DataCountAdapter dcAdapter = new DataCountAdapter(getActivity(),getData());
-        count_lv.setAdapter(dcAdapter);
+//        count_lv = (ListView) countView.findViewById(R.id.cet_data_count_lv);
+//        DataCountAdapter dcAdapter = new DataCountAdapter(getActivity(),getData());
+//        count_lv.setAdapter(dcAdapter);
         View realtimeView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_data_realtime_layout, null);
 
@@ -84,6 +99,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                 .findViewById(R.id.cet_data_realtime_tab);
         trendRB = (RadioButton) view
                 .findViewById(R.id.cet_data_trend_tab);
+        dataRadioGroup.setOnCheckedChangeListener(this);
         tabLineLayout = (LinearLayout) view
                 .findViewById(R.id.cet_data_tab_line_layout);
         tablineImg = (ImageView) view.findViewById(R.id.cet_data_list_tab_line_img);
@@ -193,47 +209,6 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         return list;
     }
 
-    private List<DataCountModel> getData(){
-        List<DataCountModel> list = new ArrayList<>();
-        DataCountModel dataCountModel = new DataCountModel();
-        dataCountModel.setAddress("武汉花山台区1");
-        dataCountModel.setNum(10);
-        dataCountModel.setStatu(true);
-        dataCountModel.setSvc(true);
-        list.add(dataCountModel);
-        dataCountModel = new DataCountModel();
-        dataCountModel.setAddress("武汉花山台区2");
-        dataCountModel.setNum(20);
-        dataCountModel.setStatu(true);
-        dataCountModel.setSvc(false);
-        list.add(dataCountModel);
-        dataCountModel = new DataCountModel();
-        dataCountModel.setAddress("武汉花山台区3");
-        dataCountModel.setNum(8);
-        dataCountModel.setStatu(true);
-        dataCountModel.setSvc(true);
-        list.add(dataCountModel);
-        dataCountModel = new DataCountModel();
-        dataCountModel.setAddress("武汉花山台区4");
-        dataCountModel.setNum(18);
-        dataCountModel.setStatu(false);
-        dataCountModel.setSvc(true);
-        list.add(dataCountModel);
-        dataCountModel = new DataCountModel();
-        dataCountModel.setAddress("武汉花山台区5");
-        dataCountModel.setNum(13);
-        dataCountModel.setStatu(false);
-        dataCountModel.setSvc(false);
-        list.add(dataCountModel);
-        dataCountModel = new DataCountModel();
-        dataCountModel.setAddress("武汉花山台区6");
-        dataCountModel.setNum(10);
-        dataCountModel.setStatu(true);
-        dataCountModel.setSvc(true);
-        list.add(dataCountModel);
-        return list;
-    }
-
     private void initCountView(){
 
     }
@@ -285,5 +260,9 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
             default:
                 break;
         }
+    }
+
+    public Handler getHandler() {
+        return handler;
     }
 }

@@ -7,10 +7,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginRight="40dp"
         android:background="@drawable/cet_search_bg"
         android:orientation="horizontal">
 
@@ -33,18 +32,25 @@
             android:layout_marginRight="10dp"
             android:src="@mipmap/seach_button" />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/cet_data_realtime_address"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/cet_main_bg_color"
-        android:paddingLeft="20dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:text="武汉花山台区"
-        android:textColor="@color/cet_main_select_color"
-        android:textSize="16sp" />
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/cet_list_iv_bg"/>
+        <TextView
+            android:id="@+id/data_address"
+            android:gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/cet_main_select_color"
+            android:textSize="16sp"
+            android:text="武汉花山台区"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,16 +64,16 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:background="@color/cet_main_select_color" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:src="@mipmap/data_input_left" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="5dp"
                 android:text="@string/cet_realtime_input"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -77,16 +83,16 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:background="@color/cet_main_select_color" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/data_output_right" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="5dp"
                 android:text="@string/cet_realtime_output"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -101,7 +107,7 @@
             android:text="@string/cet_realtime_avoltage"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="65dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
@@ -109,7 +115,7 @@
             android:text="@string/cet_realtime_avoltage"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -123,7 +129,7 @@
             android:text="@string/cet_realtime_bvoltage"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="65dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
@@ -131,7 +137,7 @@
             android:text="@string/cet_realtime_bvoltage"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -145,7 +151,7 @@
             android:text="@string/cet_realtime_cvoltage"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="65dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
@@ -153,7 +159,7 @@
             android:text="@string/cet_realtime_cvoltage"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -167,7 +173,7 @@
             android:text="@string/cet_realtime_acurrent"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="65dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
@@ -175,7 +181,7 @@
             android:text="@string/cet_realtime_acurrent"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -189,7 +195,7 @@
             android:text="@string/cet_realtime_bcurrent"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="65dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
@@ -197,7 +203,7 @@
             android:text="@string/cet_realtime_bcurrent"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -211,7 +217,7 @@
             android:text="@string/cet_realtime_ccurrent"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="65dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
@@ -219,7 +225,7 @@
             android:text="@string/cet_realtime_ccurrent"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -230,18 +236,18 @@
         android:orientation="horizontal">
         <TextView
             android:id="@+id/cet_realtime_input_apower"
-            android:text="@string/cet_realtime_apower"
+            android:text="A相功率因数:0.9"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="65dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/cet_realtime_out_apower"
-            android:text="@string/cet_realtime_apower"
+            android:text="A相功率因数:0.9"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -252,18 +258,18 @@
         android:orientation="horizontal">
         <TextView
             android:id="@+id/cet_realtime_input_bpower"
-            android:text="@string/cet_realtime_bpower"
+            android:text="B相功率因数:0.9"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="65dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/cet_realtime_out_bpower"
-            android:text="@string/cet_realtime_bpower"
+            android:text="B相功率因数:0.9"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -274,18 +280,18 @@
         android:orientation="horizontal">
         <TextView
             android:id="@+id/cet_realtime_input_cpower"
-            android:text="@string/cet_realtime_apower"
+            android:text="C相功率因数:0.9"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="65dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/cet_realtime_out_cpower"
-            android:text="@string/cet_realtime_cpower"
+            android:text="C相功率因数:0.9"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:paddingLeft="40dp"
+            android:paddingLeft="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -300,18 +306,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
-
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:background="@color/cet_main_select_color" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:src="@mipmap/data_voltage_adjust" />
 
             <TextView
                 android:id="@+id/cet_realtime_voltage_adjust"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="5dp"
                 android:text="@string/cet_realtime_voltage_adjust"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -321,17 +326,17 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:background="@color/cet_main_select_color" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/data_nopower" />
 
             <TextView
                 android:id="@+id/cet_realtime_nopower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="5dp"
                 android:text="@string/cet_realtime_nopower"
                 android:textSize="15sp" />
         </LinearLayout>

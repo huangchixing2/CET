@@ -1,10 +1,12 @@
 package com.electric.cet.mobile.android.pq.model;
 
+import java.io.Serializable;
+
 /**
  * Created by xushasha
  * use
  */
-public class DataCountModel {
+public class DataCountModel implements Serializable {
     private String address;
     private int  num;
     private boolean statu;

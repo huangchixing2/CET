@@ -5,6 +5,33 @@
     android:background="@color/main_bg_color"
     android:gravity="center_horizontal"
     android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/cet_main_bg_color">
+        <LinearLayout
+            android:layout_width="50dp"
+            android:id="@+id/my_about_back_ll"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/arrow_icon_left" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/cet_my_abount"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="16sp" />
+    </RelativeLayout>
     <ImageView
         android:layout_marginTop="100dp"
         android:layout_width="wrap_content"

@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.electric.cet.mobile.android.pq.R;
 
 public class EquipmentCollectAddActivity extends Activity implements View.OnClickListener {
-    private ImageView back_iv;
+    private LinearLayout back_iv;
     private TextView save_tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +22,7 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
     }
 
     private void  initView(){
-        back_iv = (ImageView) findViewById(R.id.equipment_collect_add_back);
+        back_iv = (LinearLayout) findViewById(R.id.equipment_collect_add_back_ll);
         save_tv = (TextView) findViewById(R.id.equipment_collect_add_save);
         back_iv.setOnClickListener(this);
         save_tv.setOnClickListener(this);
@@ -34,7 +35,7 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.equipment_collect_add_back:
+            case R.id.equipment_collect_add_back_ll:
                 finish();
                 break;
             case R.id.equipment_collect_add_save:

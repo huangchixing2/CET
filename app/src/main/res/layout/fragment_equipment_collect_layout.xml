@@ -45,119 +45,165 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:background="@drawable/cet_equipment_collect_gry_bg"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:text="@string/cet_equipment_type"
                 android:textColor="@color/cet_main_nor_color"
-                android:text="@string/cet_equipment_type"/>
+                android:textSize="15sp" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:src="@mipmap/arrow_down"/>
+                android:src="@mipmap/arrow_down" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/cet_equipment_collect_group_ll"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:background="@drawable/cet_equipment_collect_gry_bg"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:text="@string/cet_equipment_group"
                 android:textColor="@color/cet_main_nor_color"
-                android:text="@string/cet_equipment_group"/>
+                android:textSize="15sp" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:src="@mipmap/arrow_down"/>
+                android:src="@mipmap/arrow_down" />
         </LinearLayout>
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:id="@+id/equipment_collect_item_rl"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="@color/cet_main_bg_color">
+
+            <CheckBox
+                android:id="@+id/equipment_collect_title_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:button="@null"
+                android:drawableRight="@drawable/cet_checkbox_style"
+                android:text=""
+                android:textColor="@color/cet_main_nor_color"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/equipment_collect_title_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@+id/equipment_collect_title_cb"
+                android:text="@string/cet_equipment_install_address"
+                android:textColor="@color/cet_main_nor_color"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/equipment_collect_title_statu"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:gravity="center_horizontal"
+                android:text="@string/cet_equipment_title_statu"
+                android:textColor="@color/cet_main_nor_color"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/equipment_collect_title_type"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_toLeftOf="@+id/equipment_collect_title_statu"
+                android:gravity="center_horizontal"
+                android:text="@string/cet_equipment_title_type"
+                android:textColor="@color/cet_main_nor_color"
+                android:textSize="15sp" />
+        </RelativeLayout>
 
         <ListView
-            android:layout_marginBottom="45dp"
             android:id="@+id/cet_equipment_collect_lv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/equipment_collect_item_rl"
+            android:layout_marginBottom="45dp">
 
         </ListView>
+
         <RelativeLayout
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="45dp">
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true">
+
             <CheckBox
                 android:id="@+id/cet_equipment_collect_all_cb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
                 android:layout_centerVertical="true"
-                android:textSize="14sp"
-                android:textColor="@color/cet_main_nor_color"
+                android:layout_marginLeft="15dp"
                 android:button="@drawable/cet_checkbox_style"
                 android:paddingLeft="8dp"
-                android:text="@string/cet_equipment_all_select"/>
-            <TextView
+                android:text="@string/cet_equipment_all_select"
+                android:textColor="@color/cet_main_nor_color"
+                android:textSize="14sp" />
+
+            <ImageView
                 android:id="@+id/cet_equipment_collect_del"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingRight="15dp"
-                android:paddingBottom="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/cet_equipment_collect_del"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:text="@string/cet_equipment_del"/>
-            <TextView
+                android:layout_marginRight="20dp"
+                android:src="@mipmap/equipment_collect_del" />
+
+            <ImageView
                 android:id="@+id/cet_equipment_collect_edit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/cet_equipment_collect_del"
-                android:background="@drawable/cet_equipment_collect_edit"
-                android:layout_centerVertical="true"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingRight="15dp"
-                android:paddingBottom="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:text="@string/cet_equipment_edit"/>
-            <TextView
+                android:src="@mipmap/equipment_collect_edit" />
+
+            <ImageView
                 android:id="@+id/cet_equipment_collect_add"
-                android:layout_toLeftOf="@+id/cet_equipment_collect_edit"
-                android:background="@drawable/cet_equipment_collect_add"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:paddingRight="15dp"
-                android:paddingBottom="5dp"
                 android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/white"
-                android:text="@string/cet_equipment_add"/>
+                android:layout_toLeftOf="@+id/cet_equipment_collect_edit"
+                android:src="@mipmap/equipment_collect_add" />
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
