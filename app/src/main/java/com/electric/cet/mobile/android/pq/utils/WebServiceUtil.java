@@ -13,8 +13,7 @@ public class WebServiceUtil {
     private static Handler handler = new Handler() {
         @Override
         public void publish(LogRecord record) {
-            system.out.println("hello");
-            system.out.println("hello1");
+
         }
 
         @Override
