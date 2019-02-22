@@ -52,6 +52,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     return;
                 }
 
+
+
+
                 finish();
                 break;
              default:
