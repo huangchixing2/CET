@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.electric.cet.mobile.android.pq.R;
@@ -18,8 +17,6 @@ import java.io.InputStream;
  */
 public class LoginActivity extends Activity implements View.OnClickListener {
     private Button login_bt;
-    private TextView regist_tv;
-    private TextView forget_tv;
     private EditText username_et;
     private EditText psw_et;
     @Override
@@ -31,13 +28,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     private void initView(){
         login_bt = (Button) findViewById(R.id.login_login);
-        regist_tv = (TextView) findViewById(R.id.login_regist);
-        forget_tv = (TextView) findViewById(R.id.login_forget_psw);
         username_et = (EditText) findViewById(R.id.login_username);
         psw_et = (EditText) findViewById(R.id.login_psw);
         login_bt.setOnClickListener(this);
-        regist_tv.setOnClickListener(this);
-        forget_tv.setOnClickListener(this);
     }
 
 
