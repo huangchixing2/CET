@@ -72,6 +72,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         //自定义方法
         System.out.println("hello");
         System.out.println("hello");
+        System.out.println("hello");
         return token;
     }
     public String getAuth(InputStream is, String token)
