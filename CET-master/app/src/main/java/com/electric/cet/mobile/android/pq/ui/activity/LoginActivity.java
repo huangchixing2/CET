@@ -76,6 +76,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public String getAuth(InputStream is, String token)
     {
         String result = null;
+        System.out.print("huangchixings");
         return token;
     }
 
