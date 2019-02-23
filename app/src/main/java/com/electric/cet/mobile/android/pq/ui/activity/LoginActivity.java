@@ -19,6 +19,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private Button login_bt;
     private EditText username_et;
     private EditText psw_et;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

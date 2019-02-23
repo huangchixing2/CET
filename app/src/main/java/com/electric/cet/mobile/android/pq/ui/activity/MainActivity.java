@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -28,6 +29,7 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
     private RadioButton equipmentRb;
     private RadioButton myRb;
     private RadioButton selectRb;
+
 
     private DataFragment data_fragment;
 
@@ -68,6 +70,7 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
                 .add(R.id.main_content, fragments.get(0),
                         fragments.get(0).getClass().getName())
                 .commitAllowingStateLoss();
+
         mRadioGroup.setOnCheckedChangeListener(this);
     }
 
