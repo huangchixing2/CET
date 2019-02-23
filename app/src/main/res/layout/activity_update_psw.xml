@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/cet_main_bg_color">
+        <LinearLayout
+            android:layout_width="50dp"
+            android:id="@+id/my_account_updatepsw_back_ll"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/arrow_icon_left" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/cet_my_collect_update_psw"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/my_account_manage_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/cet_my_complete"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="5dp"
+            android:text="@string/cet_my_set_complete"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/cet_my_old_psw_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cet_my_old_psw"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="18sp" />
+        <EditText
+            android:layout_toRightOf="@+id/cet_my_old_psw_tv"
+            android:id="@+id/cet_my_old_psw_et"
+            style="@style/input_edit_bg_style"
+            android:layout_marginLeft="5dp"
+            android:hint="@string/cet_my_set_old_psw" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/cet_my_new_psw_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cet_my_new_psw"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="18sp" />
+        <EditText
+            android:layout_toRightOf="@+id/cet_my_new_psw_tv"
+            android:id="@+id/cet_my_new_psw_et"
+            style="@style/input_edit_bg_style"
+            android:layout_marginLeft="5dp"
+            android:hint="@string/cet_my_input_new_psw" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/cet_my_confirm_new_psw_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cet_my_confirm_psw"
+            android:textColor="@color/cet_main_nor_color"
+            android:textSize="18sp" />
+        <EditText
+            android:layout_toRightOf="@+id/cet_my_confirm_new_psw_tv"
+            android:id="@+id/cet_my_confirm_new_psw_et"
+            style="@style/input_edit_bg_style"
+            android:layout_marginLeft="5dp"
+            android:hint="@string/cet_my_input_new_psw_again" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cet_main_bg_color" />
+    </RelativeLayout>
+
+</LinearLayout>

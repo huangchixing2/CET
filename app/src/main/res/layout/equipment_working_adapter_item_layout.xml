@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <CheckBox
+            android:id="@+id/equipment_working_item_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:layout_marginLeft="25dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/cet_main_nor_color"
+            android:button="@null"
+            android:drawableRight="@drawable/cet_checkbox_style"
+            android:text=""/>
+        <TextView
+            android:id="@+id/equipment_working_item_address"
+            android:text="武汉花山台区"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/equipment_working_item_cb"
+            android:textSize="15sp"
+            android:textColor="@color/cet_main_nor_color"
+            android:layout_marginLeft="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:id="@+id/equipment_working_item_statu_rl"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
+
+            <ImageView
+                android:id="@+id/equipment_working_item_statu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/equipment_working_item_type"
+            android:text="调压器"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/equipment_working_item_statu_rl"
+            android:layout_marginRight="25dp"
+            android:textSize="15sp"
+            android:textColor="@color/cet_main_nor_color"
+            android:layout_marginLeft="25dp"
+            android:gravity="center_horizontal"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>
