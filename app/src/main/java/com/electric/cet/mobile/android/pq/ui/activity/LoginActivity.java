@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.electric.cet.mobile.android.pq.R;
+import com.electric.cet.mobile.android.pq.utils.MD5Utils;
 
 import java.io.InputStream;
 
@@ -53,8 +54,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     return;
                 }
 
-
-
+                /**
+                 * 调用MD5工具类
+                 *
+                 */
+                MD5Utils.getDigest(psw_et.getText().toString());
 
                 finish();
                 break;

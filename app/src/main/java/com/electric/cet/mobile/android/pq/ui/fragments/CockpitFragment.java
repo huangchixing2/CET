@@ -2,6 +2,7 @@ package com.electric.cet.mobile.android.pq.ui.fragments;
 
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,16 @@ import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.model.CockpitGridViewItem;
 import com.electric.cet.mobile.android.pq.ui.activity.MapViewActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.CockpitGridviewAdapter;
+import com.electric.cet.mobile.android.pq.utils.WebServiceTools;
 
+import org.json.JSONArray;
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.SoapFault;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +42,8 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cockpit, container, false);
-        initView(view);
         initData();
+        initView(view);
         return view;
     }
 
@@ -63,9 +73,37 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         });
     }
 
+    /**
+     *  显示数据
+     */
     private void initData(){
-
+        QueryAddressTask queryAddressTask = new QueryAddressTask();
+        queryAddressTask.execute();
     }
+
+    class QueryAddressTask extends AsyncTask<String, Integer, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            // 查询手机号码（段）信息*/
+            try {
+                WebServiceTools.getWether();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //将结果返回给onPostExecute方法
+            return "";
+        }
+
+        @Override
+        //此方法可以在主线程改变UI
+        protected void onPostExecute(String result) {
+            // 将WebService返回的结果显示在TextView中
+            //resultView.setText(result);
+        }
+    }
+
+
 
     private List<CockpitGridViewItem> getData(){
         List<CockpitGridViewItem> list = new ArrayList<>();

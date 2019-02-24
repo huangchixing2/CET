@@ -22,7 +22,7 @@ import java.util.logging.LogRecord;
  * Created by huangchixing on 2019/2/23.
  */
 
-public class WebServiceUtil1 {
+public class WebServiceUtilok {
     //含有3个线程的线程池
     private static final ExecutorService executorService = Executors.newFixedThreadPool(3);
 

@@ -31,5 +31,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation files('libs/arm64-v8a/ksoap2-android-assembly-2.5.2-jar-with-dependencies.jar')
+    implementation files('libs/arm64-v8a/ksoap2-android-assembly-3.6.0-jar-with-dependencies.jar')
 }

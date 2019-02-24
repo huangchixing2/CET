@@ -27,7 +27,7 @@ public class EquipmentCollectModel {
 
     public boolean isSle() {
         return isSle;
-    }
+    }  //这个代表啥？
 
     public void setSle(boolean sle) {
         isSle = sle;
