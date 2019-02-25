@@ -58,8 +58,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                  * 调用MD5工具类
                  *
                  */
-                MD5Utils.getDigest(psw_et.getText().toString());
 
+                String EncryptPwd = MD5Utils.getDigest(psw_et.getText().toString());
+//                String EncryptPwd = MD5Utils.getDigest("111");  //把密码写死
+
+                System.out.println("加密后的密码EncryptPwd为：" + EncryptPwd);
+//              Intent intent = new Intent();  //页面是否需要跳转
+//              intent.setClass(LoginActivity.this, MainActivity.class);
                 finish();
                 break;
              default:

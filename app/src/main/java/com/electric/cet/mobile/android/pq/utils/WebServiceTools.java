@@ -1,7 +1,5 @@
 package com.electric.cet.mobile.android.pq.utils;
 
-import android.os.AsyncTask;
-
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
