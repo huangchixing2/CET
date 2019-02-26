@@ -53,7 +53,8 @@
         <activity android:name=".ui.activity.UpdatePswActivity" />
         <activity android:name=".ui.activity.MyAboutActivity" />
         <activity android:name=".ui.activity.MapViewActivity" />
-        <activity android:name=".ui.activity.EquipmentDetailActivity"></activity>
+        <activity android:name=".ui.activity.EquipmentDetailActivity">
+        </activity>
 
     </application>
 

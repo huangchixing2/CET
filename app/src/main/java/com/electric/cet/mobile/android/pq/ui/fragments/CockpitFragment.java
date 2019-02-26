@@ -14,10 +14,14 @@ import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.model.CockpitGridViewItem;
 import com.electric.cet.mobile.android.pq.ui.activity.MapViewActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.CockpitGridviewAdapter;
-import com.electric.cet.mobile.android.pq.utils.GetAsyncTaskData;
+import com.electric.cet.mobile.android.pq.utils.OkHttpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.FormBody;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 // 驾驶舱
 public class CockpitFragment extends BaseFragment implements View.OnClickListener {
@@ -28,6 +32,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout sim_rl;
     private RelativeLayout dysfunction_rl;
     private RelativeLayout power_rl;
+    public static String url_deviceInfo = "http://192.168.2.102/LowLineSys/device/data/all?token=123";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +42,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         initView(view);
         return view;
     }
+
 
     private void initView(View view){
         install_rl = (RelativeLayout) view.findViewById(R.id.cockpit_install_num_rl);
@@ -68,9 +74,21 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
      *  显示数据
      */
     private void initData(){
-        GetAsyncTaskData getAsyncTaskData = new GetAsyncTaskData();
-        getAsyncTaskData.execute();
-        System.out.println("查詢成功：");
+//        GetAsyncTaskData getAsyncTaskData = new GetAsyncTaskData();
+//        getAsyncTaskData.execute();
+
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("Token","123")
+                .build();
+        final Request request = new Request.Builder()
+                .url(url_deviceInfo)
+                .get()
+                .build();
+        OkHttpUtils.GetDeviceInfo(url_deviceInfo,request);
+
+
+        System.out.println("cock initdata查詢成功：");
     }
 
     private List<CockpitGridViewItem> getData(){
