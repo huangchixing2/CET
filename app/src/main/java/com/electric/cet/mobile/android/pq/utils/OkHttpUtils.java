@@ -71,13 +71,9 @@ public class OkHttpUtils {
             }
         }).start();
 
-
-
-
     }
 
-    public static void GetDeviceInfo(String url, final Request request){
-
+    public static void doGET(String url, final Request request){
 
         new Thread(new Runnable() {
             @Override
@@ -107,51 +103,5 @@ public class OkHttpUtils {
 
     }
 
-
-
-
-//    public static void postRequest(String UserName,String EncryptPwd )  {
-//        //建立请求表单，添加上传服务器的参数
-//        RequestBody formBody = new FormBody.Builder()
-//                .add("UserName",UserName)
-//                .add("EncryptPwd ",EncryptPwd )
-//                .build();
-////        pc与客户端需要在同一个局域网，指定ip为PC的ip
-//        //发起请求
-//        final Request request = new Request.Builder()
-//                .url("http://192.168.2.102/LowLineSys/user/login")
-//                .post(formBody)
-//                .build();
-//        //新建一个线程，用于得到服务器响应的参数
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Response response = null;
-//                try {
-//
-//                    response = client.newCall(request).execute();
-//                    if (response.isSuccessful()) {
-//                        //将服务器响应的参数response.body().string())发送到hanlder中，并更新ui
-//
-//                        String result = "请求结果："+response.body().string();
-//                        System.out.println("result结果是 ：---" + result);
-//
-//                        System.out.println("登录成功");
-//                        Message msg = Message.obtain();
-//                        msg.obj = result;
-//                        msg.what = 1;
-//                        mHandler.sendMessage(msg);
-//                    } else {
-//                        throw new IOException("Unexpected code:" + response);
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//
-//            }
-//        }).start();
-//
-//    }
 
 }

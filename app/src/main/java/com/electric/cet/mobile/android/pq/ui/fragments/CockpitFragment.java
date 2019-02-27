@@ -3,6 +3,7 @@ package com.electric.cet.mobile.android.pq.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +11,24 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 
+import com.electric.cet.mobile.android.pq.Bean.deviceBean;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.model.CockpitGridViewItem;
 import com.electric.cet.mobile.android.pq.ui.activity.MapViewActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.CockpitGridviewAdapter;
-import com.electric.cet.mobile.android.pq.utils.OkHttpUtils;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 // 驾驶舱
 public class CockpitFragment extends BaseFragment implements View.OnClickListener {
@@ -32,7 +39,8 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout sim_rl;
     private RelativeLayout dysfunction_rl;
     private RelativeLayout power_rl;
-    public static String url_deviceInfo = "http://192.168.2.102/LowLineSys/device/data/all?token=123";
+    public static String url_deviceInfo = "http://192.168.2.100/LowLineSys/device/data/all?token=123";
+    private String json=null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,7 +85,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
 //        GetAsyncTaskData getAsyncTaskData = new GetAsyncTaskData();
 //        getAsyncTaskData.execute();
 
-
+        OkHttpClient client = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder()
                 .add("Token","123")
                 .build();
@@ -85,7 +93,52 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 .url(url_deviceInfo)
                 .get()
                 .build();
-        OkHttpUtils.GetDeviceInfo(url_deviceInfo,request);
+//        OkHttpUtils.doGET(url_deviceInfo,request);
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                    // 提示错误信息
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    final String str= response.body().string();
+                    json=str;
+                    System.out.println("cockpit打印" + json);
+                    System.out.println("---------------test---------");
+                    //解析json为json数组
+                    //new一个Gson对象
+                    Gson gson = new Gson();
+                    //将json字符串转为dataBean对象
+                     deviceBean deviceBean = gson.fromJson(json, deviceBean.class);
+                    Log.d("code" , "code为"+deviceBean.getCode());
+                    Log.d("msg", "msg为"+deviceBean.getMsg());
+                    Log.d("data", "data为"+deviceBean.getData());
+
+
+
+
+//                    DataBean dataBean = gson.fromJson(json,DataBean.class);
+//                    System.out.println("DEVICE ID"+ dataBean.getDeviceId());
+
+
+
+                    new Thread(new Runnable(){
+
+                        @Override
+                        public void run() {
+
+//                            mHandler.sendMessage(mHandler.obtainMessage(Integer.parseInt(json)));
+                        }
+                    }).start();
+                }
+                catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+
 
 
         System.out.println("cock initdata查詢成功：");
