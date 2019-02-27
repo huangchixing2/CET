@@ -30,6 +30,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.electric.cet.mobile.android.pq.utils.OkHttpUtils.doGET;
+
 // 驾驶舱
 public class CockpitFragment extends BaseFragment implements View.OnClickListener {
     private GridView gridview;
@@ -93,7 +95,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 .url(url_deviceInfo)
                 .get()
                 .build();
-//        OkHttpUtils.doGET(url_deviceInfo,request);
+        doGET(url_deviceInfo,request);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
