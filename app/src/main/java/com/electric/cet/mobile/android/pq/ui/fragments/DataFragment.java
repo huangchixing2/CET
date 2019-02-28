@@ -7,28 +7,37 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.electric.cet.mobile.android.pq.R;
-import com.electric.cet.mobile.android.pq.model.DataCountModel;
 import com.electric.cet.mobile.android.pq.model.DataTrend;
 import com.electric.cet.mobile.android.pq.ui.adapter.BasePagerAdapter;
-import com.electric.cet.mobile.android.pq.ui.adapter.DataCountAdapter;
 import com.electric.cet.mobile.android.pq.ui.view.GraphicalUtils;
 import com.electric.cet.mobile.android.pq.ui.view.GraphicalView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static com.electric.cet.mobile.android.pq.utils.OkHttpUtils.doGET;
 
 //数据
 public class DataFragment extends BaseFragment implements ViewPager.OnPageChangeListener,RadioGroup.OnCheckedChangeListener ,View.OnClickListener {
@@ -50,6 +59,10 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     private List<View> views;
     private ViewPager viewPager;
     private BasePagerAdapter pagerAdapter;
+
+    private TextView avo_tv;
+    String url_realTime = "http://192.168.2.107/LowLineSys/device/1/data/realtime";
+    String url_trend = "http://192.168.2.107/LowLineSys/device/3/data/trend/2019-02-22/2019-02-28";
 
 //    private ListView count_lv;
 
@@ -83,9 +96,10 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 //        count_lv = (ListView) countView.findViewById(R.id.cet_data_count_lv);
 //        DataCountAdapter dcAdapter = new DataCountAdapter(getActivity(),getData());
 //        count_lv.setAdapter(dcAdapter);
+        initCountView(countView);
         View realtimeView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_data_realtime_layout, null);
-
+        initRealtimeView(realtimeView);
         View trendView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_data_trend_layout, null);
         initTrendView(trendView);
@@ -117,7 +131,60 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     }
 
     private void initData(){
+//        initRealtimeData();
+//        initTrendData();
+    }
+    //请求趋势数据
+    public void initTrendData(){
+        OkHttpClient client = new OkHttpClient();
+        String DeviceId = null;
+        RequestBody formBody = new FormBody.Builder().add("deviceId", "3")
+                .add("startTime", "2019-02-22")
+                .add("endTime", "2019-02-28")
+                .build();
+        Request request = new Request.Builder().url(url_trend).get().build();
+        doGET(url_trend, request);
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // 提示错误信息
+                Log.d("DataFrament","趋势数据请求失败");
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String str = response.body().string();
+                String jsonData = str;
+                Log.d("DataFrament","趋势数据请求打印" + jsonData);
+                Log.d("DataFrament", "趋势数据打印成功");
+                //使用gson解析json
+            }
+        });
+    }
+
+    //请求实时数据
+    public void initRealtimeData(){
+        OkHttpClient client = new OkHttpClient();
+        String deviceid = null;
+        RequestBody formBody = new FormBody.Builder().add("deviceId", "1").build();
+        Request request = new Request.Builder().url(url_realTime).get().build();
+        doGET(url_realTime, request);
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // 提示错误信息
+                Log.d("DataFrament","实时数据请求失败");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String str = response.body().string();
+                String jsonData = str;
+                Log.d("DataFrament","实时数据请求打印" + jsonData);
+                Log.d("DataFrament", "实时数据打印成功");
+                //使用gson解析json
+            }
+        });
     }
 
     @Override
@@ -134,9 +201,11 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                 break;
             case 1:
                 realtimeRB.setChecked(true);
+                initRealtimeData();
                 break;
             case 2:
                 trendRB.setChecked(true);
+                initTrendData();
                 break;
             default:
                 break;
@@ -209,12 +278,12 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         return list;
     }
 
-    private void initCountView(){
+    private void initCountView(View view){
 
     }
 
-    private void initRealtimeView(){
-
+    private void initRealtimeView(View view){
+avo_tv = (TextView) view.findViewById(R.id.cet_realtime_input_avoltage);
     }
 
     private void initTrendView(View view) {
