@@ -2,7 +2,7 @@ package com.electric.cet.mobile.android.pq.Bean;
 
 import java.util.List;
 
-public class deviceBean {
+public class DeviceBean {
     private int code;
     private  String msg;
     private List <DataBean> data;

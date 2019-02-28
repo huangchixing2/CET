@@ -3,6 +3,8 @@ package com.electric.cet.mobile.android.pq.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +12,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import com.electric.cet.mobile.android.pq.Bean.deviceBean;
+import com.electric.cet.mobile.android.pq.Bean.DataBean;
+import com.electric.cet.mobile.android.pq.Bean.DeviceBean;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.model.CockpitGridViewItem;
 import com.electric.cet.mobile.android.pq.ui.activity.MapViewActivity;
@@ -41,26 +45,58 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout sim_rl;
     private RelativeLayout dysfunction_rl;
     private RelativeLayout power_rl;
-    public static String url_deviceInfo = "http://192.168.2.100/LowLineSys/device/data/all?token=123";
-    private String json=null;
+    public static String url_deviceInfo = "http://192.168.2.107/LowLineSys/device/data/all?token=123";
+    private String json = null;
+
+    private TextView install_tv;
+    private TextView online_tv;
+    private TextView usable_tv;
+    private TextView sim_tv;
+    private TextView dysfunction_tv;
+    private TextView power_tv;
+
+    private Handler handler = new Handler() {
+        //驾驶舱数据显示
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                  ArrayList<Integer> list = (ArrayList<Integer>) msg.getData().getBundle("data").get("list");
+                    install_tv.setText(list.get(0)+""); // int转换为string，否则报错
+                    online_tv.setText(list.get(1)+"");
+                    usable_tv.setText(list.get(2)+"");
+                    sim_tv.setText(list.get(3)+"");
+                    dysfunction_tv.setText(list.get(4)+"");
+                    power_tv.setText(list.get(5)+"");
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cockpit, container, false);
-        initData();
         initView(view);
+        initData();
         return view;
     }
 
 
-    private void initView(View view){
+    private void initView(View view) {
         install_rl = (RelativeLayout) view.findViewById(R.id.cockpit_install_num_rl);
         online_rl = (RelativeLayout) view.findViewById(R.id.cockpit_online_num_rl);
         usable_rl = (RelativeLayout) view.findViewById(R.id.cockpit_usable_num_rl);
         sim_rl = (RelativeLayout) view.findViewById(R.id.cockpit_sim_rl);
         dysfunction_rl = (RelativeLayout) view.findViewById(R.id.cockpit_dysfunction_rl);
         power_rl = (RelativeLayout) view.findViewById(R.id.cockpit_power_cut_rl);
+        install_tv = (TextView) view.findViewById(R.id.cockpit_install_num_tv);
+        online_tv = (TextView) view.findViewById(R.id.cockpit_online_num_tv);
+        usable_tv = (TextView) view.findViewById(R.id.cockpit_usable_num_tv);
+        sim_tv = (TextView) view.findViewById(R.id.cockpit_sim_tv);
+        dysfunction_tv = (TextView) view.findViewById(R.id.cockpit_dysfunction_tv);
+        power_tv = (TextView) view.findViewById(R.id.cockpit_power_cut_tv);
         install_rl.setOnClickListener(this);
         online_rl.setOnClickListener(this);
         usable_rl.setOnClickListener(this);
@@ -68,85 +104,126 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         dysfunction_rl.setOnClickListener(this);
         power_rl.setOnClickListener(this);
         gridview = (GridView) view.findViewById(R.id.cockpit_gridview);
-        CockpitGridviewAdapter adapter = new CockpitGridviewAdapter(getActivity(),getData());
+        CockpitGridviewAdapter adapter = new CockpitGridviewAdapter(getActivity(), getData());
         gridview.setAdapter(adapter);
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(),MapViewActivity.class);
-                startActivityForResult(intent,1002);
+                intent.setClass(getActivity(), MapViewActivity.class);
+                startActivityForResult(intent, 1002);
             }
         });
     }
 
     /**
-     *  显示数据
+     * 显示数据
      */
-    private void initData(){
+    private void initData() {
 //        GetAsyncTaskData getAsyncTaskData = new GetAsyncTaskData();
 //        getAsyncTaskData.execute();
 
         OkHttpClient client = new OkHttpClient();
-        RequestBody formBody = new FormBody.Builder()
-                .add("Token","123")
-                .build();
-        final Request request = new Request.Builder()
-                .url(url_deviceInfo)
-                .get()
-                .build();
-        doGET(url_deviceInfo,request);
+        RequestBody formBody = new FormBody.Builder().add("Token", "123").build();
+        final Request request = new Request.Builder().url(url_deviceInfo).get().build();
+        doGET(url_deviceInfo, request);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                    // 提示错误信息
+                // 提示错误信息
             }
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 try {
-                    final String str= response.body().string();
-                    json=str;
+                    final String str = response.body().string();
+                    json = str;
                     System.out.println("cockpit打印" + json);
                     System.out.println("---------------test---------");
-                    //解析json为json数组
+                    //使用gson解析json数据
                     //new一个Gson对象
                     Gson gson = new Gson();
                     //将json字符串转为dataBean对象
-                     deviceBean deviceBean = gson.fromJson(json, deviceBean.class);
-                    Log.d("code" , "code为"+deviceBean.getCode());
-                    Log.d("msg", "msg为"+deviceBean.getMsg());
-                    Log.d("data", "data为"+deviceBean.getData());
+                    DeviceBean DeviceBean = gson.fromJson(json, DeviceBean.class);
+                    Log.d("COCKPITACTIVITY", "DEVICE ID IS " + DeviceBean.getData().get(0).getDeviceName());
+                    Log.d("COCKPITACTIVITY", "DEVICE ID IS " + DeviceBean.getData().get(1).getDeviceId());
+                    Log.d("COCKPITACTIVITY", "------数据解析成功------");
 
+                    //发送消息给主线程
+                    Message message = handler.obtainMessage();
+                    Bundle bundle = new Bundle();
+                    bundle.putIntegerArrayList("list", countData(DeviceBean.getData()));
+                    message.what = 1;
+                    message.getData().putBundle("data",bundle);
+                    handler.sendMessage(message);
 
-
-
-//                    DataBean dataBean = gson.fromJson(json,DataBean.class);
-//                    System.out.println("DEVICE ID"+ dataBean.getDeviceId());
-
-
-
-                    new Thread(new Runnable(){
-
-                        @Override
-                        public void run() {
-
-//                            mHandler.sendMessage(mHandler.obtainMessage(Integer.parseInt(json)));
-                        }
-                    }).start();
-                }
-                catch (IOException e1) {
+                } catch (IOException e1) {
                     e1.printStackTrace();
                 }
             }
         });
 
-
-
-
         System.out.println("cock initdata查詢成功：");
     }
 
-    private List<CockpitGridViewItem> getData(){
+
+//    private void ParseJsonWithGson(String json){
+//        //new一个Gson对象
+//        Gson gson = new Gson();
+//        //将json字符串转为dataBean对象
+//        DeviceBean deviceBean= gson.fromJson(json, DeviceBean.class);
+//        Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(0).getDeviceName());
+//        Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(1).getDeviceId());
+//        Log.d("COCKPITACTIVITY", "------数据解析成功------" + deviceBean.getData());
+//
+//    }
+
+
+    //计数的方法，返回list
+    private ArrayList<Integer> countData(List<DataBean> data) {
+        int install = 0;
+        int online = 0;
+        int usable = 0;
+        int sim = 0;
+        int syn = 0;
+        int power = 0;
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getInstalled()) {
+                install++;
+                System.out.println("安装数量 " + install);
+            }
+            if (data.get(i).getOnline()) {
+                online++;
+                System.out.println("在线数量 " + online);
+            }
+            if (data.get(i).getUsable()) {
+                usable++;
+                System.out.println("可用数量 " + usable);
+            }
+            if (data.get(i).getSIMCardOnline()) {
+                sim++;
+                System.out.println("sim卡在线数量 " + sim);
+            }
+            if (data.get(i).getAbnormal()) {
+                syn++;
+                System.out.println("功能异常数量 " + syn);
+            }
+            if (data.get(i).getPowerFailure()) {
+                power++;
+                System.out.println("停电数量 " + power);
+            }
+        }
+        list.add(install);
+        list.add(online);
+        list.add(usable);
+        list.add(sim);
+        list.add(syn);
+        list.add(power);
+        return list;
+    }
+
+    private List<CockpitGridViewItem> getData() {
         List<CockpitGridViewItem> list = new ArrayList<>();
         CockpitGridViewItem item = new CockpitGridViewItem();
         item.setNum("99");
@@ -172,51 +249,51 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         item.setNum("10");
         item.setTitle(getActivity().getString(R.string.cet_cockpit_power_cut));
         list.add(item);
-        return  list;
+        return list;
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.cockpit_install_num_rl:
                 Intent install_intent = new Intent();
-                install_intent.setClass(getActivity(),MapViewActivity.class);
-                install_intent.putExtra("title",getResources().getString(R.string.cet_cockpit_install_num));
-                startActivityForResult(install_intent,1002);
+                install_intent.setClass(getActivity(), MapViewActivity.class);
+                install_intent.putExtra("title", getResources().getString(R.string.cet_cockpit_install_num));
+                startActivityForResult(install_intent, 1002);
                 break;
             case R.id.cockpit_online_num_rl:
                 Intent online_intent = new Intent();
-                online_intent.putExtra("title",getResources().getString(R.string.cet_cockpit_online_num));
-                online_intent.setClass(getActivity(),MapViewActivity.class);
-                startActivityForResult(online_intent,1002);
+                online_intent.putExtra("title", getResources().getString(R.string.cet_cockpit_online_num));
+                online_intent.setClass(getActivity(), MapViewActivity.class);
+                startActivityForResult(online_intent, 1002);
                 break;
             case R.id.cockpit_usable_num_rl:
                 Intent usable_intent = new Intent();
-                usable_intent.putExtra("title",getResources().getString(R.string.cet_cockpit_usable_num));
-                usable_intent.setClass(getActivity(),MapViewActivity.class);
-                startActivityForResult(usable_intent,1002);
+                usable_intent.putExtra("title", getResources().getString(R.string.cet_cockpit_usable_num));
+                usable_intent.setClass(getActivity(), MapViewActivity.class);
+                startActivityForResult(usable_intent, 1002);
                 break;
             case R.id.cockpit_sim_rl:
                 Intent sim_intent = new Intent();
-                sim_intent.putExtra("title",getResources().getString(R.string.cet_cockpit_sim_arrearage));
-                sim_intent.setClass(getActivity(),MapViewActivity.class);
-                startActivityForResult(sim_intent,1002);
+                sim_intent.putExtra("title", getResources().getString(R.string.cet_cockpit_sim_arrearage));
+                sim_intent.setClass(getActivity(), MapViewActivity.class);
+                startActivityForResult(sim_intent, 1002);
                 break;
             case R.id.cockpit_dysfunction_rl:
                 Intent dysfunction_intent = new Intent();
-                dysfunction_intent.putExtra("title",getResources().getString(R.string.cet_cockpit_dysfunction));
-                dysfunction_intent.setClass(getActivity(),MapViewActivity.class);
-                startActivityForResult(dysfunction_intent,1002);
+                dysfunction_intent.putExtra("title", getResources().getString(R.string.cet_cockpit_dysfunction));
+                dysfunction_intent.setClass(getActivity(), MapViewActivity.class);
+                startActivityForResult(dysfunction_intent, 1002);
                 break;
             case R.id.cockpit_power_cut_rl:
                 Intent power_intent = new Intent();
-                power_intent.putExtra("title",getResources().getString(R.string.cet_cockpit_power_cut));
-                power_intent.setClass(getActivity(),MapViewActivity.class);
-                startActivityForResult(power_intent,1002);
+                power_intent.putExtra("title", getResources().getString(R.string.cet_cockpit_power_cut));
+                power_intent.setClass(getActivity(), MapViewActivity.class);
+                startActivityForResult(power_intent, 1002);
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 }
