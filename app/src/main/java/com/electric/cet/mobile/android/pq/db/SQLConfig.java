@@ -2,157 +2,101 @@ package com.electric.cet.mobile.android.pq.db;
 
 public interface SQLConfig {
 
-	public static final String TB_USERMANAGER 	= "usermanager";
-	public static final String TB_RESHOLDER	    = "resholder";
-	public static final String TB_RESPUSH	    = "respush";
-	public static final String SQLNAME			= "sundata_ebag_user.db";
-	
-	public static final String ID 			    = "_id";
-	public static final String USERCODE         = "userCode";
-	public static final String USERPWD          = "userPwd";
-	public static final String USERNAME 		= "userName";
-	public static final String REALNAME 		= "realName";
-	public static final String CLASSCODE 		= "classCode";
-	public static final String CLASSNAME		= "className";
-	public static final String GRADECODE 		= "gradeCode";
-	public static final String GRADENAME 		= "gradeName";
-	public static final String SCHOOLCODE		= "schoolCode";
-	public static final String SCHOOLNAME		= "schoolName";
-	public static final String CITYCODE 		= "cityCode";
-	public static final String CITYNAME 		= "cityName";
-	public static final String IMAGEURL 		= "imageURL";
-	public static final String LOCALIMAGEURL 	= "localImageURL";
-	public static final String USERTYPE 		= "userType";
-	public static final String SESSIONID 		= "sessionId";
-	
-	
-	public static final String HOLDERCODE		= "holdercode";
-	public static final String HOLDERNAME		= "holdername";
-	public static final String FILEID			= "fileid";
-	public static final String DATE				= "date";
-	
-	public static final String FILENAME			= "filename";
-	public static final String SUBJECTCODE		= "subjectcode";
-	public static final String SUBJECTNAME		= "subjectname";
-	public static final String FILETYPE			= "filetype";
-	public static final String FILESIZE			= "filesize";
-	public static final String FILEPATH			= "filepath";
-	public static final String FILEHOLDER		= "fileholder";
-	public static final String COVERURL		    = "coverurl";
-	public static final String RESTYPE		    = "restype";
-	public static final String DOWNLOADSTATE	= "downloadstate";
-	
-	public static final String RELEASERCODE	    = "releasercode";
-	public static final String RELEASERNAME	    = "releasername";
-	public static final String RELEASEDATE	    = "releaserdate";
-	public static final String RESURL	    	= "resurl";
-	
-	public static final String LOCALCOVERURL	= "localcoverurl";
-	public static final String LOCALRESURL	    = "localresurl";
-	
-	
-	
-	
+	public static final String TB_DEVICEINFO = "DEVICEINFO";
+	public static final String SQLNAME = "LowLineSys.db";
 
-	public static final String CREATEUSERMANAGER = "CREATE TABLE IF NOT EXISTS "
-			+ TB_USERMANAGER
+	public static final String DEVICEID = "DeviceId";
+	public static final String DEVICENAME = "DeviceName";
+	public static final String CITYID = "CityId";
+	public static final String COUNTYID = "CountyId";
+	public static final String POWERSUPPLYID = "PowerSupplyId";
+	public static final String ISINSTALLED = "IsInstalled";
+	public static final String ISONLINE = "IsOnline";
+	public static final String ISUSABLE = "IsUsable";
+	public static final String ISSIMCARDONLINE = "IsSIMCardOnline";
+	public static final String ISABNORMAL = "IsAbnormal";
+	public static final String ISPOWERFAILURE = "IsPowerFailure";
+	public static final String LONGITUDE = "Longitude";
+	public static final String LATITUDE = "Latitude";
+	public static final String ADJUSTTIME = "AdjustTime";
+	public static final String ISVOLTAGEREGULATENORMAL = "IsVoltageRegulateNormal";
+	public static final String ISREACTIVECOMPENSATIONNORMAL = "IsReactiveCompensationNormal";
+	public static final String MANUFACTURE = "Manufacture";
+	public static final String MODEL = "Model";
+	public static final String PHASETYPEID = "PhaseTypeId";
+	public static final String CAPACITY = "PhaseTypeId";
+	public static final String ISCIRCUITNORMAL = "IsCircuitNormal";
+	public static final String INSTALLADDRESS = "InstallAddress";
+	public static final String DEVICETYPEID = "DeviceTypeId";
+	public static final String STATE = "State";
+	public static final String CIRCUITID = "CircuitId";
+	public static final String COURTS = "Courts";
+	public static final String ISMANUFACTURENORMAL = "IsManufactureNormal";
+	public static final String LOCATION = "Location";
+
+//统计数据表
+	public static final String CREATEDEVICEINFO = "CREATE TABLE IF NOT EXISTS "
+			+ TB_DEVICEINFO
 			+ " ("
-			+ ID
+			+ DEVICEID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
-			+ USERCODE
+			+ DEVICENAME
 			+ " VARCHAR NULL,"
-			+ USERPWD
+			+ CITYID
 			+ " VARCHAR NULL,"
-			+ USERNAME
+			+ COUNTYID
 			+ " VARCHAR NULL,"
-			+ CLASSCODE
+			+ POWERSUPPLYID
 			+ " VARCHAR NULL,"
-			+ CLASSNAME
+			+ ISINSTALLED
 			+ " VARCHAR NULL,"
-			+ REALNAME
+			+ ISONLINE
 			+ " VARCHAR NULL,"
-			+ GRADECODE
+			+ ISUSABLE
 			+ " VARCHAR NULL,"
-			+ GRADENAME
+			+ ISSIMCARDONLINE
 			+ " VARCHAR NULL,"
-			+ SCHOOLCODE
+			+ ISABNORMAL
 			+ " VARCHAR NULL,"
-			+ SCHOOLNAME
+			+ ISPOWERFAILURE
 			+ " VARCHAR NULL,"
-			+ CITYCODE
+			+ LONGITUDE
 			+ " VARCHAR NULL,"
-			+ CITYNAME
+			+ LATITUDE
 			+ " VARCHAR NULL,"
-			+ IMAGEURL
+			+ ADJUSTTIME
 			+ " VARCHAR NULL,"
-			+ LOCALIMAGEURL
+			+ ISVOLTAGEREGULATENORMAL
 			+ " VARCHAR NULL,"
-			+ SESSIONID
-			+ " VARCHAR NULL," + USERTYPE + " INT DEFAULT 0 " + ")";
-	
-	//holder表
-	public static final String CREATERESHOLDER = "CREATE TABLE IF NOT EXISTS "
-			+ TB_RESHOLDER
-			+ " ("
-			+ ID
-			+ " INTEGER PRIMARY KEY AUTOINCREMENT ,"
-			+ HOLDERCODE
+			+ ISREACTIVECOMPENSATIONNORMAL
 			+ " VARCHAR NULL,"
-			+ HOLDERNAME
+			+ MANUFACTURE
 			+ " VARCHAR NULL,"
-			+ CLASSCODE
+			+ MODEL
 			+ " VARCHAR NULL,"
-			+ FILEID
+			+ PHASETYPEID
 			+ " VARCHAR NULL,"
-			+ FILENAME
+			+ CAPACITY
 			+ " VARCHAR NULL,"
-			+ FILETYPE
+			+ ISCIRCUITNORMAL
 			+ " VARCHAR NULL,"
-			+ RESTYPE
+			+ INSTALLADDRESS
 			+ " VARCHAR NULL,"
-			+ DATE
-			+ " VARCHAR NULL"
-			+ ")"
-			;
-	
-	//推送资源表
-	public static final String CREATERESPUSH = "CREATE TABLE IF NOT EXISTS "
-			+ TB_RESPUSH
-			+ " ("
-			+ ID
-			+ " INTEGER PRIMARY KEY AUTOINCREMENT ,"
-			+ FILEID
+			+ DEVICETYPEID
 			+ " VARCHAR NULL,"
-			+ FILENAME
-			+ " VARCHAR NULL,"  
-			+ COVERURL
-			+ " VARCHAR NULL," 
-			+ SUBJECTCODE
+			+ ISREACTIVECOMPENSATIONNORMAL
 			+ " VARCHAR NULL,"
-			+ SUBJECTNAME
+			+ STATE
 			+ " VARCHAR NULL,"
-			+ RESURL
+			+ CIRCUITID
 			+ " VARCHAR NULL,"
-			+ RELEASERCODE
+			+ COURTS
 			+ " VARCHAR NULL,"
-			+ RELEASERNAME
+			+ ISMANUFACTURENORMAL
 			+ " VARCHAR NULL,"
-			+ RELEASEDATE
+			+ LOCATION
 			+ " VARCHAR NULL,"
-			+ FILETYPE
-			+ " VARCHAR NULL,"
-			+ FILESIZE
-			+ " VARCHAR NULL,"
-			+ CLASSCODE
-			+ " VARCHAR NULL,"
-			+ DOWNLOADSTATE
-			+ " VARCHAR NULL,"
-			+ RESTYPE
-			+ " VARCHAR NULL,"
-			+ LOCALCOVERURL
-			+ " VARCHAR NULL,"
-			+ LOCALRESURL
-			+ " VARCHAR NULL"
-			+ ")"
-			;
+			+ " INT DEFAULT 0 " + ")";
+
+
 }
