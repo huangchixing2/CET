@@ -111,7 +111,7 @@ public interface SQLConfig {
 //    public static final String CREATE_REALTIMEDATA = "create table RealTimeData(" + "id integer primary key autoincrement," + "DeviceId integer," + "DeviceName text," + "AVoltageInput real," + "BVoltageInput real," + "CVoltageInput real," + "ACurrentInput real," + "BCurrentInput real," + "CCurrentInput real," + "APowerFactorInput real," + "BBowerFactorInput real," + "CPowerFactorInput real," + "AVoltageOutput real," + "BVoltageOutput real," + "CVoltageOutput real," + "ACurrentOutput real," + "BCurrentOutput real," + "CCurrentOutput real," + "APowerFactorOutput real," + "BPowerFactorOutput real," + "CPowerFactorOutput real," + "VoltageRegulate real," + "ReactivePowerInput real, ";
 
 
-	//创建设备统计数据表
+	//统计数据可以直接查询
 
 
 }

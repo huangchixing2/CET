@@ -140,7 +140,10 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
     public static DataBean queryUserInfo() {
         SQLiteDatabase db = instance.getReadableDatabase();
         DataBean dataBean = null;
-        Cursor cursor = db.query(CREATE_DEVICEDATA, null, null, null, null, null, null);
+//        Cursor cursor = db.query("DeviceData", null, null, null, null, null, null);
+//        Cursor cursor = db.execSQL("select * from DeviceData order by DeviceId desc");
+        //降序查询
+        Cursor cursor = db.rawQuery("select * from DeviceData order by DeviceId desc",new String[]{});
         if (cursor.moveToNext()) {
             dataBean = new DataBean();
 //            String code = cursor.getString(cursor.getColumnIndex(CODE));  //需要确定和添加
@@ -174,6 +177,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             String location = cursor.getString(cursor.getColumnIndex(LOCATION));
 
             dataBean.setDeviceId(devid);
+            Log.i("deviceid",devid+"~~~~~");
             dataBean.setDeviceName(devicename);
             dataBean.setCityId(cityid);
             dataBean.setCountyId(countyid);

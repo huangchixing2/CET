@@ -33,13 +33,9 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static com.electric.cet.mobile.android.pq.utils.OkHttpUtils.doGET;
 
 //数据
 public class DataFragment extends BaseFragment implements ViewPager.OnPageChangeListener, RadioGroup.OnCheckedChangeListener, View.OnClickListener {
@@ -66,8 +62,12 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 
     private DataBean dataBean;
 
-    String url_realTime = "http://192.168.2.106/LowLineSys/device/2/data/realtime";
-    String url_trend = "http://192.168.2.106/LowLineSys/device/3/data/trend/2019-02-22/2019-02-28";
+//    String url_realTime = "http://192.168.2.104/LowLineSys/device/2/data/realtime";
+//    String url_realTime = "http://192.168.2.104/LowLineSys/device/2/data/realtime";
+    String url_before = "http://192.168.2.104/LowLineSys/device/";
+    String url_after = "/data/realtime";
+    String url_trend = "http://192.168.2.104/LowLineSys/device/3/data/trend/2019-02-22/2019-02-28";
+    String url_afterTrend = "/data/trend/";
 
 
 
@@ -135,7 +135,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 //        initTrendData();
     }
 
-private SQLhelper_Device dbHelper;
+
 
 
     //请求趋势数据
@@ -143,12 +143,13 @@ private SQLhelper_Device dbHelper;
         OkHttpClient client = new OkHttpClient();
         String DeviceId = null;
 
-        RequestBody formBody = new FormBody.Builder().add("deviceId","2" ) //deviceId如何传入？
-                .add("startTime", "2019-02-22")  //参数如何填入？
-//        bdate_tv.getText().toString().trim().replace("/","-")
-                .add("endTime", "2019-02-28").build();
+//        RequestBody formBody = new FormBody.Builder().add("deviceId","3" ) //deviceId如何传入？
+//                .add("startTime", "2019-02-22")  //参数如何填入？
+////        bdate_tv.getText().toString().trim().replace("/","-")
+//                .add("endTime", "2019-02-28").build();
+        String url_trend = url_before + dataBean.getDeviceId() + url_afterTrend + bdate_tv.getText().toString().trim().replace("/","-")+"/" +adate_tv.getText().toString().trim().replace("/","-");
         Request request = new Request.Builder().url(url_trend).get().build();
-        doGET(url_trend, request);
+//        doGET(url_trend, request);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -177,14 +178,20 @@ private SQLhelper_Device dbHelper;
         });
     }
 
+    private SQLhelper_Device dbHelper;
 
     //请求实时数据
     public void initRealtimeData() {
         OkHttpClient client = new OkHttpClient();
         String deviceid = null;
-        RequestBody formBody = new FormBody.Builder().add("deviceId", "2").build(); //参数如何填入？
+
+
+
+//        RequestBody formBody = new FormBody.Builder().add("deviceId", "98").build(); //参数如何填入？
+        Log.i("deviceid",dataBean.getDeviceId()+"");
+        String url_realTime = url_before + dataBean.getDeviceId() + url_after;
         Request request = new Request.Builder().url(url_realTime).get().build();
-        doGET(url_realTime, request);
+//        doGET(url_realTime, request);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
