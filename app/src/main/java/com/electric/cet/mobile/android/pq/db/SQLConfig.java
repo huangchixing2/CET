@@ -2,8 +2,10 @@ package com.electric.cet.mobile.android.pq.db;
 
 public interface SQLConfig {
 
-	public static final String TB_DEVICEINFO = "DEVICEINFO";
-	public static final String SQLNAME = "LowLineSys.db";
+	public static final String SQLNAME = "LowLineSys1.db";
+    public static final String CREATE_DEVICEDATA = "deviceInfo";
+
+    public static final String USERCODE = "code";
 
 	public static final String DEVICEID = "DeviceId";
 	public static final String DEVICENAME = "DeviceName";
@@ -34,69 +36,82 @@ public interface SQLConfig {
 	public static final String ISMANUFACTURENORMAL = "IsManufactureNormal";
 	public static final String LOCATION = "Location";
 
-//统计数据表
-	public static final String CREATEDEVICEINFO = "CREATE TABLE IF NOT EXISTS "
-			+ TB_DEVICEINFO
-			+ " ("
-			+ DEVICEID
-			+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
-			+ DEVICENAME
-			+ " VARCHAR NULL,"
-			+ CITYID
-			+ " VARCHAR NULL,"
-			+ COUNTYID
-			+ " VARCHAR NULL,"
-			+ POWERSUPPLYID
-			+ " VARCHAR NULL,"
-			+ ISINSTALLED
-			+ " VARCHAR NULL,"
-			+ ISONLINE
-			+ " VARCHAR NULL,"
-			+ ISUSABLE
-			+ " VARCHAR NULL,"
-			+ ISSIMCARDONLINE
-			+ " VARCHAR NULL,"
-			+ ISABNORMAL
-			+ " VARCHAR NULL,"
-			+ ISPOWERFAILURE
-			+ " VARCHAR NULL,"
-			+ LONGITUDE
-			+ " VARCHAR NULL,"
-			+ LATITUDE
-			+ " VARCHAR NULL,"
-			+ ADJUSTTIME
-			+ " VARCHAR NULL,"
-			+ ISVOLTAGEREGULATENORMAL
-			+ " VARCHAR NULL,"
-			+ ISREACTIVECOMPENSATIONNORMAL
-			+ " VARCHAR NULL,"
-			+ MANUFACTURE
-			+ " VARCHAR NULL,"
-			+ MODEL
-			+ " VARCHAR NULL,"
-			+ PHASETYPEID
-			+ " VARCHAR NULL,"
-			+ CAPACITY
-			+ " VARCHAR NULL,"
-			+ ISCIRCUITNORMAL
-			+ " VARCHAR NULL,"
-			+ INSTALLADDRESS
-			+ " VARCHAR NULL,"
-			+ DEVICETYPEID
-			+ " VARCHAR NULL,"
-			+ ISREACTIVECOMPENSATIONNORMAL
-			+ " VARCHAR NULL,"
-			+ STATE
-			+ " VARCHAR NULL,"
-			+ CIRCUITID
-			+ " VARCHAR NULL,"
-			+ COURTS
-			+ " VARCHAR NULL,"
-			+ ISMANUFACTURENORMAL
-			+ " VARCHAR NULL,"
-			+ LOCATION
-			+ " VARCHAR NULL,"
-			+ " INT DEFAULT 0 " + ")";
+
+    /**
+     * //	public static final String CREATEDEVICEINFO = "CREATE TABLE IF NOT EXISTS "
+     * //			+ TB_DEVICEINFO
+     * //			+ " ("
+     * //			+ DEVICEID
+     * //			+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
+     * //			+ DEVICENAME
+     * //			+ " VARCHAR NULL,"
+     * //			+ CITYID
+     * //			+ " VARCHAR NULL,"
+     * //			+ COUNTYID
+     * //			+ " INTEGER,"
+     * //			+ POWERSUPPLYID
+     * //			+ " INTEGER,"
+     * //			+ ISINSTALLED
+     * //			+ " VARCHAR NULL,"
+     * //			+ ISONLINE
+     * //			+ " VARCHAR NULL,"
+     * //			+ ISUSABLE
+     * //			+ " VARCHAR NULL,"
+     * //			+ ISSIMCARDONLINE
+     * //			+ " VARCHAR NULL,"
+     * //			+ ISABNORMAL
+     * //			+ " VARCHAR NULL,"
+     * //			+ ISPOWERFAILURE
+     * //			+ " VARCHAR NULL,"
+     * //			+ LONGITUDE
+     * //			+ " VARCHAR NULL,"
+     * //			+ LATITUDE
+     * //			+ " VARCHAR NULL,"
+     * //			+ ADJUSTTIME
+     * //			+ " VARCHAR NULL,"
+     * //			+ ISVOLTAGEREGULATENORMAL
+     * //			+ " VARCHAR NULL,"
+     * //			+ ISREACTIVECOMPENSATIONNORMAL
+     * //			+ " VARCHAR NULL,"
+     * //			+ MANUFACTURE
+     * //			+ " VARCHAR NULL,"
+     * //			+ MODEL
+     * //			+ " VARCHAR NULL,"
+     * //			+ PHASETYPEID
+     * //			+ " VARCHAR NULL,"
+     * //			+ CAPACITY
+     * //			+ " VARCHAR NULL,"
+     * //			+ ISCIRCUITNORMAL
+     * //			+ " VARCHAR NULL,"
+     * //			+ INSTALLADDRESS
+     * //			+ " VARCHAR NULL,"
+     * //			+ DEVICETYPEID
+     * //			+ " VARCHAR NULL,"
+     * //			+ ISREACTIVECOMPENSATIONNORMAL
+     * //			+ " VARCHAR NULL,"
+     * //			+ STATE
+     * //			+ " VARCHAR NULL,"
+     * //			+ CIRCUITID
+     * //			+ " VARCHAR NULL,"
+     * //			+ COURTS
+     * //			+ " VARCHAR NULL,"
+     * //			+ ISMANUFACTURENORMAL
+     * //			+ " VARCHAR NULL,"
+     * //			+ LOCATION
+     * //			+ " VARCHAR NULL,"
+     * //			+ " INT DEFAULT 0 " + ")";
+     **/
+
+
+    // 创建设备的所有信息表
+    public static final String deviceData = "create table DeviceData(id integer primary key autoincrement, DeviceId integer, DeviceName text, CityId integer, CountyId integer, PowerSupplyId integer, IsInstalled integer, IsOnline integer, IsUsable integer, IsSIMCardOnline integer, IsAbnormal integer, IsPowerFailure integer, Longitude integer, Latitude integer, AdjustTime integer, IsVoltageRegulateNormal integer, IsReactiveCompensationNormal integer, Manufacture text, Model text, PhaseTypeId integer, Capacity integer, IsCircuitNormal integer, InstallAddress text, DeviceTypeId integer, State integer, CircuitId integer, Courts text, IsManufactureNormal integer, Location text)";
+
+
+//    //创建设备的实时信息表
+//    public static final String CREATE_REALTIMEDATA = "create table RealTimeData(" + "id integer primary key autoincrement," + "DeviceId integer," + "DeviceName text," + "AVoltageInput real," + "BVoltageInput real," + "CVoltageInput real," + "ACurrentInput real," + "BCurrentInput real," + "CCurrentInput real," + "APowerFactorInput real," + "BBowerFactorInput real," + "CPowerFactorInput real," + "AVoltageOutput real," + "BVoltageOutput real," + "CVoltageOutput real," + "ACurrentOutput real," + "BCurrentOutput real," + "CCurrentOutput real," + "APowerFactorOutput real," + "BPowerFactorOutput real," + "CPowerFactorOutput real," + "VoltageRegulate real," + "ReactivePowerInput real, ";
+
+
+	//创建设备统计数据表
 
 
 }

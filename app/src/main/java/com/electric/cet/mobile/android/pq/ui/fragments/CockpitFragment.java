@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.Bean.DeviceBean;
 import com.electric.cet.mobile.android.pq.R;
+import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.model.CockpitGridViewItem;
 import com.electric.cet.mobile.android.pq.ui.activity.MapViewActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.CockpitGridviewAdapter;
@@ -45,7 +46,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout sim_rl;
     private RelativeLayout dysfunction_rl;
     private RelativeLayout power_rl;
-    public static String url_deviceInfo = "http://192.168.2.107/LowLineSys/device/data/all?token=123";
+    public static String url_deviceInfo = "http://192.168.2.104/LowLineSys/device/data/all?token=123";
     private String json = null;
 
     private TextView install_tv;
@@ -54,6 +55,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private TextView sim_tv;
     private TextView dysfunction_tv;
     private TextView power_tv;
+    private SQLhelper_Device dbHelper;
 
     private Handler handler = new Handler() {
         //驾驶舱数据显示
@@ -103,6 +105,9 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         sim_rl.setOnClickListener(this);
         dysfunction_rl.setOnClickListener(this);
         power_rl.setOnClickListener(this);
+
+
+
         gridview = (GridView) view.findViewById(R.id.cockpit_gridview);
         CockpitGridviewAdapter adapter = new CockpitGridviewAdapter(getActivity(), getData());
         gridview.setAdapter(adapter);
@@ -144,15 +149,18 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                     //new一个Gson对象
                     Gson gson = new Gson();
                     //将json字符串转为dataBean对象
-                    DeviceBean DeviceBean = gson.fromJson(json, DeviceBean.class);
-                    Log.d("COCKPITACTIVITY", "DEVICE ID IS " + DeviceBean.getData().get(0).getDeviceName());
-                    Log.d("COCKPITACTIVITY", "DEVICE ID IS " + DeviceBean.getData().get(1).getDeviceId());
+                    DeviceBean deviceBean = gson.fromJson(json, DeviceBean.class);
+                    Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(0).getDeviceName());
+                    Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(1).getDeviceId());
                     Log.d("COCKPITACTIVITY", "------数据解析成功------");
+
+                    //网络请求到的数据写入数据库
+                   SQLhelper_Device.Instance(getActivity()).insertUserInfo(deviceBean.getData());
 
                     //发送消息给主线程
                     Message message = handler.obtainMessage();
                     Bundle bundle = new Bundle();
-                    bundle.putIntegerArrayList("list", countData(DeviceBean.getData()));
+                    bundle.putIntegerArrayList("list", countData(deviceBean.getData()));
                     message.what = 1;
                     message.getData().putBundle("data",bundle);
                     handler.sendMessage(message);

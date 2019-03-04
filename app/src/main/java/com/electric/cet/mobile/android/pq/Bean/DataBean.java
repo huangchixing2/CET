@@ -22,7 +22,7 @@ public class DataBean {
          private int PhaseTypeId;
          private int Capacity;
          private Boolean IsCircuitNormal;
-         private Boolean InstallAddress;
+         private String InstallAddress;
          private int DeviceTypeId;
          private Boolean State;
          private int CircuitId;
@@ -198,11 +198,11 @@ public class DataBean {
         IsCircuitNormal = circuitNormal;
     }
 
-    public Boolean getInstallAddress() {
+    public String getInstallAddress() {
         return InstallAddress;
     }
 
-    public void setInstallAddress(Boolean installAddress) {
+    public void setInstallAddress(String installAddress) {
         InstallAddress = installAddress;
     }
 
@@ -255,4 +255,8 @@ public class DataBean {
     }
 
 
+    @Override
+    public String toString() {
+        return "DataBean{" + "DeviceId=" + DeviceId + ", DeviceName='" + DeviceName + '\'' + ", CityId=" + CityId + ", CountyId=" + CountyId + ", PowerSupplyId=" + PowerSupplyId + ", IsInstalled=" + IsInstalled + ", IsOnline=" + IsOnline + ", IsUsable=" + IsUsable + ", IsSIMCardOnline=" + IsSIMCardOnline + ", IsAbnormal=" + IsAbnormal + ", IsPowerFailure=" + IsPowerFailure + ", Longitude=" + Longitude + ", Latitude=" + Latitude + ", AdjustTime=" + AdjustTime + ", IsVoltageRegulateNormal=" + IsVoltageRegulateNormal + ", IsReactiveCompensationNormal=" + IsReactiveCompensationNormal + ", Manufacture='" + Manufacture + '\'' + ", Model='" + Model + '\'' + ", PhaseTypeId=" + PhaseTypeId + ", Capacity=" + Capacity + ", IsCircuitNormal=" + IsCircuitNormal + ", InstallAddress=" + InstallAddress + ", DeviceTypeId=" + DeviceTypeId + ", State=" + State + ", CircuitId=" + CircuitId + ", Courts='" + Courts + '\'' + ", IsManufactureNormal=" + IsManufactureNormal + ", Location='" + Location + '\'' + '}';
+    }
 }
