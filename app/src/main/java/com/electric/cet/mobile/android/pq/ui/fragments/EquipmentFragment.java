@@ -16,8 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.model.EquipmentCollectModel;
 import com.electric.cet.mobile.android.pq.model.EquipmentWorkingModel;
@@ -57,6 +59,10 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private List<EquipmentWorkingModel> workingList = new ArrayList<>();
 
     private int baseDistance;
+    private DataBean dataBean;
+    private TextView equipment_collect_title_address;
+    private TextView equipment_collect_title_type;
+    private TextView equipment_collect_title_statu;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,6 +92,13 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
                 .findViewById(R.id.cet_equipment_tab_line_layout);
         tablineImg = (ImageView) view.findViewById(R.id.cet_equipment_list_tab_line_img);
         viewPager = (ViewPager) view.findViewById(R.id.cet_equipment_list_viewpager);
+
+        equipment_collect_title_address = (TextView) view.findViewById(R.id.equipment_collect_title_address);
+        equipment_collect_title_type = (TextView) view.findViewById(R.id.equipment_collect_title_type);
+        equipment_collect_title_statu = (TextView) view.findViewById(R.id.equipment_collect_title_statu);
+
+
+
         DisplayMetrics metrics = new DisplayMetrics();
         metrics = getResources().getDisplayMetrics();
         baseDistance = (int) Math.round(metrics.widthPixels / 2.0);
@@ -99,6 +112,12 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     }
 
     private void initData(){
+    //查询数据库,显示设备台账信息
+//        dataBean = SQLhelper_Device.Instance(getActivity()).queryDeviceInfo(0);
+//        equipment_collect_title_address.setText(dataBean.getInstallAddress());
+//        equipment_collect_title_type.setText(dataBean.getDeviceTypeId());
+//        equipment_collect_title_statu.setText(dataBean.getState()+ "");
+
 
     }
 

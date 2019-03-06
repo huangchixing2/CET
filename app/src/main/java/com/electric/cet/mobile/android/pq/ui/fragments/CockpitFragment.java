@@ -21,6 +21,7 @@ import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.model.CockpitGridViewItem;
 import com.electric.cet.mobile.android.pq.ui.activity.MapViewActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.CockpitGridviewAdapter;
+import com.electric.cet.mobile.android.pq.utils.Constans;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -29,13 +30,9 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static com.electric.cet.mobile.android.pq.utils.OkHttpUtils.doGET;
 
 // 驾驶舱
 public class CockpitFragment extends BaseFragment implements View.OnClickListener {
@@ -46,7 +43,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout sim_rl;
     private RelativeLayout dysfunction_rl;
     private RelativeLayout power_rl;
-    public static String url_deviceInfo = "http://192.168.2.104/LowLineSys/device/data/all?token=123";
+    public static String url_deviceInfo = "http://192.168.2.107/LowLineSys/device/data/all?token=123";
     private String json = null;
 
     private TextView install_tv;
@@ -63,6 +60,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
+
                   ArrayList<Integer> list = (ArrayList<Integer>) msg.getData().getBundle("data").get("list");
                     install_tv.setText(list.get(0)+""); // int转换为string，否则报错
                     online_tv.setText(list.get(1)+"");
@@ -129,9 +127,9 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
 //        getAsyncTaskData.execute();
 
         OkHttpClient client = new OkHttpClient();
-        RequestBody formBody = new FormBody.Builder().add("Token", "123").build();
+//        RequestBody formBody = new FormBody.Builder().add("Token", "123").build();
         final Request request = new Request.Builder().url(url_deviceInfo).get().build();
-        doGET(url_deviceInfo, request);
+//        doGET(url_deviceInfo, request);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -153,7 +151,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                     Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(0).getDeviceName());
                     Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(1).getDeviceId());
                     Log.d("COCKPITACTIVITY", "------数据解析成功------");
-
+                    SQLhelper_Device.Instance(getActivity()).clearAllUserInfo();
                     //网络请求到的数据写入数据库
                    SQLhelper_Device.Instance(getActivity()).insertUserInfo(deviceBean.getData());
 
@@ -265,43 +263,35 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.cockpit_install_num_rl:
-                Intent install_intent = new Intent();
-                install_intent.setClass(getActivity(), MapViewActivity.class);
-                install_intent.putExtra("title", getResources().getString(R.string.cet_cockpit_install_num));
-                startActivityForResult(install_intent, 1002);
+                toDetailList(Constans.INSTALL_NUM, getResources().getString(R.string.cet_cockpit_install_num), 1002);
                 break;
             case R.id.cockpit_online_num_rl:
-                Intent online_intent = new Intent();
-                online_intent.putExtra("title", getResources().getString(R.string.cet_cockpit_online_num));
-                online_intent.setClass(getActivity(), MapViewActivity.class);
-                startActivityForResult(online_intent, 1002);
+                toDetailList(Constans.ONLINE_NUM, getResources().getString(R.string.cet_cockpit_online_num), 1002);
                 break;
             case R.id.cockpit_usable_num_rl:
-                Intent usable_intent = new Intent();
-                usable_intent.putExtra("title", getResources().getString(R.string.cet_cockpit_usable_num));
-                usable_intent.setClass(getActivity(), MapViewActivity.class);
-                startActivityForResult(usable_intent, 1002);
+                toDetailList(Constans.USABLE_NUM, getResources().getString(R.string.cet_cockpit_usable_num), 1002);
                 break;
             case R.id.cockpit_sim_rl:
-                Intent sim_intent = new Intent();
-                sim_intent.putExtra("title", getResources().getString(R.string.cet_cockpit_sim_arrearage));
-                sim_intent.setClass(getActivity(), MapViewActivity.class);
-                startActivityForResult(sim_intent, 1002);
+                toDetailList(Constans.SIM_NUM, getResources().getString(R.string.cet_cockpit_sim_arrearage), 1002);
                 break;
             case R.id.cockpit_dysfunction_rl:
-                Intent dysfunction_intent = new Intent();
-                dysfunction_intent.putExtra("title", getResources().getString(R.string.cet_cockpit_dysfunction));
-                dysfunction_intent.setClass(getActivity(), MapViewActivity.class);
-                startActivityForResult(dysfunction_intent, 1002);
+                toDetailList(Constans.EXCEPT_NUM, getResources().getString(R.string.cet_cockpit_dysfunction), 1002);
                 break;
             case R.id.cockpit_power_cut_rl:
-                Intent power_intent = new Intent();
-                power_intent.putExtra("title", getResources().getString(R.string.cet_cockpit_power_cut));
-                power_intent.setClass(getActivity(), MapViewActivity.class);
-                startActivityForResult(power_intent, 1002);
+                toDetailList(Constans.POWEROFF_NUM, getResources().getString(R.string.cet_cockpit_power_cut), 1002);
                 break;
             default:
                 break;
         }
+    }
+
+    private void toDetailList(int sourceFlag, String title, int requestCode){
+        Intent power_intent = new Intent();
+        power_intent.putExtra("source_flag", sourceFlag);
+        Log.d("huangchixing33","===============");
+        Log.d("huangchixing33" , sourceFlag + "");
+        power_intent.putExtra("title",title);
+        power_intent.setClass(getActivity(), MapViewActivity.class);
+        startActivityForResult(power_intent, requestCode);
     }
 }

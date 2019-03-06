@@ -1,40 +1,43 @@
 package com.electric.cet.mobile.android.pq.Bean;
 
-public class DataBean {
-         private int DeviceId;
-         private String DeviceName;
-         private int CityId;
-         private int CountyId;
-         private int PowerSupplyId;
-         private Boolean IsInstalled;
-         private Boolean IsOnline;
-         private Boolean IsUsable;
-         private Boolean IsSIMCardOnline;
-         private Boolean IsAbnormal;
-         private Boolean IsPowerFailure;
-         private int Longitude;
-         private int Latitude;
-         private int AdjustTime;
-         private Boolean IsVoltageRegulateNormal;
-         private Boolean IsReactiveCompensationNormal;
-         private String Manufacture;
-         private String Model;
-         private int PhaseTypeId;
-         private int Capacity;
-         private Boolean IsCircuitNormal;
-         private String InstallAddress;
-         private int DeviceTypeId;
-         private Boolean State;
-         private int CircuitId;
-         private String Courts;
-         private Boolean IsManufactureNormal;
-         private String Location;
+import java.io.Serializable;
 
-    public int getDeviceId() {
+public class DataBean implements Serializable {
+    //设备信息，共28条
+    private long DeviceId; //设备id
+         private String DeviceName;//设备名称
+         private long CityId; //地市id
+         private long CountyId; //区县id
+         private long PowerSupplyId;//供电所id
+         private Boolean IsInstalled; //是否安装
+         private Boolean IsOnline;//是否在线
+         private Boolean IsUsable;//是否可用
+         private Boolean IsSIMCardOnline;//simcard是否在线
+         private Boolean IsAbnormal; //功能是否异常
+         private Boolean IsPowerFailure;//是否停电
+         private long Longitude; //经度
+         private long Latitude; //纬度
+         private long AdjustTime;//调整次数
+         private Boolean IsVoltageRegulateNormal;//调压是否正常
+         private Boolean IsReactiveCompensationNormal; //无功补偿是否正常
+         private String Manufacture;//厂家信息
+         private String Model; //型号
+         private long PhaseTypeId; //相数
+         private long Capacity; //容量大小
+         private Boolean IsCircuitNormal; //线路是否正常
+         private String InstallAddress;//安装地址
+         private int DeviceTypeId; //设备类型id
+         private Boolean State;//状态是否异常
+         private long CircuitId;//线路ID
+         private String Courts;//台区
+         private Boolean IsManufactureNormal; //厂家是否正常
+         private String Location;//详细位置
+
+    public long getDeviceId() {
         return DeviceId;
     }
 
-    public void setDeviceId(int deviceId) {
+    public void setDeviceId(long deviceId) {
         DeviceId = deviceId;
     }
 
@@ -46,27 +49,27 @@ public class DataBean {
         DeviceName = deviceName;
     }
 
-    public int getCityId() {
+    public long getCityId() {
         return CityId;
     }
 
-    public void setCityId(int cityId) {
+    public void setCityId(long cityId) {
         CityId = cityId;
     }
 
-    public int getCountyId() {
+    public long getCountyId() {
         return CountyId;
     }
 
-    public void setCountyId(int countyId) {
+    public void setCountyId(long countyId) {
         CountyId = countyId;
     }
 
-    public int getPowerSupplyId() {
+    public long getPowerSupplyId() {
         return PowerSupplyId;
     }
 
-    public void setPowerSupplyId(int powerSupplyId) {
+    public void setPowerSupplyId(long powerSupplyId) {
         PowerSupplyId = powerSupplyId;
     }
 
@@ -118,27 +121,27 @@ public class DataBean {
         IsPowerFailure = powerFailure;
     }
 
-    public int getLongitude() {
+    public long getLongitude() {
         return Longitude;
     }
 
-    public void setLongitude(int longitude) {
+    public void setLongitude(long longitude) {
         Longitude = longitude;
     }
 
-    public int getLatitude() {
+    public long getLatitude() {
         return Latitude;
     }
 
-    public void setLatitude(int latitude) {
+    public void setLatitude(long latitude) {
         Latitude = latitude;
     }
 
-    public int getAdjustTime() {
+    public long getAdjustTime() {
         return AdjustTime;
     }
 
-    public void setAdjustTime(int adjustTime) {
+    public void setAdjustTime(long adjustTime) {
         AdjustTime = adjustTime;
     }
 
@@ -174,19 +177,19 @@ public class DataBean {
         Model = model;
     }
 
-    public int getPhaseTypeId() {
+    public long getPhaseTypeId() {
         return PhaseTypeId;
     }
 
-    public void setPhaseTypeId(int phaseTypeId) {
+    public void setPhaseTypeId(long phaseTypeId) {
         PhaseTypeId = phaseTypeId;
     }
 
-    public int getCapacity() {
+    public long getCapacity() {
         return Capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(long capacity) {
         Capacity = capacity;
     }
 
@@ -222,11 +225,11 @@ public class DataBean {
         State = state;
     }
 
-    public int getCircuitId() {
+    public long getCircuitId() {
         return CircuitId;
     }
 
-    public void setCircuitId(int circuitId) {
+    public void setCircuitId(long circuitId) {
         CircuitId = circuitId;
     }
 
@@ -253,7 +256,6 @@ public class DataBean {
     public void setLocation(String location) {
         Location = location;
     }
-
 
     @Override
     public String toString() {

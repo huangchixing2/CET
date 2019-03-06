@@ -1,14 +1,14 @@
 package com.electric.cet.mobile.android.pq.ui.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.R;
-import com.electric.cet.mobile.android.pq.model.DataCountModel;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ import java.util.List;
 public class DataCountAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private List<DataCountModel> list;
+    private List<DataBean> list;
 
-    public DataCountAdapter(Context context, List<DataCountModel> list) {
+    public DataCountAdapter(Context context, List<DataBean> list) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.list = list;
@@ -56,10 +56,10 @@ public class DataCountAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.address.setText(list.get(position).getAddress());
-        holder.num.setText(context.getResources().getString(R.string.cet_count_num,String.valueOf(list.get(position).getNum())));
+        holder.address.setText(list.get(position).getInstallAddress());
+        holder.num.setText(context.getResources().getString(R.string.cet_count_num,String.valueOf(list.get(position).getAdjustTime())));
         String vStatu = "";
-        if(list.get(position).isStatu()){
+        if(list.get(position).getVoltageRegulateNormal()){
             vStatu = context.getResources().getString(R.string.cet_count_nor);
         }else{
             vStatu = context.getResources().getString(R.string.cet_count_abnor);
@@ -67,7 +67,7 @@ public class DataCountAdapter extends BaseAdapter {
         }
         holder.statu.setText(context.getResources().getString(R.string.cet_count_statu,vStatu));
         String svc = "";
-        if(list.get(position).isSvc()){
+        if(list.get(position).getReactiveCompensationNormal()){
             vStatu = context.getResources().getString(R.string.cet_count_nor);
         }else{
             vStatu = context.getResources().getString(R.string.cet_count_abnor);

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -32,8 +33,9 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.R;
-import com.electric.cet.mobile.android.pq.model.DataCountModel;
+import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.ui.adapter.DataCountAdapter;
 
 import java.util.ArrayList;
@@ -52,8 +54,9 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
     private RadioButton list_rb;
     private TextView title;
     private ListView listView;
+    private int sourceFlag = -1;
 
-    private List<DataCountModel> list = new ArrayList<>();
+    private List<DataBean> devicesList = new ArrayList<>();
 
     private Handler handler = new Handler() {
         @Override
@@ -79,6 +82,7 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
     }
 
     private void initView() {
+        sourceFlag = getIntent().getIntExtra("source_flag",1);
         map_rg = (RadioGroup) findViewById(R.id.cet_cockpit_mapview_rg);
         map_rb = (RadioButton) findViewById(R.id.cet_cockpit_map_rb);
         list_rb = (RadioButton) findViewById(R.id.cet_cockpit_list_rb);
@@ -240,7 +244,13 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
 
     }
 
-    private List<DataCountModel> getData() {
+    //查询数据库
+    private List<DataBean> getData() {
+        devicesList.clear();
+        devicesList = SQLhelper_Device.Instance(this).queryDeviceList(sourceFlag);
+        Log.d("guol","devicesList.size:"+devicesList.size());//为何只有一条数据？
+        return devicesList;
+        /*
         DataCountModel dataCountModel = new DataCountModel();
         dataCountModel.setAddress("武汉花山台区1");
         dataCountModel.setNum(10);
@@ -278,6 +288,7 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
         dataCountModel.setSvc(true);
         list.add(dataCountModel);
         return list;
+        */
     }
 
     @Override
@@ -303,6 +314,6 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
         Intent intent = new Intent();
         setResult(1002,intent);
         finish();
-        list.get(position);
+        devicesList.get(position);
     }
 }

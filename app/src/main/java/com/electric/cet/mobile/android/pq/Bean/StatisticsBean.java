@@ -1,11 +1,9 @@
 package com.electric.cet.mobile.android.pq.Bean;
 
-import java.util.List;
-
 public class StatisticsBean {
     private int code;
     private String msg;
-    List<StatisticsDataBean> data;
+    StatisticsDataBean data;
 
     public int getCode() {
         return code;
@@ -23,11 +21,11 @@ public class StatisticsBean {
         this.msg = msg;
     }
 
-    public List<StatisticsDataBean> getData() {
+    public StatisticsDataBean getData() {
         return data;
     }
 
-    public void setData(List<StatisticsDataBean> data) {
+    public void setData(StatisticsDataBean data) {
         this.data = data;
     }
 

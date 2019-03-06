@@ -3,13 +3,14 @@ package com.electric.cet.mobile.android.pq.Bean;
 public class RealTimeData {
     private int DeviceId;
     private String DeviceName;
+    private float AVoltageInput;
     private float BVoltageInput;
     private float CVoltageInput;
     private float ACurrentInput;
     private float BCurrentInput;
     private float CCurrentInput;
     private float APowerFactorInput;
-    private float BPowerFactorInput;
+    private float BBowerFactorInput;
     private float CPowerFactorInput;
     private float AVoltageOutput;
     private float BVoltageOutput;
@@ -37,6 +38,14 @@ public class RealTimeData {
 
     public void setDeviceName(String deviceName) {
         DeviceName = deviceName;
+    }
+
+    public float getAVoltageInput() {
+        return AVoltageInput;
+    }
+
+    public void setAVoltageInput(float AVoltageInput) {
+        this.AVoltageInput = AVoltageInput;
     }
 
     public float getBVoltageInput() {
@@ -88,11 +97,11 @@ public class RealTimeData {
     }
 
     public float getBBowerFactorInput() {
-        return BPowerFactorInput;
+        return BBowerFactorInput;
     }
 
     public void setBBowerFactorInput(float BBowerFactorInput) {
-        this.BPowerFactorInput = BBowerFactorInput;
+        this.BBowerFactorInput = BBowerFactorInput;
     }
 
     public float getCPowerFactorInput() {
@@ -193,6 +202,6 @@ public class RealTimeData {
 
     @Override
     public String toString() {
-        return "RealTimeData{" + "DeviceId=" + DeviceId + ", DeviceName='" + DeviceName + '\'' + ", BVoltageInput=" + BVoltageInput + ", CVoltageInput=" + CVoltageInput + ", ACurrentInput=" + ACurrentInput + ", BCurrentInput=" + BCurrentInput + ", CCurrentInput=" + CCurrentInput + ", APowerFactorInput=" + APowerFactorInput + ", BBowerFactorInput=" + BPowerFactorInput + ", CPowerFactorInput=" + CPowerFactorInput + ", AVoltageOutput=" + AVoltageOutput + ", BVoltageOutput=" + BVoltageOutput + ", CVoltageOutput=" + CVoltageOutput + ", ACurrentOutput=" + ACurrentOutput + ", BCurrentOutput=" + BCurrentOutput + ", CCurrentOutput=" + CCurrentOutput + ", APowerFactorOutput=" + APowerFactorOutput + ", BBowerFactorOutput=" + BBowerFactorOutput + ", CPowerFactorOutput=" + CPowerFactorOutput + ", VoltageRegulate=" + VoltageRegulate + ", ReactivePowerInput=" + ReactivePowerInput + '}';
+        return "RealTimeData{" + "DeviceId=" + DeviceId + ", DeviceName='" + DeviceName + '\'' + ", AVoltageInput=" + AVoltageInput + ", BVoltageInput=" + BVoltageInput + ", CVoltageInput=" + CVoltageInput + ", ACurrentInput=" + ACurrentInput + ", BCurrentInput=" + BCurrentInput + ", CCurrentInput=" + CCurrentInput + ", APowerFactorInput=" + APowerFactorInput + ", BBowerFactorInput=" + BBowerFactorInput + ", CPowerFactorInput=" + CPowerFactorInput + ", AVoltageOutput=" + AVoltageOutput + ", BVoltageOutput=" + BVoltageOutput + ", CVoltageOutput=" + CVoltageOutput + ", ACurrentOutput=" + ACurrentOutput + ", BCurrentOutput=" + BCurrentOutput + ", CCurrentOutput=" + CCurrentOutput + ", APowerFactorOutput=" + APowerFactorOutput + ", BBowerFactorOutput=" + BBowerFactorOutput + ", CPowerFactorOutput=" + CPowerFactorOutput + ", VoltageRegulate=" + VoltageRegulate + ", ReactivePowerInput=" + ReactivePowerInput + '}';
     }
 }

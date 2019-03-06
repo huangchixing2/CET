@@ -1,11 +1,9 @@
 package com.electric.cet.mobile.android.pq.Bean;
 
-import java.util.List;
-
 public class RealTimeBean {
     private int code;
     private String msg;
-    private List<RealTimeData> realTimeData;
+    private RealTimeData data;
 
     public int getCode() {
         return code;
@@ -23,16 +21,16 @@ public class RealTimeBean {
         this.msg = msg;
     }
 
-    public List<RealTimeData> getRealTimeData() {
-        return realTimeData;
+    public RealTimeData getData() {
+        return data;
     }
 
-    public void setRealTimeData(List<RealTimeData> realTimeData) {
-        this.realTimeData = realTimeData;
+    public void setData(RealTimeData data) {
+        this.data = data;
     }
 
     @Override
     public String toString() {
-        return "RealTimeBean{" + "code=" + code + ", msg='" + msg + '\'' + ", realTimeData=" + realTimeData + '}';
+        return "RealTimeBean{" + "code=" + code + ", msg='" + msg + '\'' + ", realTimeData=" + data + '}';
     }
 }

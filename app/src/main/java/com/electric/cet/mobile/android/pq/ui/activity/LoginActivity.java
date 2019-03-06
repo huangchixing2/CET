@@ -23,7 +23,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private Button login_bt;
     private EditText username_et;
     private EditText psw_et;
-    public static String url_login  = "http://192.168.2.104/LowLineSys/user/login";
+    public static String url_login  = "http://192.168.2.107/LowLineSys/user/login";
 
 
     @Override
