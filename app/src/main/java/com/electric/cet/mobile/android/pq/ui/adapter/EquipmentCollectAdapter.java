@@ -10,7 +10,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.model.EquipmentCollectModel;
 
@@ -30,6 +29,8 @@ public class EquipmentCollectAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(context);
         this.list = list;
     }
+
+
     @Override
     public int getCount() {
             return list.size();
@@ -59,6 +60,7 @@ public class EquipmentCollectAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+//        是否被选中
         if(list.get(position).isSle()){
             holder.cb.setChecked(true);
         }else{
@@ -71,7 +73,7 @@ public class EquipmentCollectAdapter extends BaseAdapter {
             }
         });
         holder.address.setText(list.get(position).getAddress());
-        holder.type.setText(list.get(position).getType());
+        holder.type.setText(list.get(position).getType());  //此字段服务器未提供
         if(list.get(position).isStatu()){
             holder.statu.setImageResource(R.mipmap.equipment_online);
         }else{

@@ -114,7 +114,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-    //                    countRB.setChecked(true);
+    //
                     RealTimeBean realTimeBean = (RealTimeBean)msg.obj;
                     Log.d("huangchixing",realTimeBean.getData().getAVoltageInput()+ "");
                     Log.d("huangchixing", realTimeBean.getData().getAVoltageOutput()+ "");
@@ -142,6 +142,11 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                     cet_realtime_nopower.setText("无功投入：" + realTimeBean.getData().getReactivePowerInput() + "");
 
 
+                    break;
+                case 1002:
+                    countRB.setChecked(true);
+                    Log.i("devicesId",(int)getActivity().getSharedPreferences("data",0).getLong("deviceId",-1l)+"datahandler");
+                    refreshCountData( (int)getActivity().getSharedPreferences("data",0).getLong("deviceId",-1l));
                     break;
                 default:
                     break;
@@ -199,25 +204,38 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 //
 //        initRealtimeData();
 //        initTrendData();
-        //查询数据库，并显示统计数据
-        dataBean = SQLhelper_Device.Instance(getActivity()).queryDeviceInfo(6);
-        Log.d("statics",  dataBean.getInstallAddress() );
-        data_address.setText("台区: " + dataBean.getInstallAddress()); // int转换为string，否则报错
-
-        voltageRegulateTime.setText("调压次数: "+ dataBean.getAdjustTime() + "");
-        voltageRegulate.setText("调压: "+ dataBean.getVoltageRegulateNormal()); //怎么做判断正常和异常
-        reactiveCompensation.setText("无功补偿: " + dataBean.getReactiveCompensationNormal() + "");
-        manufacture.setText("厂家: "+dataBean.getManufacture() + "");
-        model.setText("型号: "+dataBean.getModel() + "");
-        capacity.setText("容量: "+dataBean.getCapacity() + " KG");
-        phrase.setText("相数: "+dataBean.getPhaseTypeId() + "");
-        circuit.setText("线路: "+dataBean.getCircuitId() + "");
-        location.setText("位置: "+dataBean.getLocation());
+        refreshCountData(-1);
 
 
     }
 
+private void refreshCountData(int deviceId){
+    //查询数据库，并显示统计数据
+    dataBean = SQLhelper_Device.Instance(getActivity()).queryDeviceInfo(deviceId); //deviceId如何传参？
+    Log.d("statics",  dataBean.getInstallAddress() );
+    data_address.setText("台区: " + dataBean.getInstallAddress()); // int转换为string，否则报错
 
+    voltageRegulateTime.setText("调压次数: "+ dataBean.getAdjustTime() + "");
+    //做一个判断，true显示正常，false显示异常
+    if(dataBean.getVoltageRegulateNormal()){
+        voltageRegulate.setText("调压: "+ getResources().getString(R.string.cet_count_nor));
+    }else{
+        voltageRegulate.setText("调压: "+ getResources().getString(R.string.cet_count_abnor));
+    }
+//    voltageRegulate.setText("调压: "+ dataBean.getVoltageRegulateNormal()); //怎么做判断正常和异常
+    if(dataBean.getReactiveCompensationNormal()){
+        reactiveCompensation.setText("无功补偿: " + getResources().getString(R.string.cet_count_nor));
+    }else{
+        reactiveCompensation.setText("无功补偿: " + getResources().getString(R.string.cet_count_abnor));
+    }
+//    reactiveCompensation.setText("无功补偿: " + dataBean.getReactiveCompensationNormal() + "");
+    manufacture.setText("厂家: "+dataBean.getManufacture() + "");
+    model.setText("型号: "+dataBean.getModel() + "");
+    capacity.setText("容量: "+dataBean.getCapacity() + " KG");
+    phrase.setText("相数: "+dataBean.getPhaseTypeId() + "");
+    circuit.setText("线路: "+dataBean.getCircuitId() + "");
+    location.setText("位置: "+dataBean.getLocation());
+}
 
 
 

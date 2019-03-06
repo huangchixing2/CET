@@ -6,12 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.electric.cet.mobile.android.pq.R;
-import com.electric.cet.mobile.android.pq.ui.activity.BaseFragmentActivity;
 import com.electric.cet.mobile.android.pq.ui.fragments.CockpitFragment;
 import com.electric.cet.mobile.android.pq.ui.fragments.DataFragment;
 import com.electric.cet.mobile.android.pq.ui.fragments.EquipmentFragment;
@@ -143,9 +141,20 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("MainActivity","requestCode->"+requestCode+"resultCode->"+resultCode);
+//        if(data == null){
+//            Log.i("devicesId",data.getIntExtra("devicesId",-1)+"null");
+//        }
         if(resultCode == 1002){
             dataRb.setChecked(true);
             data_fragment.getHandler().sendEmptyMessage(1002);
+//            Handler datahandler = data_fragment.getHandler();
+//            Message message = datahandler.obtainMessage();
+//            message.what = 1002;
+//            message.getData().putInt("devicesId",data.getIntExtra("devicesId",-1));
+//            Log.i("devicesId",data.getIntExtra("devicesId",-1)+"mainactivity");
+//            datahandler.sendMessage(message);
+//            data_fragment.getHandler().sendEmptyMessage(1002);
+            ;
         }
     }
 }

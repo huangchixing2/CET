@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class DataBean implements Serializable {
     //设备信息，共28条
+    private boolean isSle; //是否被选中  需要服务器添加是否可选
     private long DeviceId; //设备id
          private String DeviceName;//设备名称
          private long CityId; //地市id
@@ -32,6 +33,14 @@ public class DataBean implements Serializable {
          private String Courts;//台区
          private Boolean IsManufactureNormal; //厂家是否正常
          private String Location;//详细位置
+
+    public boolean isSle() {
+        return isSle;
+    }
+
+    public void setSle(boolean sle) {
+        isSle = sle;
+    }
 
     public long getDeviceId() {
         return DeviceId;

@@ -3,6 +3,7 @@ package com.electric.cet.mobile.android.pq.ui.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -56,6 +57,7 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
     private ListView listView;
     private int sourceFlag = -1;
 
+
     private List<DataBean> devicesList = new ArrayList<>();
 
     private Handler handler = new Handler() {
@@ -87,6 +89,7 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
         map_rb = (RadioButton) findViewById(R.id.cet_cockpit_map_rb);
         list_rb = (RadioButton) findViewById(R.id.cet_cockpit_list_rb);
         listView = (ListView) findViewById(R.id.cet_mapview_ll);
+        title = (TextView) findViewById(R.id.cockpit_tab);
         DataCountAdapter dcAdapter = new DataCountAdapter(this, getData());
         listView.setAdapter(dcAdapter);
         listView.setOnItemClickListener(this);
@@ -124,6 +127,11 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
         mLocationClient.start();
         //图片点击事件，回到定位点
 //        mLocationClient.requestLocation();
+        //点击不同按钮显示对应的标题文字
+        String  value = getIntent().getStringExtra("title");
+        title.setText(value);
+
+
     }
 
     @Override
@@ -250,45 +258,6 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
         devicesList = SQLhelper_Device.Instance(this).queryDeviceList(sourceFlag);
         Log.d("guol","devicesList.size:"+devicesList.size());//为何只有一条数据？
         return devicesList;
-        /*
-        DataCountModel dataCountModel = new DataCountModel();
-        dataCountModel.setAddress("武汉花山台区1");
-        dataCountModel.setNum(10);
-        dataCountModel.setStatu(true);
-        dataCountModel.setSvc(true);
-        list.add(dataCountModel);
-        dataCountModel = new DataCountModel();
-        dataCountModel.setAddress("武汉花山台区2");
-        dataCountModel.setNum(20);
-        dataCountModel.setStatu(true);
-        dataCountModel.setSvc(false);
-        list.add(dataCountModel);
-        dataCountModel = new DataCountModel();
-        dataCountModel.setAddress("武汉花山台区3");
-        dataCountModel.setNum(8);
-        dataCountModel.setStatu(true);
-        dataCountModel.setSvc(true);
-        list.add(dataCountModel);
-        dataCountModel = new DataCountModel();
-        dataCountModel.setAddress("武汉花山台区4");
-        dataCountModel.setNum(18);
-        dataCountModel.setStatu(false);
-        dataCountModel.setSvc(true);
-        list.add(dataCountModel);
-        dataCountModel = new DataCountModel();
-        dataCountModel.setAddress("武汉花山台区5");
-        dataCountModel.setNum(13);
-        dataCountModel.setStatu(false);
-        dataCountModel.setSvc(false);
-        list.add(dataCountModel);
-        dataCountModel = new DataCountModel();
-        dataCountModel.setAddress("武汉花山台区6");
-        dataCountModel.setNum(10);
-        dataCountModel.setStatu(true);
-        dataCountModel.setSvc(true);
-        list.add(dataCountModel);
-        return list;
-        */
     }
 
     @Override
@@ -312,8 +281,10 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent();
+        Log.i("devicesId",devicesList.get(position).getDeviceId()+"mapview");
+        SharedPreferences sp = getSharedPreferences("data",0);
+        sp.edit().putLong("deviceId",devicesList.get(position).getDeviceId()).commit();
         setResult(1002,intent);
         finish();
-        devicesList.get(position);
     }
 }

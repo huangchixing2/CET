@@ -6,7 +6,7 @@ package com.electric.cet.mobile.android.pq.model;
  */
 public class EquipmentCollectModel {
     //列表显示
-    private boolean isSle;
+    private boolean isSle; //是否被选中
     private String address;
     private String type;
     private boolean statu;

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.R;
+import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.model.EquipmentCollectModel;
 import com.electric.cet.mobile.android.pq.model.EquipmentWorkingModel;
 import com.electric.cet.mobile.android.pq.ui.activity.EquipmentCollectAddActivity;
@@ -32,7 +33,7 @@ import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentWorkingAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-//设备
+
 public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageChangeListener,RadioGroup.OnCheckedChangeListener,View.OnClickListener {
     private RadioGroup equipmentRadioGroup;
     private RadioButton collectRB;
@@ -49,20 +50,23 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private ImageView edit_tv;
     private ImageView del_tv;
     private CheckBox all_cb;
-
+//台账
     private ListView collect_lv;
     private EquipmentCollectAdapter collectAdapter;
-    private List<EquipmentCollectModel> collectList = new ArrayList<>();
-
+    private List<DataBean> collectList = new ArrayList<>();
+    private List<EquipmentCollectModel> collects = new ArrayList<>();
+//工况
     private ListView working_lv;
     private EquipmentWorkingAdapter workingAdapter;
-    private List<EquipmentWorkingModel> workingList = new ArrayList<>();
+    private List<EquipmentWorkingModel> works = new ArrayList<>();
 
     private int baseDistance;
     private DataBean dataBean;
     private TextView equipment_collect_title_address;
     private TextView equipment_collect_title_type;
     private TextView equipment_collect_title_statu;
+//    private List<DataBean> devicesList = new ArrayList<>();
+    private int sourceFlag = -1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,6 +77,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     }
 
     private void initView(View view){
+
         views = new ArrayList<View>();
         View collectView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_equipment_collect_layout, null);
@@ -112,14 +117,11 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     }
 
     private void initData(){
-    //查询数据库,显示设备台账信息
-//        dataBean = SQLhelper_Device.Instance(getActivity()).queryDeviceInfo(0);
-//        equipment_collect_title_address.setText(dataBean.getInstallAddress());
-//        equipment_collect_title_type.setText(dataBean.getDeviceTypeId());
-//        equipment_collect_title_statu.setText(dataBean.getState()+ "");
-
 
     }
+
+
+
 
     @Override
     public void onPageScrolled(int i, float v, int i1) {
@@ -132,9 +134,11 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         switch (i) {
             case 0:
                 collectRB.setChecked(true);
+                initCollectView(viewPager);//旋转台账显示
                 break;
             case 1:
                 workingRB.setChecked(true);
+                initWorkingView(viewPager);//选择工况显示
                 break;
             default:
                 break;
@@ -160,15 +164,18 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         }
     }
 
+//台账view显示
     private void initCollectView(View view){
+
         collect_lv = (ListView) view.findViewById(R.id.cet_equipment_collect_lv);
-        collectAdapter = new EquipmentCollectAdapter(getActivity(),getCollectData());
+        collectAdapter = new EquipmentCollectAdapter(getActivity(), getCollectData());
         collect_lv.setAdapter(collectAdapter);
         collect_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent  = new Intent();
                 intent.setClass(getActivity(),EquipmentDetailActivity.class);
+                intent.putExtra("data",collectList.get(position));
                 startActivity(intent);
             }
         });
@@ -186,10 +193,10 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
             }
         });
     }
-
+//工况view显示
     private  void initWorkingView(View view){
         working_lv = (ListView) view.findViewById(R.id.cet_equipment_working_lv);
-        workingAdapter = new EquipmentWorkingAdapter(getActivity(),getWorkingData());
+        workingAdapter = new EquipmentWorkingAdapter(getActivity(), getWorkingData());
         working_lv.setAdapter(workingAdapter);
         working_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -201,75 +208,115 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         });
     }
 
-    private List<EquipmentCollectModel> getCollectData(){
+    //台账信息查询数据库
+    private List<EquipmentCollectModel> getCollectData() {
         collectList.clear();
-        EquipmentCollectModel equipmentCollectModel = new EquipmentCollectModel();
-        equipmentCollectModel.setSle(true);
-        equipmentCollectModel.setAddress("武汉花山台区1");
-        equipmentCollectModel.setType("调压器");
-        equipmentCollectModel.setStatu(true);
-        collectList.add(equipmentCollectModel);
-        equipmentCollectModel = new EquipmentCollectModel();
-        equipmentCollectModel.setSle(false);
-        equipmentCollectModel.setAddress("武汉花山台区2");
-        equipmentCollectModel.setType("调压器");
-        equipmentCollectModel.setStatu(true);
-        collectList.add(equipmentCollectModel);
-        equipmentCollectModel = new EquipmentCollectModel();
-        equipmentCollectModel.setSle(false);
-        equipmentCollectModel.setAddress("武汉花山台区3");
-        equipmentCollectModel.setType("调压器");
-        equipmentCollectModel.setStatu(true);
-        collectList.add(equipmentCollectModel);
-        equipmentCollectModel = new EquipmentCollectModel();
-        equipmentCollectModel.setSle(false);
-        equipmentCollectModel.setAddress("武汉花山台区4");
-        equipmentCollectModel.setType("调压器");
-        equipmentCollectModel.setStatu(true);
-        collectList.add(equipmentCollectModel);
-        equipmentCollectModel = new EquipmentCollectModel();
-        equipmentCollectModel.setSle(false);
-        equipmentCollectModel.setAddress("武汉花山台区5");
-        equipmentCollectModel.setType("调压器");
-        equipmentCollectModel.setStatu(false);
-        collectList.add(equipmentCollectModel);
-        return collectList;
+        collects.clear();
+        collectList = SQLhelper_Device.Instance(getActivity()).queryDeviceList(); //参数如何传递
+//            Log.d("guol","devicesList.size:"+collectList.size());//为何只有一条数据？
+        for (int i = 0; i < collectList.size(); i++) {
+            EquipmentCollectModel equipmentCollectModel = new EquipmentCollectModel();
+            equipmentCollectModel.setSle(false);
+            equipmentCollectModel.setAddress(collectList.get(i).getInstallAddress());
+            equipmentCollectModel.setType("调压器");//需要确认对应关系?
+            if (collectList.get(i).getState()) {
+                equipmentCollectModel.setStatu(true);
+            } else {
+                equipmentCollectModel.setStatu(false);
+            }
+            collects.add(equipmentCollectModel);
+        }
+        return collects;
     }
 
-    private List<EquipmentWorkingModel> getWorkingData(){
-        workingList.clear();
-        EquipmentWorkingModel equipmentWorkingModel = new EquipmentWorkingModel();
-        equipmentWorkingModel.setSle(true);
-        equipmentWorkingModel.setAddress("武汉花山台区1");
-        equipmentWorkingModel.setType("调压器");
-        equipmentWorkingModel.setStatu(true);
-        workingList.add(equipmentWorkingModel);
-        equipmentWorkingModel = new EquipmentWorkingModel();
-        equipmentWorkingModel.setSle(false);
-        equipmentWorkingModel.setAddress("武汉花山台区2");
-        equipmentWorkingModel.setType("调压器");
-        equipmentWorkingModel.setStatu(true);
-        workingList.add(equipmentWorkingModel);
-        equipmentWorkingModel = new EquipmentWorkingModel();
-        equipmentWorkingModel.setSle(false);
-        equipmentWorkingModel.setAddress("武汉花山台区3");
-        equipmentWorkingModel.setType("调压器");
-        equipmentWorkingModel.setStatu(true);
-        workingList.add(equipmentWorkingModel);
-        equipmentWorkingModel = new EquipmentWorkingModel();
-        equipmentWorkingModel.setSle(false);
-        equipmentWorkingModel.setAddress("武汉花山台区4");
-        equipmentWorkingModel.setType("调压器");
-        equipmentWorkingModel.setStatu(true);
-        workingList.add(equipmentWorkingModel);
-        equipmentWorkingModel = new EquipmentWorkingModel();
-        equipmentWorkingModel.setSle(false);
-        equipmentWorkingModel.setAddress("武汉花山台区5");
-        equipmentWorkingModel.setType("调压器");
-        equipmentWorkingModel.setStatu(false);
-        workingList.add(equipmentWorkingModel);
-        return workingList;
+    //工况信息查询
+    private List<EquipmentWorkingModel> getWorkingData() {
+        works.clear();
+        collects.clear();
+        collectList = SQLhelper_Device.Instance(getActivity()).queryDeviceList(); //参数如何传递
+//            Log.d("guol","devicesList.size:"+collectList.size());//为何只有一条数据？
+        for (int i = 0; i < collectList.size(); i++) {
+            EquipmentWorkingModel equipmentWorkingModel = new EquipmentWorkingModel();
+            equipmentWorkingModel.setSle(false); //默认设置为不勾选
+            equipmentWorkingModel.setAddress(collectList.get(i).getInstallAddress());
+            equipmentWorkingModel.setType("调压器");//需要确认对应关系？
+            if (collectList.get(i).getState()) {
+                equipmentWorkingModel.setStatu(true);
+            } else {
+                equipmentWorkingModel.setStatu(false);
+            }
+            works.add(equipmentWorkingModel);
+        }
+        return works;
     }
+
+//        EquipmentCollectModel equipmentCollectModel = new EquipmentCollectModel();
+//        equipmentCollectModel.setSle(true);
+//        equipmentCollectModel.setAddress("武汉花山台区1");
+//        equipmentCollectModel.setType("调压器");
+//        equipmentCollectModel.setStatu(true);
+//        collectList.add(equipmentCollectModel);
+//        equipmentCollectModel = new EquipmentCollectModel();
+//        equipmentCollectModel.setSle(false);
+//        equipmentCollectModel.setAddress("武汉花山台区2");
+//        equipmentCollectModel.setType("调压器");
+//        equipmentCollectModel.setStatu(true);
+//        collectList.add(equipmentCollectModel);
+//        equipmentCollectModel = new EquipmentCollectModel();
+//        equipmentCollectModel.setSle(false);
+//        equipmentCollectModel.setAddress("武汉花山台区3");
+//        equipmentCollectModel.setType("调压器");
+//        equipmentCollectModel.setStatu(true);
+//        collectList.add(equipmentCollectModel);
+//        equipmentCollectModel = new EquipmentCollectModel();
+//        equipmentCollectModel.setSle(false);
+//        equipmentCollectModel.setAddress("武汉花山台区4");
+//        equipmentCollectModel.setType("调压器");
+//        equipmentCollectModel.setStatu(true);
+//        collectList.add(equipmentCollectModel);
+//        equipmentCollectModel = new EquipmentCollectModel();
+//        equipmentCollectModel.setSle(false);
+//        equipmentCollectModel.setAddress("武汉花山台区5");
+//        equipmentCollectModel.setType("调压器");
+//        equipmentCollectModel.setStatu(false);
+//        collectList.add(equipmentCollectModel);
+//        return collectList;
+
+
+
+//        workingList.clear();
+//        EquipmentWorkingModel equipmentWorkingModel = new EquipmentWorkingModel();
+//        equipmentWorkingModel.setSle(true);
+//        equipmentWorkingModel.setAddress("武汉花山台区1");
+//        equipmentWorkingModel.setType("调压器");
+//        equipmentWorkingModel.setStatu(true);
+//        workingList.add(equipmentWorkingModel);
+//        equipmentWorkingModel = new EquipmentWorkingModel();
+//        equipmentWorkingModel.setSle(false);
+//        equipmentWorkingModel.setAddress("武汉花山台区2");
+//        equipmentWorkingModel.setType("调压器");
+//        equipmentWorkingModel.setStatu(true);
+//        workingList.add(equipmentWorkingModel);
+//        equipmentWorkingModel = new EquipmentWorkingModel();
+//        equipmentWorkingModel.setSle(false);
+//        equipmentWorkingModel.setAddress("武汉花山台区3");
+//        equipmentWorkingModel.setType("调压器");
+//        equipmentWorkingModel.setStatu(true);
+//        workingList.add(equipmentWorkingModel);
+//        equipmentWorkingModel = new EquipmentWorkingModel();
+//        equipmentWorkingModel.setSle(false);
+//        equipmentWorkingModel.setAddress("武汉花山台区4");
+//        equipmentWorkingModel.setType("调压器");
+//        equipmentWorkingModel.setStatu(true);
+//        workingList.add(equipmentWorkingModel);
+//        equipmentWorkingModel = new EquipmentWorkingModel();
+//        equipmentWorkingModel.setSle(false);
+//        equipmentWorkingModel.setAddress("武汉花山台区5");
+//        equipmentWorkingModel.setType("调压器");
+//        equipmentWorkingModel.setStatu(false);
+//        workingList.add(equipmentWorkingModel);
+//        return workingList;
+
 
     @Override
     public void onClick(View v) {
@@ -297,7 +344,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     }
 
     private void deleteSelectedData(){
-        List<EquipmentCollectModel> stayList = new ArrayList<>();
+        List<DataBean> stayList = new ArrayList<>();
         for(int i = 0;i<collectList.size();i++){
             if(!collectList.get(i).isSle()){
                 stayList.add(collectList.get(i));

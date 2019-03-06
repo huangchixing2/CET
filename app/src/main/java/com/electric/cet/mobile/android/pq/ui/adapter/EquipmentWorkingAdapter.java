@@ -9,8 +9,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.model.EquipmentWorkingModel;
+import com.electric.cet.mobile.android.pq.ui.fragments.EquipmentFragment;
 
 import java.util.List;
 
@@ -21,13 +23,18 @@ import java.util.List;
 public class EquipmentWorkingAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
+//    private List<DataBean> list = new ArrayList<>();
     private List<EquipmentWorkingModel> list;
-
     public EquipmentWorkingAdapter(Context context, List<EquipmentWorkingModel> list) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.list = list;
     }
+
+    public EquipmentWorkingAdapter(EquipmentFragment equipmentFragment, List<DataBean> workingData) {
+
+    }
+
     @Override
     public int getCount() {
         return list.size();
@@ -57,13 +64,14 @@ public class EquipmentWorkingAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+//        是否被选中
         if(list.get(position).isSle()){
             holder.cb.setChecked(true);
         }else{
             holder.cb.setChecked(false);
         }
         holder.address.setText(list.get(position).getAddress());
-        holder.type.setText(list.get(position).getType());
+        holder.type.setText(list.get(position).getType());  //此字段服务器未提供
         if(list.get(position).isStatu()){
             holder.statu.setImageResource(R.mipmap.equipment_online);
         }else{
