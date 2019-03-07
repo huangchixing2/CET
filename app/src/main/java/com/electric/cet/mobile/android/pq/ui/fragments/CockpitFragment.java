@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.Bean.DeviceBean;
+import com.electric.cet.mobile.android.pq.Bean.OptionBean;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.model.CockpitGridViewItem;
@@ -44,7 +45,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout dysfunction_rl;
     private RelativeLayout power_rl;
     public static String url_deviceInfo = "http://192.168.2.102/LowLineSys/device/data/all?token=123";
-    public static String url_option = "http://localhost/LowLineSys/device/data/options?token=123";
+    public static String url_option = "http://192.168.2.102/LowLineSys/device/data/options?token=123";
     private String json = null;
 
     private TextView install_tv;
@@ -80,8 +81,8 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cockpit, container, false);
         initView(view);
+        initAllData();
         initTreeData();
-        initData();
 
         return view;
     }
@@ -125,7 +126,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     /**
      * 显示数据
      */
-    private void initData() {
+    private void initAllData() {
 //        GetAsyncTaskData getAsyncTaskData = new GetAsyncTaskData();
 //        getAsyncTaskData.execute();
 
@@ -172,18 +173,15 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 }
             }
         });
-
-
     }
-
-    //无法调通？
+    //无法调通？ ip问题导致
     public void initTreeData() {
         //获取tree信息的请求
         OkHttpClient client_option = new OkHttpClient();
 //        RequestBody formBody = new FormBody.Builder().add("Token", "123").build();
-        final Request request_option = new Request.Builder().url(url_option).get().build();
+        Request request = new Request.Builder().url(url_option).get().build();
 //        doGET(url_deviceInfo, request);
-        client_option.newCall(request_option).enqueue(new Callback() {
+        client_option.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 // 提示错误信息
@@ -195,13 +193,22 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 final String str_tree = response.body().string();
                 System.out.println("cockpit tree 打印" + str_tree);
                 Log.d("cockpittree", str_tree );
+                //使用gson解析json数据
+                //new一个Gson对象
+                Gson gson = new Gson();
+                //将json字符串转为dataBean对象
+                OptionBean optionBean = gson.fromJson(str_tree, OptionBean.class);
+                Log.d("name","");
+
+                //存入数据库的另一个表
+
             }
         });
 
 
 
-        //存入数据库的另一个表
-        System.out.println("cock initdata查詢成功：");
+
+
 
     }
 
