@@ -43,7 +43,8 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout sim_rl;
     private RelativeLayout dysfunction_rl;
     private RelativeLayout power_rl;
-    public static String url_deviceInfo = "http://192.168.2.107/LowLineSys/device/data/all?token=123";
+    public static String url_deviceInfo = "http://192.168.2.102/LowLineSys/device/data/all?token=123";
+    public static String url_option = "http://localhost/LowLineSys/device/data/options?token=123";
     private String json = null;
 
     private TextView install_tv;
@@ -79,7 +80,9 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cockpit, container, false);
         initView(view);
+        initTreeData();
         initData();
+
         return view;
     }
 
@@ -134,6 +137,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onFailure(Call call, IOException e) {
                 // 提示错误信息
+                Log.d("allinfo", "allinfo请求失败");
             }
 
             @Override
@@ -141,7 +145,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 try {
                     final String str = response.body().string();
                     json = str;
-                    System.out.println("cockpit打印" + json);
+                    System.out.println("cockpit allinfo打印" + json);
                     System.out.println("---------------test---------");
                     //使用gson解析json数据
                     //new一个Gson对象
@@ -169,7 +173,36 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
             }
         });
 
+
+    }
+
+    //无法调通？
+    public void initTreeData() {
+        //获取tree信息的请求
+        OkHttpClient client_option = new OkHttpClient();
+//        RequestBody formBody = new FormBody.Builder().add("Token", "123").build();
+        final Request request_option = new Request.Builder().url(url_option).get().build();
+//        doGET(url_deviceInfo, request);
+        client_option.newCall(request_option).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // 提示错误信息
+                Log.d("optioninfo", "optioninfo请求失败");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String str_tree = response.body().string();
+                System.out.println("cockpit tree 打印" + str_tree);
+                Log.d("cockpittree", str_tree );
+            }
+        });
+
+
+
+        //存入数据库的另一个表
         System.out.println("cock initdata查詢成功：");
+
     }
 
 

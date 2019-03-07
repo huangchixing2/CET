@@ -78,7 +78,6 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_map_view);
-
         initView();
         initData();
     }
@@ -282,6 +281,7 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent();
         Log.i("devicesId",devicesList.get(position).getDeviceId()+"mapview");
+        //使用SharedPreferences存储数据
         SharedPreferences sp = getSharedPreferences("data",0);
         sp.edit().putLong("deviceId",devicesList.get(position).getDeviceId()).commit();
         setResult(1002,intent);

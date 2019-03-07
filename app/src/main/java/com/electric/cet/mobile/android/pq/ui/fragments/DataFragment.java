@@ -100,7 +100,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 
     //    String url_realTime = "http://192.168.2.104/LowLineSys/device/2/data/realtime";
 //    String url_realTime = "http://192.168.2.104/LowLineSys/device/2/data/realtime";
-    String url_before = "http://192.168.2.107/LowLineSys/device/";
+    String url_before = "http://192.168.2.102/LowLineSys/device/";
     String url_after = "/data/realtime";
 //    String url_trend = "http://192.168.2.104/LowLineSys/device/3/data/trend/2019-02-22/2019-02-28";
     String url_afterTrend = "/data/trend/";
@@ -146,6 +146,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                 case 1002:
                     countRB.setChecked(true);
                     Log.i("devicesId",(int)getActivity().getSharedPreferences("data",0).getLong("deviceId",-1l)+"datahandler");
+                    //还原出存储的数据并显示在ui
                     refreshCountData( (int)getActivity().getSharedPreferences("data",0).getLong("deviceId",-1l));
                     break;
                 default:

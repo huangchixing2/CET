@@ -26,7 +26,7 @@ public interface SQLConfig {
 	public static final String MANUFACTURE = "Manufacture";
 	public static final String MODEL = "Model";
 	public static final String PHASETYPEID = "PhaseTypeId";
-	public static final String CAPACITY = "PhaseTypeId";
+	public static final String CAPACITY = "Capacity";
 	public static final String ISCIRCUITNORMAL = "IsCircuitNormal";
 	public static final String INSTALLADDRESS = "InstallAddress";
 	public static final String DEVICETYPEID = "DeviceTypeId";

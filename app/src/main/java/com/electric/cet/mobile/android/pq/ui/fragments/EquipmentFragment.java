@@ -122,7 +122,6 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
 
 
 
-
     @Override
     public void onPageScrolled(int i, float v, int i1) {
         int location = Math.round(v * baseDistance) + i * baseDistance;
@@ -203,6 +202,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent  = new Intent();
                 intent.setClass(getActivity(),EquipmentDetailActivity.class);
+                intent.putExtra("data",collectList.get(position));
                 startActivity(intent);
             }
         });
@@ -210,6 +210,12 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
 
     //台账信息查询数据库
     private List<EquipmentCollectModel> getCollectData() {
+        /*
+        collects.clear();
+        collects = SQLhelper_Device.Instance(getActivity()).queryDeviceList(); //参数如何传递
+        return collects;
+         */
+
         collectList.clear();
         collects.clear();
         collectList = SQLhelper_Device.Instance(getActivity()).queryDeviceList(); //参数如何传递

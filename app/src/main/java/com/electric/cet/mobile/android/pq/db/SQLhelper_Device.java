@@ -88,6 +88,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             values.put(ISMANUFACTURENORMAL, deviceInfos.get(i).getManufactureNormal());
             values.put(LOCATION, deviceInfos.get(i).getLocation());
             db.insert("DeviceData", null, values);
+            Log.d("huangchixingsq",values + "");
         }
 
     }
@@ -176,7 +177,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             String isreactivecompensationnormal = cursor.getString(cursor.getColumnIndex(ISREACTIVECOMPENSATIONNORMAL));
             String manufacture = cursor.getString(cursor.getColumnIndex(MANUFACTURE));
             String model = cursor.getString(cursor.getColumnIndex(MODEL));
-            int phasetypeid = cursor.getInt(cursor.getColumnIndex(CAPACITY));
+            int phasetypeid = cursor.getInt(cursor.getColumnIndex(PHASETYPEID));
             int capacity = cursor.getInt(cursor.getColumnIndex(CAPACITY));
             String iscircuitnormal = cursor.getString(cursor.getColumnIndex(ISCIRCUITNORMAL));
             String installaddress = cursor.getString(cursor.getColumnIndex(INSTALLADDRESS));

@@ -54,6 +54,8 @@ public class EquipmentDetailActivity extends Activity {
         capacity = (TextView) findViewById(R.id.equipment_collect_detail_capacity_tv);
     }
 
+
+
     private void initData(){
         city.setText(dataBean.getCityId()+"");
         country.setText(dataBean.getCountyId() + "");
