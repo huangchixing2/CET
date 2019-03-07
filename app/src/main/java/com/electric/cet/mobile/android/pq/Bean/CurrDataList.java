@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 class CurrDataList implements Serializable {
     private String RecordTime;
-    private int Value;
+    private double Value;
 
     public String getRecordTime() {
         return RecordTime;
@@ -14,11 +14,11 @@ class CurrDataList implements Serializable {
         RecordTime = recordTime;
     }
 
-    public int getValue() {
+    public double getValue() {
         return Value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         Value = value;
     }
 }

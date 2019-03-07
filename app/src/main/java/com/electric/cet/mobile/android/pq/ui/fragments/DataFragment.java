@@ -99,28 +99,22 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     private DataBean dataBean;
     private DeviceBean deviceBean;
 
-    //    String url_realTime = "http://192.168.2.104/LowLineSys/device/2/data/realtime";
-//    String url_realTime = "http://192.168.2.104/LowLineSys/device/2/data/realtime";
+
     String url_before = "http://192.168.2.102/LowLineSys/device/";
     String url_after = "/data/realtime";
-//    String url_trend = "http://192.168.2.104/LowLineSys/device/3/data/trend/2019-02-22/2019-02-28";
     String url_afterTrend = "/data/trend/";
 
-
     private int baseDistance;
-
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-    //
+                    //实时数据现在在界面
                     RealTimeBean realTimeBean = (RealTimeBean)msg.obj;
                     Log.d("huangchixing",realTimeBean.getData().getAVoltageInput()+ "");
                     Log.d("huangchixing", realTimeBean.getData().getAVoltageOutput()+ "");
-
-
                     cet_realtime_input_avoltage.setText("A相电压：" + realTimeBean.getData().getAVoltageInput() + "");
                     cet_realtime_out_avoltage.setText("A相电压：" + realTimeBean.getData().getAVoltageOutput() + "");
                     cet_realtime_input_bvoltage.setText("B相电压：" + realTimeBean.getData().getBVoltageInput() + "");
@@ -147,7 +141,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                 case 1002:
                     countRB.setChecked(true);
                     Log.i("devicesId",(int)getActivity().getSharedPreferences("data",0).getLong("deviceId",-1l)+"datahandler");
-                    //还原出存储的数据并显示在ui
+                    //还原出统计数据存储的数据并显示在ui
                     refreshCountData( (int)getActivity().getSharedPreferences("data",0).getLong("deviceId",-1l));
                     break;
                 default:
@@ -252,7 +246,7 @@ private void refreshCountData(int deviceId){
 //    }
 
 
-    //请求趋势数据
+    //Get方式请求趋势数据
     public void initTrendData() {
         OkHttpClient client = new OkHttpClient();
         String DeviceId = null;
@@ -282,6 +276,7 @@ private void refreshCountData(int deviceId){
                 Gson gson = new Gson();
                 //将json字符串转为dataBean对象
                 TrendBean trendBean = gson.fromJson(jsonData, TrendBean.class);
+//                Log.d("huangchixing55",trendBean)
 
 
             }

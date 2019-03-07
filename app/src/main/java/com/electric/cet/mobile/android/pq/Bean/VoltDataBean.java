@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 public class VoltDataBean implements Serializable {
-    private int PhaseType;  //对象
+    private double PhaseType;  //对象
     private List<VoteDateListBean> DataList; //集合
 
-    public int getPhaseType() {
+    public double getPhaseType() {
         return PhaseType;
     }
 
-    public void setPhaseType(int phaseType) {
+    public void setPhaseType(double phaseType) {
         PhaseType = phaseType;
     }
 

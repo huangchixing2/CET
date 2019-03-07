@@ -4,16 +4,17 @@ import java.io.Serializable;
 import java.util.List;
 
 class CurrDataBean implements Serializable {
-    private int PhaseType;
+    private double PhaseType;
     private List<CurrDataList> DataList;
 
-    public int getPhaseType() {
+    public double getPhaseType() {
         return PhaseType;
     }
 
-    public void setPhaseType(int phaseType) {
+    public void setPhaseType(double phaseType) {
         PhaseType = phaseType;
     }
+
 
     public List<CurrDataList> getDataList() {
         return DataList;

@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 class PowerDataBean implements Serializable {
-    private int PhaseType;
+    private double PhaseType;
     private List<PowerDataListBean> DataList;
 
-    public int getPhaseType() {
+    public double getPhaseType() {
         return PhaseType;
     }
 
-    public void setPhaseType(int phaseType) {
+    public void setPhaseType(double phaseType) {
         PhaseType = phaseType;
     }
 
