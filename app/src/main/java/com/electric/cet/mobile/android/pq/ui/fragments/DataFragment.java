@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.Bean.DeviceBean;
 import com.electric.cet.mobile.android.pq.Bean.RealTimeBean;
+import com.electric.cet.mobile.android.pq.Bean.TrendBean;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.model.DataTrend;
@@ -278,6 +279,9 @@ private void refreshCountData(int deviceId){
                 Log.d("DataFrament", "趋势数据打印成功");
                 //使用gson解析json数据
                 //new一个Gson对象
+                Gson gson = new Gson();
+                //将json字符串转为dataBean对象
+                TrendBean trendBean = gson.fromJson(jsonData, TrendBean.class);
 
 
             }
@@ -311,7 +315,7 @@ private void refreshCountData(int deviceId){
                     String jsonData = str;
                     Log.d("DataFrament", "实时数据请求打印" + jsonData);
                     Log.d("DataFrament", "实时数据打印成功");
-//                //使用gson解析json数据
+               //使用gson解析json数据
                     Gson gson = new Gson();
                     //将json字符串转为dataBean对象
                     RealTimeBean realTimeBean = gson.fromJson(jsonData, RealTimeBean.class);
