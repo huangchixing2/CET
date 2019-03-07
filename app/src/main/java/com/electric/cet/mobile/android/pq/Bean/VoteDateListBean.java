@@ -2,7 +2,7 @@ package com.electric.cet.mobile.android.pq.Bean;
 
 import java.io.Serializable;
 
-class VoteDateListBean implements Serializable {
+public class VoteDateListBean implements Serializable {
     private String RecordTime;
     private double Value;
 

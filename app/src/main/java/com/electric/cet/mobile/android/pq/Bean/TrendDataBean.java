@@ -6,9 +6,9 @@ import java.util.List;
 public class TrendDataBean implements Serializable {
     private int DeviceId;  //对象
     private String DeviceName;  //对象
-    List<VoltDataBean> VoltData;  //集合
-    List<CurrDataBean> CurrData; //集合
-    List<PowerDataBean> PowerData;  //集合
+    private List<VoltDataBean> VoltData;
+    private List<CurrDataBean> CurrData;
+    private List<PowerDataBean> PowerData;
 
     public int getDeviceId() {
         return DeviceId;

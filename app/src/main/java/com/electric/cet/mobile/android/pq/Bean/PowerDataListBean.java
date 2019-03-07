@@ -2,7 +2,7 @@ package com.electric.cet.mobile.android.pq.Bean;
 
 import java.io.Serializable;
 
-class PowerDataListBean implements Serializable {
+public class PowerDataListBean implements Serializable {
     private String RecordTime;
     private double Value;
 

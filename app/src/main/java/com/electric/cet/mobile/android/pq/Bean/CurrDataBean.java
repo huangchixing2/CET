@@ -3,7 +3,7 @@ package com.electric.cet.mobile.android.pq.Bean;
 import java.io.Serializable;
 import java.util.List;
 
-class CurrDataBean implements Serializable {
+public class CurrDataBean implements Serializable {
     private double PhaseType;
     private List<CurrDataList> DataList;
 
@@ -14,7 +14,6 @@ class CurrDataBean implements Serializable {
     public void setPhaseType(double phaseType) {
         PhaseType = phaseType;
     }
-
 
     public List<CurrDataList> getDataList() {
         return DataList;

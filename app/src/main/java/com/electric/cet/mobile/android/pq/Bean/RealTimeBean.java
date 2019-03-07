@@ -1,6 +1,8 @@
 package com.electric.cet.mobile.android.pq.Bean;
 
-public class RealTimeBean {
+import java.io.Serializable;
+
+public class RealTimeBean implements Serializable {
     private int code;
     private String msg;
     private RealTimeData data;

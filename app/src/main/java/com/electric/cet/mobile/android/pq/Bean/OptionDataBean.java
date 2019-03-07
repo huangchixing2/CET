@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.List;
 
 public class OptionDataBean implements Serializable {
-    private List<CountiesDataBean> Counties;
+    private List<CitiesDataBean> Cities;
     private List<DeviceTypeDataBean> DeviceType;
     private List<SimCardStateDataBean> SIMCardState;
     private List<PhaseTypeDataBean> PhaseType;
 
-    public List<CountiesDataBean> getCounties() {
-        return Counties;
+    public List<CitiesDataBean> getCities() {
+        return Cities;
     }
 
-    public void setCounties(List<CountiesDataBean> counties) {
-        Counties = counties;
+    public void setCities(List<CitiesDataBean> cities) {
+        Cities = cities;
     }
 
     public List<DeviceTypeDataBean> getDeviceType() {

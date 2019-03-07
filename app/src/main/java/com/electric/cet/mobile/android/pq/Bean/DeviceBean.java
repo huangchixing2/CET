@@ -1,8 +1,9 @@
 package com.electric.cet.mobile.android.pq.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class DeviceBean {
+public class DeviceBean implements Serializable {
     private int code;
     private  String msg;
     private List <DataBean> data;

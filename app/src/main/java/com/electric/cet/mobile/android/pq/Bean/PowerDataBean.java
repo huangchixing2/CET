@@ -3,7 +3,7 @@ package com.electric.cet.mobile.android.pq.Bean;
 import java.io.Serializable;
 import java.util.List;
 
-class PowerDataBean implements Serializable {
+public class PowerDataBean implements Serializable {
     private double PhaseType;
     private List<PowerDataListBean> DataList;
 

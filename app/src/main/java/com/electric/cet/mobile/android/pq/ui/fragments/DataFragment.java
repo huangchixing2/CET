@@ -276,8 +276,9 @@ private void refreshCountData(int deviceId){
                 Gson gson = new Gson();
                 //将json字符串转为dataBean对象
                 TrendBean trendBean = gson.fromJson(jsonData, TrendBean.class);
-//                Log.d("huangchixing55",trendBean)
-
+                Log.d("huangchixing22",trendBean.getData().getDeviceId() + "");
+                Log.d("huangchixing22",trendBean.getData().getVoltData().get(1).getPhaseType() + "");
+                Log.d("huangchixing22", trendBean.getData().getCurrData().get(0).getDataList().get(0).getRecordTime());
 
             }
         });

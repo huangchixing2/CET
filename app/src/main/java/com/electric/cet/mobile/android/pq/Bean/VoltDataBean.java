@@ -5,7 +5,7 @@ import java.util.List;
 
 public class VoltDataBean implements Serializable {
     private double PhaseType;  //对象
-    private List<VoteDateListBean> DataList; //集合
+    private List<VoteDateListBean> DataList;
 
     public double getPhaseType() {
         return PhaseType;

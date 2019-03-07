@@ -1,6 +1,8 @@
 package com.electric.cet.mobile.android.pq.Bean;
 
-public class RealTimeData {
+import java.io.Serializable;
+
+public class RealTimeData implements Serializable {
     private int DeviceId;
     private String DeviceName;
     private float AVoltageInput;

@@ -1,6 +1,8 @@
 package com.electric.cet.mobile.android.pq.Bean;
 
-public class StatisticsBean {
+import java.io.Serializable;
+
+public class StatisticsBean implements Serializable {
     private int code;
     private String msg;
     StatisticsDataBean data;

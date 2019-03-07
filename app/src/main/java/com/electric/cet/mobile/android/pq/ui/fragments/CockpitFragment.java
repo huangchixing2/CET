@@ -174,9 +174,8 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
             }
         });
     }
-    //无法调通？ ip问题导致
+   //获取tree信息的请求
     public void initTreeData() {
-        //获取tree信息的请求
         OkHttpClient client_option = new OkHttpClient();
 //        RequestBody formBody = new FormBody.Builder().add("Token", "123").build();
         Request request = new Request.Builder().url(url_option).get().build();
@@ -198,7 +197,11 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 Gson gson = new Gson();
                 //将json字符串转为dataBean对象
                 OptionBean optionBean = gson.fromJson(str_tree, OptionBean.class);
-                Log.d("name","");
+                Log.d("huangchixingcc",optionBean.getData().getDeviceType().get(0).getName());
+                Log.d("huangchixingcc",optionBean.getData().getPhaseType().get(0).getName());
+                Log.d("huangchixing2",optionBean.getData().getCities().get(0).getName());
+                Log.d("huangchixing2",optionBean.getData().getCities().get(1).getName());
+
 
                 //存入数据库的另一个表
 

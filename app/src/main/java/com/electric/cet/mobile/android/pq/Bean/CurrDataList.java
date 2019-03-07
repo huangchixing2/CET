@@ -2,7 +2,7 @@ package com.electric.cet.mobile.android.pq.Bean;
 
 import java.io.Serializable;
 
-class CurrDataList implements Serializable {
+public class CurrDataList implements Serializable {
     private String RecordTime;
     private double Value;
 
