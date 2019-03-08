@@ -3,6 +3,7 @@ package com.electric.cet.mobile.android.pq.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,15 @@ import android.widget.TextView;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.ui.activity.AccountManageActivity;
 import com.electric.cet.mobile.android.pq.ui.activity.MyAboutActivity;
+import com.electric.cet.mobile.android.pq.utils.Constans;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 //我的
 public class MyFragment extends BaseFragment implements View.OnClickListener {
@@ -44,6 +54,25 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
+    //退出登录请求GET
+    public void logOut(){
+        OkHttpClient client_option = new OkHttpClient();
+        Request request = new Request.Builder().url(Constans.URL_LOGINOUT).get().build();
+        client_option.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("logout", "退出登录请求失败");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                Log.d("logout", "退出登录成功");
+            }
+        });
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -58,6 +87,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(abountIntent);
                 break;
             case R.id.cet_my_login_out:
+                logOut();
                 break;
             default:
                 break;

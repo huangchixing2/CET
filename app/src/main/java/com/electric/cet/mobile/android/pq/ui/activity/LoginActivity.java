@@ -2,6 +2,7 @@ package com.electric.cet.mobile.android.pq.ui.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import com.electric.cet.mobile.android.pq.utils.OkHttpUtils;
 import java.io.InputStream;
 
 import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
@@ -34,7 +36,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         initView();
     }
 
-    private void initView(){
+    private void initView() {
         login_bt = (Button) findViewById(R.id.login_login);
         username_et = (EditText) findViewById(R.id.login_username);
         psw_et = (EditText) findViewById(R.id.login_psw);
@@ -42,14 +44,48 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
 
+//    public void validata(){
+//
+//        if(TextUtils.isEmpty(username_et.getText())){
+//                    Toast.makeText(LoginActivity.this, R.string.phone_num_can_not_be_empty, Toast.LENGTH_LONG).show();
+//                    return ;
+//                }
+//        if (TextUtils.isEmpty(psw_et.getText())) {
+//                    Toast.makeText(LoginActivity.this, R.string.passwd_can_not_be_empty, Toast.LENGTH_LONG).show();
+//                    return ;
+//                }
+//
+//    }
+
+    //用户登录
+    public void login() {
+        final String UserName = username_et.getText().toString().trim();
+        final String passWd = psw_et.getText().toString().trim();
+        final String EncryptPwd = MD5Utils.getDigest(passWd);
+        System.out.println("加密后的密码为 " + EncryptPwd);
+//        //执行用户名密码校验
+        if (!TextUtils.isEmpty(UserName) && !TextUtils.isEmpty(passWd)){
+            OkHttpClient client = new OkHttpClient();
+            RequestBody formBody = new FormBody.Builder().add("UserName", UserName).add("EncryptPwd ", EncryptPwd).build();
+
+            final Request request = new Request.Builder().url(Constans.URL_LOGIN).post(formBody).build();
+            OkHttpUtils.postLogin(Constans.URL_LOGIN, request);
+        }
+
+
+
+//               postRequest(username,EncryptPwd );
+
+
+    }
+
     /**
-     * @param v
-     *  add login logic
-     *  author huangchixing
+     * @param v add login logic
+     *          author huangchixing
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.login_login:
 //                if(TextUtils.isEmpty(username_et.getText())){
 //                    Toast.makeText(LoginActivity.this, R.string.phone_num_can_not_be_empty, Toast.LENGTH_LONG).show();
@@ -61,22 +97,24 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //                }
 
 //                login(username_et.getText().toString(), psw_et.getText().toString());
-
-                final String UserName = username_et .getText().toString().trim();
-                final String EncryptPwd  = MD5Utils.getDigest(psw_et.getText().toString());
-                System.out.println("加密后的密码为 " + EncryptPwd );
-
-//               postRequest(username,EncryptPwd );
-                 RequestBody formBody = new FormBody.Builder()
-                .add("UserName",UserName)
-                .add("EncryptPwd ",EncryptPwd )
-                .build();
-
-                final Request request = new Request.Builder()
-                        .url(Constans.URL_LOGIN)
-                        .post(formBody)
-                        .build();
-                OkHttpUtils.postLogin(Constans.URL_LOGIN,request);
+                //执行用户名密码校验
+//                validata();
+                login();  //处理登录事件
+//                final String UserName = username_et .getText().toString().trim();
+//                final String EncryptPwd  = MD5Utils.getDigest(psw_et.getText().toString());
+//                System.out.println("加密后的密码为 " + EncryptPwd );
+//
+////               postRequest(username,EncryptPwd );
+//                 RequestBody formBody = new FormBody.Builder()
+//                .add("UserName",UserName)
+//                .add("EncryptPwd ",EncryptPwd )
+//                .build();
+//
+//                final Request request = new Request.Builder()
+//                        .url(Constans.URL_LOGIN)
+//                        .post(formBody)
+//                        .build();
+//                OkHttpUtils.postLogin(Constans.URL_LOGIN,request);
 
 //                Intent intent = new Intent();
 //                intent.setClass(this,MainActivity.class);
@@ -92,8 +130,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //              intent.setClass(LoginActivity.this, MainActivity.class);
                 finish();
                 break;
-             default:
-                 break;
+            default:
+                break;
         }
     }
 
@@ -144,11 +182,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //        }).start();
 
 
-
-
-
-
-
 //    public void login(String UserName, String EncryptPwd) {
 //        if(TextUtils.isEmpty(username_et.getText())){
 //            Toast.makeText(LoginActivity.this, R.string.phone_num_can_not_be_empty, Toast.LENGTH_LONG).show();
@@ -164,16 +197,15 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
 
     /**
- * Created by huangchixing
- * use
- */
-    public String getToken(String userName, String pwd, String token)
-    {
+     * Created by huangchixing
+     * use
+     */
+    public String getToken(String userName, String pwd, String token) {
         //自定义方法
         return token;
     }
-    public String getAuth(InputStream is, String token)
-    {
+
+    public String getAuth(InputStream is, String token) {
         String result = null;
         System.out.print("huangchixing");
         System.out.print("huangchixing2");

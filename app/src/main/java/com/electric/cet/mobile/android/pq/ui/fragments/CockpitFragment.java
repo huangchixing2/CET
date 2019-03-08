@@ -204,7 +204,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 //存入数据库,每次清除上一次数据
 //                SQLhelper_Device.Instance(getActivity()).clearOptionInfo();
                 //网络请求到的数据写入数据库
-//                SQLhelper_Device.Instance(getActivity()).insertOptionInfo(optionBean.getData().); //如何传参？
+                SQLhelper_Device.Instance(getActivity()).insertOptionInfo(optionBean); //如何传参？
 
 
                 //存入数据库的另一个表

@@ -102,30 +102,15 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
      *
      * @param
      */
-//    public static void insertOptionInfo(OptionBean optionBeans) {
-//        SQLiteDatabase db = instance.getWritableDatabase();
-//
-//        ContentValues values = new ContentValues();
-//
-//            values.put(CITIES, optionBeans.getData().getCities().);
-//            values.put(CITIES, optionBeans.getData().getCities().get(i).getName());
-//            values.put(COUNTIES, optionBeans.getData().getCities().get(i).getCounties().get(i).getName());
-//            values.put(COUNTIES, optionBeans.getData().getCities().get(i).getCounties().get(i).getID());
-//            values.put(POWERSUPPLY, optionBeans.getData().getCities().get(i).getCounties().get(i).getPowerSupply().get(0).getName());
-//            values.put(POWERSUPPLY, optionBeans.getData().getCities().get(i).getCounties().get(i).getPowerSupply().get(0).getID());
-//            values.put(DEVICETYPE, optionBeans.getData().getDeviceType().get(i).getName());
-//            values.put(DEVICETYPE, optionBeans.getData().getDeviceType().get(i).getID());
-//            values.put(SIMCARDSTATE, optionBeans.getData().getSIMCardState().get(i).getName());
-//            values.put(SIMCARDSTATE, optionBeans.getData().getSIMCardState().get(i).getID());
-//            values.put(PHASETYPE, optionBeans.getData().getPhaseType().get(i).getName());
-//            values.put(PHASETYPE, optionBeans.getData().getPhaseType().get(i).getID());
-//
-//
-//
-//
-//        db.insert("DeviceData", null, values);
-//        Log.d("huangchixingsq1", values + "");
-//    }
+    public static void insertOptionInfo(OptionBean optionBeans) {
+        SQLiteDatabase db = instance.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+
+        db.insert("DeviceData", null, values);
+        Log.d("huangchixingsq1", values + "");
+    }
 
 
 

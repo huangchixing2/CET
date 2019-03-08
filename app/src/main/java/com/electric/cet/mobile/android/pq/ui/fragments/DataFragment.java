@@ -329,7 +329,9 @@ private void refreshCountData(int deviceId){
                 }catch (IOException e1){
                     e1.printStackTrace();
                 }
-
+            }
+        });
+    }
 
 
 //                cet_realtime_input_avoltage.setText("A相电压：" + realTimeBean.getData().getAVoltageInput() + "");
@@ -352,9 +354,7 @@ private void refreshCountData(int deviceId){
 //                cet_realtime_out_cpower.setText("C相功率因数：" + realTimeBean.getData().getCPowerFactorOutput() + "");
 //                cet_realtime_voltage_adjust.setText("调压档位：" + realTimeBean.getData().getVoltageRegulate() + "");
 //                cet_realtime_nopower.setText("无功投入：" + realTimeBean.getData().getReactivePowerInput() + "");
-            }
-        });
-    }
+
 
     @Override
     public void onPageScrolled(int i, float v, int i1) {
