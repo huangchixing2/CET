@@ -9,8 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
+import com.electric.cet.mobile.android.pq.Bean.OptionBean;
 import com.electric.cet.mobile.android.pq.utils.Constans;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,9 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
     @Override
     public void onCreate(SQLiteDatabase db) {
 //        Log.i(TAG, "[CREATE_DEVICEDATA]:" + CREATE_DEVICEDATA);
-        db.execSQL(deviceData);
+        db.execSQL(deviceData); //创建所有信息表
+        db.execSQL(optionData); //创建可选信息表
+        Log.d("create","SUCCEED");
 //        Log.i(TAG, "[CREATE_REALTIMEDATA]:" + CREATE_REALTIMEDATA);
 //        db.execSQL(CREATE_REALTIMEDATA);
     }
@@ -93,11 +97,51 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
 
     }
 
+    /**
+     * 添加可选节点信息，可选节点信息如何添加？
+     *
+     * @param
+     */
+//    public static void insertOptionInfo(OptionBean optionBeans) {
+//        SQLiteDatabase db = instance.getWritableDatabase();
+//
+//        ContentValues values = new ContentValues();
+//
+//            values.put(CITIES, optionBeans.getData().getCities().);
+//            values.put(CITIES, optionBeans.getData().getCities().get(i).getName());
+//            values.put(COUNTIES, optionBeans.getData().getCities().get(i).getCounties().get(i).getName());
+//            values.put(COUNTIES, optionBeans.getData().getCities().get(i).getCounties().get(i).getID());
+//            values.put(POWERSUPPLY, optionBeans.getData().getCities().get(i).getCounties().get(i).getPowerSupply().get(0).getName());
+//            values.put(POWERSUPPLY, optionBeans.getData().getCities().get(i).getCounties().get(i).getPowerSupply().get(0).getID());
+//            values.put(DEVICETYPE, optionBeans.getData().getDeviceType().get(i).getName());
+//            values.put(DEVICETYPE, optionBeans.getData().getDeviceType().get(i).getID());
+//            values.put(SIMCARDSTATE, optionBeans.getData().getSIMCardState().get(i).getName());
+//            values.put(SIMCARDSTATE, optionBeans.getData().getSIMCardState().get(i).getID());
+//            values.put(PHASETYPE, optionBeans.getData().getPhaseType().get(i).getName());
+//            values.put(PHASETYPE, optionBeans.getData().getPhaseType().get(i).getID());
+//
+//
+//
+//
+//        db.insert("DeviceData", null, values);
+//        Log.d("huangchixingsq1", values + "");
+//    }
+
+
+
+//清除所有信息表格信息
     public static void clearAllUserInfo() {
         SQLiteDatabase db = instance.getWritableDatabase();
         db.delete("DeviceData", null, null);
 
     }
+//清除可选表格信息
+//    public static void clearOptionInfo() {
+//        SQLiteDatabase db = instance.getWritableDatabase();
+//        db.delete("OptionData", null, null);
+//
+//    }
+
 
     /**
      * 修改设备信息

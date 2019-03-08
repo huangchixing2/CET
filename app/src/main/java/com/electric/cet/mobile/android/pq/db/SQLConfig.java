@@ -2,39 +2,48 @@ package com.electric.cet.mobile.android.pq.db;
 
 public interface SQLConfig {
 
-	public static final String SQLNAME = "LowLineSys1.db";
+    public static final String SQLNAME = "LowLineSys1.db";
 //    public static final String CREATE_DEVICEDATA = "deviceInfo";
 
     public static final String USERCODE = "code";
 
-	public static final String DEVICEID = "DeviceId";
-	public static final String DEVICENAME = "DeviceName";
-	public static final String CITYID = "CityId";
-	public static final String COUNTYID = "CountyId";
-	public static final String POWERSUPPLYID = "PowerSupplyId";
-	public static final String ISINSTALLED = "IsInstalled";
-	public static final String ISONLINE = "IsOnline";
-	public static final String ISUSABLE = "IsUsable";
-	public static final String ISSIMCARDONLINE = "IsSIMCardOnline";
-	public static final String ISABNORMAL = "IsAbnormal";
-	public static final String ISPOWERFAILURE = "IsPowerFailure";
-	public static final String LONGITUDE = "Longitude";
-	public static final String LATITUDE = "Latitude";
-	public static final String ADJUSTTIME = "AdjustTime";
-	public static final String ISVOLTAGEREGULATENORMAL = "IsVoltageRegulateNormal";
-	public static final String ISREACTIVECOMPENSATIONNORMAL = "IsReactiveCompensationNormal";
-	public static final String MANUFACTURE = "Manufacture";
-	public static final String MODEL = "Model";
-	public static final String PHASETYPEID = "PhaseTypeId";
-	public static final String CAPACITY = "Capacity";
-	public static final String ISCIRCUITNORMAL = "IsCircuitNormal";
-	public static final String INSTALLADDRESS = "InstallAddress";
-	public static final String DEVICETYPEID = "DeviceTypeId";
-	public static final String STATE = "State";
-	public static final String CIRCUITID = "CircuitId";
-	public static final String COURTS = "Courts";
-	public static final String ISMANUFACTURENORMAL = "IsManufactureNormal";
-	public static final String LOCATION = "Location";
+    public static final String DEVICEID = "DeviceId";
+    public static final String DEVICENAME = "DeviceName";
+    public static final String CITYID = "CityId";
+    public static final String COUNTYID = "CountyId";
+    public static final String POWERSUPPLYID = "PowerSupplyId";
+    public static final String ISINSTALLED = "IsInstalled";
+    public static final String ISONLINE = "IsOnline";
+    public static final String ISUSABLE = "IsUsable";
+    public static final String ISSIMCARDONLINE = "IsSIMCardOnline";
+    public static final String ISABNORMAL = "IsAbnormal";
+    public static final String ISPOWERFAILURE = "IsPowerFailure";
+    public static final String LONGITUDE = "Longitude";
+    public static final String LATITUDE = "Latitude";
+    public static final String ADJUSTTIME = "AdjustTime";
+    public static final String ISVOLTAGEREGULATENORMAL = "IsVoltageRegulateNormal";
+    public static final String ISREACTIVECOMPENSATIONNORMAL = "IsReactiveCompensationNormal";
+    public static final String MANUFACTURE = "Manufacture";
+    public static final String MODEL = "Model";
+    public static final String PHASETYPEID = "PhaseTypeId";
+    public static final String CAPACITY = "Capacity";
+    public static final String ISCIRCUITNORMAL = "IsCircuitNormal";
+    public static final String INSTALLADDRESS = "InstallAddress";
+    public static final String DEVICETYPEID = "DeviceTypeId";
+    public static final String STATE = "State";
+    public static final String CIRCUITID = "CircuitId";
+    public static final String COURTS = "Courts";
+    public static final String ISMANUFACTURENORMAL = "IsManufactureNormal";
+    public static final String LOCATION = "Location";
+
+    //可选信息添加
+    public static final String CITIES = "Cities";
+    public static final String COUNTIES = "Counties";
+    public static final String POWERSUPPLY = "PowerSupply";
+    public static final String DEVICETYPE = "DeviceType";
+    public static final String SIMCARDSTATE = "SIMCardState";
+    public static final String PHASETYPE = "PhaseType";
+
 
 
     /**
@@ -107,11 +116,10 @@ public interface SQLConfig {
     public static final String deviceData = "create table DeviceData(id integer primary key autoincrement, DeviceId real, DeviceName text, CityId real, CountyId real, PowerSupplyId real, IsInstalled integer, IsOnline integer, IsUsable integer, IsSIMCardOnline integer, IsAbnormal integer, IsPowerFailure integer, Longitude real, Latitude real, AdjustTime real, IsVoltageRegulateNormal integer, IsReactiveCompensationNormal integer, Manufacture text, Model text, PhaseTypeId real, Capacity real, IsCircuitNormal integer, InstallAddress text, DeviceTypeId integer, State integer, CircuitId real, Courts text, IsManufactureNormal integer, Location text)";
 
 
-//    //创建设备的实时信息表
-//    public static final String CREATE_REALTIMEDATA = "create table RealTimeData(" + "id integer primary key autoincrement," + "DeviceId integer," + "DeviceName text," + "AVoltageInput real," + "BVoltageInput real," + "CVoltageInput real," + "ACurrentInput real," + "BCurrentInput real," + "CCurrentInput real," + "APowerFactorInput real," + "BBowerFactorInput real," + "CPowerFactorInput real," + "AVoltageOutput real," + "BVoltageOutput real," + "CVoltageOutput real," + "ACurrentOutput real," + "BCurrentOutput real," + "CCurrentOutput real," + "APowerFactorOutput real," + "BPowerFactorOutput real," + "CPowerFactorOutput real," + "VoltageRegulate real," + "ReactivePowerInput real, ";
+    //创建可选的节点树信息表
+    public static final String optionData = "create table OptionData(id integer primary key autoincrement,Cities text, Counties text, PowerSupply text, DeviceType text, SIMCardState text, PhaseType text)";
 
 
-	//统计数据可以直接查询
 
 
 }

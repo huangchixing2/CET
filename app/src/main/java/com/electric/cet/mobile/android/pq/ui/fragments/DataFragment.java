@@ -28,6 +28,7 @@ import com.electric.cet.mobile.android.pq.model.DataTrend;
 import com.electric.cet.mobile.android.pq.ui.adapter.BasePagerAdapter;
 import com.electric.cet.mobile.android.pq.ui.view.GraphicalUtils;
 import com.electric.cet.mobile.android.pq.ui.view.GraphicalView;
+import com.electric.cet.mobile.android.pq.utils.Constans;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -100,9 +101,9 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     private DeviceBean deviceBean;
 
 
-    String url_before = "http://192.168.2.102/LowLineSys/device/";
-    String url_after = "/data/realtime";
-    String url_afterTrend = "/data/trend/";
+//    String url_before = "http://192.168.2.102/LowLineSys/device/";
+//    String url_after = "/data/realtime";
+//    String url_afterTrend = "/data/trend/";
 
     private int baseDistance;
 
@@ -255,7 +256,7 @@ private void refreshCountData(int deviceId){
 //                .add("startTime", "2019-02-22")  //参数如何填入？
 ////        bdate_tv.getText().toString().trim().replace("/","-")
 //                .add("endTime", "2019-02-28").build();
-        String url_trend = url_before + dataBean.getDeviceId() + url_afterTrend + bdate_tv.getText().toString().trim().replace("/", "-") + "/" + adate_tv.getText().toString().trim().replace("/", "-");
+        String url_trend = Constans.URL_BEFORE + dataBean.getDeviceId() + Constans.URL_AFTERTREND + bdate_tv.getText().toString().trim().replace("/", "-") + "/" + adate_tv.getText().toString().trim().replace("/", "-");
         Request request = new Request.Builder().url(url_trend).get().build();
 //        doGET(url_trend, request);
         client.newCall(request).enqueue(new Callback() {
@@ -280,6 +281,7 @@ private void refreshCountData(int deviceId){
                 Log.d("huangchixing22",trendBean.getData().getVoltData().get(1).getPhaseType() + "");
                 Log.d("huangchixing22", trendBean.getData().getCurrData().get(0).getDataList().get(0).getRecordTime());
 
+
             }
         });
     }
@@ -294,7 +296,7 @@ private void refreshCountData(int deviceId){
 
 //        RequestBody formBody = new FormBody.Builder().add("deviceId", "98").build(); //参数如何填入？
         Log.i("deviceid", dataBean.getDeviceId() + "");
-        String url_realTime = url_before + dataBean.getDeviceId() + url_after;
+        String url_realTime = Constans.URL_BEFORE + dataBean.getDeviceId() + Constans.URL_AFTER;
         Request request = new Request.Builder().url(url_realTime).get().build();
 //        doGET(url_realTime, request);
         client.newCall(request).enqueue(new Callback() {

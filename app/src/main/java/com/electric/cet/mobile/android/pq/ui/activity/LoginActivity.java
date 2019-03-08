@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.electric.cet.mobile.android.pq.R;
+import com.electric.cet.mobile.android.pq.utils.Constans;
 import com.electric.cet.mobile.android.pq.utils.MD5Utils;
 import com.electric.cet.mobile.android.pq.utils.OkHttpUtils;
 
@@ -23,7 +24,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private Button login_bt;
     private EditText username_et;
     private EditText psw_et;
-    public static String url_login  = "http://192.168.2.102/LowLineSys/user/login";
+//    public static String url_login  = "http://192.168.2.102/LowLineSys/user/login";
 
 
     @Override
@@ -72,10 +73,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 .build();
 
                 final Request request = new Request.Builder()
-                        .url(url_login)
+                        .url(Constans.URL_LOGIN)
                         .post(formBody)
                         .build();
-                OkHttpUtils.postLogin(url_login,request);
+                OkHttpUtils.postLogin(Constans.URL_LOGIN,request);
 
 //                Intent intent = new Intent();
 //                intent.setClass(this,MainActivity.class);

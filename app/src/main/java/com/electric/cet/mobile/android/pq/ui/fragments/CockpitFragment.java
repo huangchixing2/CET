@@ -44,8 +44,8 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout sim_rl;
     private RelativeLayout dysfunction_rl;
     private RelativeLayout power_rl;
-    public static String url_deviceInfo = "http://192.168.2.102/LowLineSys/device/data/all?token=123";
-    public static String url_option = "http://192.168.2.102/LowLineSys/device/data/options?token=123";
+//    public static String url_deviceInfo = "http://192.168.2.102/LowLineSys/device/data/all?token=123";
+//    public static String url_option = "http://192.168.2.102/LowLineSys/device/data/options?token=123";
     private String json = null;
 
     private TextView install_tv;
@@ -124,7 +124,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     }
 
     /**
-     * 显示数据
+     * 显示所有数据
      */
     private void initAllData() {
 //        GetAsyncTaskData getAsyncTaskData = new GetAsyncTaskData();
@@ -132,7 +132,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
 
         OkHttpClient client = new OkHttpClient();
 //        RequestBody formBody = new FormBody.Builder().add("Token", "123").build();
-        final Request request = new Request.Builder().url(url_deviceInfo).get().build();
+        final Request request = new Request.Builder().url(Constans.URL_DEVICEINFO).get().build();
 //        doGET(url_deviceInfo, request);
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -156,6 +156,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                     Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(0).getDeviceName());
                     Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(1).getDeviceId());
                     Log.d("COCKPITACTIVITY", "------数据解析成功------");
+                    //存入数据库,每次清除上一次数据
                     SQLhelper_Device.Instance(getActivity()).clearAllUserInfo();
                     //网络请求到的数据写入数据库
                    SQLhelper_Device.Instance(getActivity()).insertUserInfo(deviceBean.getData());
@@ -177,9 +178,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
    //获取tree信息的请求
     public void initTreeData() {
         OkHttpClient client_option = new OkHttpClient();
-//        RequestBody formBody = new FormBody.Builder().add("Token", "123").build();
-        Request request = new Request.Builder().url(url_option).get().build();
-//        doGET(url_deviceInfo, request);
+        Request request = new Request.Builder().url(Constans.URL_OPTION).get().build();
         client_option.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -201,6 +200,11 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 Log.d("huangchixingcc",optionBean.getData().getPhaseType().get(0).getName());
                 Log.d("huangchixing2",optionBean.getData().getCities().get(0).getName());
                 Log.d("huangchixing2",optionBean.getData().getCities().get(1).getName());
+
+                //存入数据库,每次清除上一次数据
+//                SQLhelper_Device.Instance(getActivity()).clearOptionInfo();
+                //网络请求到的数据写入数据库
+//                SQLhelper_Device.Instance(getActivity()).insertOptionInfo(optionBean.getData().); //如何传参？
 
 
                 //存入数据库的另一个表
