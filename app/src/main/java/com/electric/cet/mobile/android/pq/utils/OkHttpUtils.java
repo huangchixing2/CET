@@ -68,8 +68,9 @@ public class OkHttpUtils {
 
                     int loginResultCode = loginData.getCode();
                     Log.i("resultcode", loginResultCode + "");
+                    int ResponseCode = response.code();
                     //响应成功,判断状态码
-                    if (loginResultCode == 200) {
+                    if (ResponseCode == 200) {
                         Log.i("登录状态", "登录成功");
                         String data = loginData.getData().toString();
                         try {

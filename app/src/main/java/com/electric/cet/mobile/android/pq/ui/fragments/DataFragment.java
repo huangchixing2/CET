@@ -2,6 +2,7 @@ package com.electric.cet.mobile.android.pq.ui.fragments;
 
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
@@ -25,6 +27,7 @@ import com.electric.cet.mobile.android.pq.Bean.TrendBean;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.model.DataTrend;
+import com.electric.cet.mobile.android.pq.ui.activity.SearchActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.BasePagerAdapter;
 import com.electric.cet.mobile.android.pq.ui.view.GraphicalUtils;
 import com.electric.cet.mobile.android.pq.ui.view.GraphicalView;
@@ -75,6 +78,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     private TextView phrase;
     private TextView circuit;
     private TextView location;
+    private RelativeLayout count_rl;
 
     private TextView cet_realtime_input_avoltage;
     private TextView cet_realtime_out_avoltage;
@@ -144,6 +148,9 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                     Log.i("devicesId",(int)getActivity().getSharedPreferences("data",0).getLong("deviceId",-1l)+"datahandler");
                     //还原出统计数据存储的数据并显示在ui
                     refreshCountData( (int)getActivity().getSharedPreferences("data",0).getLong("deviceId",-1l));
+                    break;
+                case 1001:
+                    refreshCountData(Integer.parseInt(msg.getData().getString("deviceID")));
                     break;
                 default:
                     break;
@@ -268,6 +275,7 @@ private void refreshCountData(int deviceId){
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                Log.d("DataFrament", "code" + response.code());
                 final String str = response.body().string();
                 String jsonData = str;
                 Log.d("DataFrament", "趋势数据请求打印" + jsonData);
@@ -459,6 +467,15 @@ private void refreshCountData(int deviceId){
         phrase = (TextView) view.findViewById(R.id.phrase);
         circuit = (TextView) view.findViewById(R.id.circuit);
         location = (TextView) view.findViewById(R.id.location);
+        count_rl = (RelativeLayout)view.findViewById(R.id.cet_data_search_rl);
+       count_rl.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent();
+               intent.setClass(getActivity(),SearchActivity.class);
+               getActivity().startActivityForResult(intent,1001);
+           }
+       });
     }
 
     private void initRealtimeView(View view) {
@@ -531,6 +548,18 @@ private void refreshCountData(int deviceId){
                 break;
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("search","resultCode --" +resultCode);
+        Log.i("search","search --" +data.getStringExtra("search"));
+
+        if(resultCode == 1001){
+
+        }
+    }
+
 
     public Handler getHandler() {
         return handler;

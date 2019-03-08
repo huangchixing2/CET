@@ -488,5 +488,88 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
         instance.getWritableDatabase().execSQL(sql, conditions);
     }
 
+    /**
+     * 按照设备名称模糊搜索
+     *
+     * @param
+     * @param
+     * @return
+     */
+    public static List<DataBean> queryDeviceListByName(String deviceName) {
+        SQLiteDatabase db = instance.getReadableDatabase();
+//        Cursor cursor = db.query("DeviceData", null, null, null, null, null, null);
+//        Cursor cursor = db.execSQL("select * from DeviceData order by DeviceId desc");
 
+
+        //降序查询
+        List<DataBean> list = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select * from DeviceData where DeviceName like ?",new String[]{"%"+deviceName +"%"});
+        Log.d("search","size="+cursor.getCount());
+        while (cursor.moveToNext()) {
+            DataBean dataBean = new DataBean();
+//            String code = cursor.getString(cursor.getColumnIndex(CODE));  //需要确定和添加
+            int devid = cursor.getInt(cursor.getColumnIndex(DEVICEID));
+            String devicename = cursor.getString(cursor.getColumnIndex(DEVICENAME));
+            int cityid = cursor.getInt(cursor.getColumnIndex(CITYID));
+            int countyid = cursor.getInt(cursor.getColumnIndex(COUNTYID));
+            int powersupplyid = cursor.getInt(cursor.getColumnIndex(POWERSUPPLYID));
+            String isinstalled = cursor.getString(cursor.getColumnIndex(ISINSTALLED));
+            String isonline = cursor.getString(cursor.getColumnIndex(ISONLINE));
+            String isusable = cursor.getString(cursor.getColumnIndex(ISUSABLE));
+            String issimcardonline = cursor.getString(cursor.getColumnIndex(ISSIMCARDONLINE));
+            String isabnormal = cursor.getString(cursor.getColumnIndex(ISABNORMAL));
+            String ispowerfailure = cursor.getString(cursor.getColumnIndex(ISPOWERFAILURE));
+            int longitude = cursor.getInt(cursor.getColumnIndex(LONGITUDE));
+            int latitude = cursor.getInt(cursor.getColumnIndex(LATITUDE));
+            int adjusttime = cursor.getInt(cursor.getColumnIndex(ADJUSTTIME));
+            String isvoltageregulatenormal = cursor.getString(cursor.getColumnIndex(ISVOLTAGEREGULATENORMAL));
+            String isreactivecompensationnormal = cursor.getString(cursor.getColumnIndex(ISREACTIVECOMPENSATIONNORMAL));
+            String manufacture = cursor.getString(cursor.getColumnIndex(MANUFACTURE));
+            String model = cursor.getString(cursor.getColumnIndex(MODEL));
+            int phasetypeid = cursor.getInt(cursor.getColumnIndex(PHASETYPEID));
+            int capacity = cursor.getInt(cursor.getColumnIndex(CAPACITY));
+            String iscircuitnormal = cursor.getString(cursor.getColumnIndex(ISCIRCUITNORMAL));
+            String installaddress = cursor.getString(cursor.getColumnIndex(INSTALLADDRESS));
+            int devicetypeid = cursor.getInt(cursor.getColumnIndex(DEVICETYPEID));
+            String state = cursor.getString(cursor.getColumnIndex(STATE));
+            int circuitid = cursor.getInt(cursor.getColumnIndex(CIRCUITID));
+            String courts = cursor.getString(cursor.getColumnIndex(COURTS));
+            String ismanufacturenormal = cursor.getString(cursor.getColumnIndex(ISMANUFACTURENORMAL));
+            String location = cursor.getString(cursor.getColumnIndex(LOCATION));
+
+            dataBean.setDeviceId(devid);
+            Log.i("deviceid",devid+"~~~~~");
+            dataBean.setDeviceName(devicename);
+            dataBean.setCityId(cityid);
+            dataBean.setCountyId(countyid);
+            dataBean.setPowerSupplyId(powersupplyid);
+            dataBean.setInstalled(isinstalled.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setOnline(isonline.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setUsable(isusable.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setSIMCardOnline(issimcardonline.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setAbnormal(isabnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setPowerFailure(ispowerfailure.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setLongitude(longitude);
+            dataBean.setLatitude(latitude);
+            dataBean.setAdjustTime(adjusttime);
+            dataBean.setVoltageRegulateNormal(isvoltageregulatenormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setReactiveCompensationNormal(isreactivecompensationnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setManufacture(manufacture);
+            dataBean.setModel(model);
+            dataBean.setPhaseTypeId(phasetypeid);
+            dataBean.setCapacity(capacity);
+            dataBean.setCircuitNormal(iscircuitnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setInstallAddress(installaddress);
+            dataBean.setDeviceTypeId(devicetypeid);
+            dataBean.setState(state.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setCircuitId(circuitid);
+            dataBean.setCourts(courts);
+            dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setLocation(location);
+            list.add(dataBean);
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
 }

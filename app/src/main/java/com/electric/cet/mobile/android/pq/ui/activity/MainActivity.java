@@ -2,6 +2,7 @@ package com.electric.cet.mobile.android.pq.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -144,6 +145,7 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
 //        if(data == null){
 //            Log.i("devicesId",data.getIntExtra("devicesId",-1)+"null");
 //        }
+        Log.i("MainActivity","search --" +data.getStringExtra("deviceID"));
         if(resultCode == 1002){
             dataRb.setChecked(true);
             data_fragment.getHandler().sendEmptyMessage(1002);
@@ -155,6 +157,11 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
 //            datahandler.sendMessage(message);
 //            data_fragment.getHandler().sendEmptyMessage(1002);
             ;
+        } else if(resultCode == 1001){
+            Message message = data_fragment.getHandler().obtainMessage();
+            message.what = 1001;
+            message.getData().putString("deviceID",data.getStringExtra("deviceID"));
+            data_fragment.getHandler().sendMessage(message);
         }
     }
 }

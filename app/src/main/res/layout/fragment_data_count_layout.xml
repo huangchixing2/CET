@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/cet_data_search_rl"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginLeft="40dp"
@@ -21,6 +22,8 @@
             android:layout_marginRight="40dp"
             android:background="@color/transparent"
             android:hint="@string/cet_search_hint"
+            android:focusable="false"
+            android:clickable="false"
             android:textSize="14sp" />
 
         <ImageView
