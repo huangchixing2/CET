@@ -57,6 +57,9 @@ public class SetContactActivity extends Activity {
                     String jsonData = str;
                     Log.d("huangchixinguu", "用户信息提交打印" + jsonData);
                     Log.d("huangchixinguu", "用户信息提交成功");
+                    if(response.code()==200){
+                        Log.d("contact","用户名修改成功");
+                    }
 
                 } catch (IOException e1) {
                     e1.printStackTrace();

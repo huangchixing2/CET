@@ -69,6 +69,7 @@ public class OkHttpUtils {
                     int loginResultCode = loginData.getCode();
                     Log.i("resultcode", loginResultCode + "");
                     int ResponseCode = response.code();
+                    //无法获取token
                     //响应成功,判断状态码
                     if (ResponseCode == 200) {
                         Log.i("登录状态", "登录成功");

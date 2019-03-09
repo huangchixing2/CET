@@ -47,7 +47,7 @@ public class AccountManageActivity extends Activity implements View.OnClickListe
                 break;
             case R.id.my_account_manage_update_psw_rl:
                 Intent pswIntent = new Intent();
-                pswIntent.setClass(AccountManageActivity.this,UpdatePswActivity.class);
+                pswIntent.setClass(AccountManageActivity.this,MyPwdActivity.class);
                 startActivity(pswIntent);
                 break;
                 default:

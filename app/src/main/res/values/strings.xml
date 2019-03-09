@@ -401,7 +401,7 @@
     <string name="cet_my_old_psw">旧密码</string>
     <string name="cet_my_set_old_psw">请填写旧密码</string>
     <string name="cet_my_new_psw">新密码</string>
-    <string name="cet_my_input_new_psw">至少8个字符，包含字母和数字</string>
+    <string name="cet_my_input_new_psw">至少6个字符，包含字母和数字</string>
     <string name="cet_my_confirm_psw">确认密码</string>
     <string name="cet_my_input_new_psw_again">再次输入新密码</string>
     <string name="cet_cockpit_map">地图</string>
