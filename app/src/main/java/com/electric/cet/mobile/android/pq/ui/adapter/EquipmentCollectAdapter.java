@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.model.EquipmentCollectModel;
 
@@ -22,9 +23,9 @@ import java.util.List;
 public class EquipmentCollectAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private List<EquipmentCollectModel> list;
+    private List<DataBean> list;
 
-    public EquipmentCollectAdapter(Context context, List<EquipmentCollectModel> list) {
+    public EquipmentCollectAdapter(Context context, List<DataBean> list) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.list = list;
@@ -55,7 +56,7 @@ public class EquipmentCollectAdapter extends BaseAdapter {
             holder.cb = (CheckBox) convertView.findViewById(R.id.equipment_collect_item_cb);
             holder.address = (TextView) convertView.findViewById(R.id.equipment_collect_item_address);
             holder.type = (TextView) convertView.findViewById(R.id.equipment_collect_item_type);
-            holder.statu = (ImageView) convertView.findViewById(R.id.equipment_collect_item_statu);
+            holder.status = (ImageView) convertView.findViewById(R.id.equipment_collect_item_status);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -72,12 +73,12 @@ public class EquipmentCollectAdapter extends BaseAdapter {
                 list.get(position).setSle(isChecked);
             }
         });
-        holder.address.setText(list.get(position).getAddress());
-        holder.type.setText(list.get(position).getType());  //此字段服务器未提供
-        if(list.get(position).isStatu()){
-            holder.statu.setImageResource(R.mipmap.equipment_online);
+        holder.address.setText(list.get(position).getCityId()+""+list.get(position).getCountyId()+""+list.get(position).getPowerSupplyId()+""+list.get(position).getDeviceName()+"");
+        holder.type.setText(list.get(position).getDeviceTypeId()+"");
+        if(list.get(position).getState()){
+            holder.status.setImageResource(R.mipmap.equipment_online);
         }else{
-            holder.statu.setImageResource(R.mipmap.equipment_offline);
+            holder.status.setImageResource(R.mipmap.equipment_offline);
         }
         return convertView;
     }
@@ -86,6 +87,6 @@ public class EquipmentCollectAdapter extends BaseAdapter {
         CheckBox cb;
         TextView address;
         TextView type;
-        ImageView statu;
+        ImageView status;
     }
 }

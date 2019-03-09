@@ -25,7 +25,8 @@ import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.model.EquipmentCollectModel;
 import com.electric.cet.mobile.android.pq.model.EquipmentWorkingModel;
 import com.electric.cet.mobile.android.pq.ui.activity.EquipmentCollectAddActivity;
-import com.electric.cet.mobile.android.pq.ui.activity.EquipmentDetailActivity;
+import com.electric.cet.mobile.android.pq.ui.activity.CollectDetailActivity;
+import com.electric.cet.mobile.android.pq.ui.activity.WorkingDetailActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.BasePagerAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentCollectAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentWorkingAdapter;
@@ -42,7 +43,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private LinearLayout tabLineLayout;
     private ImageView tablineImg;
 
-    private List<View> views;
+    private List<View> views = new ArrayList<View>();
     private ViewPager viewPager;
     private BasePagerAdapter pagerAdapter;
 
@@ -50,23 +51,22 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private ImageView edit_tv;
     private ImageView del_tv;
     private CheckBox all_cb;
-//台账
+
+    private static final int pageCollect = 0;
+    private static final int pageWorking = 1;
+    //台账
     private ListView collect_lv;
     private EquipmentCollectAdapter collectAdapter;
-    private List<DataBean> collectList = new ArrayList<>();
-    private List<EquipmentCollectModel> collects = new ArrayList<>();
-//工况
+    private List<DataBean> allDevicesList = new ArrayList<>();
+    //工况
     private ListView working_lv;
     private EquipmentWorkingAdapter workingAdapter;
     private List<EquipmentWorkingModel> works = new ArrayList<>();
 
     private int baseDistance;
-    private DataBean dataBean;
     private TextView equipment_collect_title_address;
     private TextView equipment_collect_title_type;
     private TextView equipment_collect_title_statu;
-    private int sourceFlag = -1;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,9 +77,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         return view;
     }
 
-    private void initView(View view){
-
-        views = new ArrayList<View>();
+    private void initView(View view) {
         View collectView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_equipment_collect_layout, null);
         initCollectView(collectView);
@@ -117,8 +115,11 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         viewPager.setOnPageChangeListener(this);
     }
 
-    private void initData(){
-
+    private void initData() {
+        allDevicesList.clear();
+        allDevicesList.addAll(getCollectData());
+        collectAdapter.notifyDataSetChanged();
+        workingAdapter.notifyDataSetChanged();
     }
 
 
@@ -132,11 +133,13 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     @Override
     public void onPageSelected(int i) {
         switch (i) {
-            case 0:
+            case pageCollect:
                 collectRB.setChecked(true);
+                initCollectView(viewPager);//旋转台账显示
                 break;
-            case 1:
+            case pageWorking:
                 workingRB.setChecked(true);
+                initWorkingView(viewPager);//选择工况显示
                 break;
             default:
                 break;
@@ -165,14 +168,14 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
 //台账view显示
     private void initCollectView(View view){
         collect_lv = (ListView) view.findViewById(R.id.cet_equipment_collect_lv);
-        collectAdapter = new EquipmentCollectAdapter(getActivity(), getCollectData());
+        collectAdapter = new EquipmentCollectAdapter(getActivity(), allDevicesList);
         collect_lv.setAdapter(collectAdapter);
         collect_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent  = new Intent();
-                intent.setClass(getActivity(),EquipmentDetailActivity.class);
-                intent.putExtra("data",collectList.get(position));
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), CollectDetailActivity.class);
+                intent.putExtra("data", allDevicesList.get(position));
                 startActivity(intent);
             }
         });
@@ -186,58 +189,44 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         all_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                allSelectedFreshen(isChecked);
+                selectAllItem(isChecked);
             }
         });
     }
 //工况view显示
     private  void initWorkingView(View view){
         working_lv = (ListView) view.findViewById(R.id.cet_equipment_working_lv);
-        workingAdapter = new EquipmentWorkingAdapter(getActivity(), getWorkingData());
+        workingAdapter = new EquipmentWorkingAdapter(getActivity(), allDevicesList);
         working_lv.setAdapter(workingAdapter);
         working_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent  = new Intent();
-                intent.setClass(getActivity(),EquipmentDetailActivity.class);
-                intent.putExtra("data",collectList.get(position));
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), WorkingDetailActivity.class);
+                intent.putExtra("data", allDevicesList.get(position));
                 startActivity(intent);
             }
         });
     }
 
     //台账信息查询数据库
-    private List<EquipmentCollectModel> getCollectData() {
-        collectList.clear();
-        collects.clear();
-        List<EquipmentCollectModel> a;
-        collectList = SQLhelper_Device.Instance(getActivity()).queryDeviceList(); //参数如何传递
-        for (int i = 0; i < collectList.size(); i++) {
-            EquipmentCollectModel equipmentCollectModel = new EquipmentCollectModel();
-            equipmentCollectModel.setSle(false);
-            equipmentCollectModel.setAddress(collectList.get(i).getInstallAddress());
-            equipmentCollectModel.setType("调压器");//需要确认对应关系?
-            if (collectList.get(i).getState()) {
-                equipmentCollectModel.setStatu(true);
-            } else {
-                equipmentCollectModel.setStatu(false);
-            }
-            collects.add(equipmentCollectModel);
-        }
-        return collects;
+    private List<DataBean> getCollectData() {
+        List<DataBean> devicesList = SQLhelper_Device.Instance(getActivity()).queryDeviceList(); //参数如何传递
+        return devicesList;
     }
 
     //工况信息查询
     private List<EquipmentWorkingModel> getWorkingData() {
         works.clear();
-        collects.clear();
-        collectList = SQLhelper_Device.Instance(getActivity()).queryDeviceList(); //参数如何传递
-        for (int i = 0; i < collectList.size(); i++) {
+        allDevicesList.clear();
+        allDevicesList = SQLhelper_Device.Instance(getActivity()).queryDeviceList(); //参数如何传递
+//            Log.d("guol","devicesList.size:"+collectList.size());//为何只有一条数据？
+        for (int i = 0; i < allDevicesList.size(); i++) {
             EquipmentWorkingModel equipmentWorkingModel = new EquipmentWorkingModel();
             equipmentWorkingModel.setSle(false); //默认设置为不勾选
-            equipmentWorkingModel.setAddress(collectList.get(i).getInstallAddress());
+            equipmentWorkingModel.setAddress(allDevicesList.get(i).getInstallAddress());
             equipmentWorkingModel.setType("调压器");//需要确认对应关系？
-            if (collectList.get(i).getState()) {
+            if (allDevicesList.get(i).getState()) {
                 equipmentWorkingModel.setStatu(true);
             } else {
                 equipmentWorkingModel.setStatu(false);
@@ -262,9 +251,9 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
                 startActivity(editIntent);
                 break;
             case R.id.cet_equipment_collect_del:
-                if(!isSelectedItem()){
-                    Toast.makeText(getActivity(),"请选择后删除",Toast.LENGTH_SHORT).show();
-                }else{
+                if (!isSelectedItem()) {
+                    Toast.makeText(getActivity(), "请先选择删除项", Toast.LENGTH_SHORT).show();
+                } else {
                     deleteSelectedData();
                 }
                 break;
@@ -273,32 +262,32 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         }
     }
 
-    private void deleteSelectedData(){
-        List<DataBean> stayList = new ArrayList<>();
-        for(int i = 0;i<collectList.size();i++){
-            if(!collectList.get(i).isSle()){
-                stayList.add(collectList.get(i));
+    private void deleteSelectedData() {
+        List<DataBean> deleteList = new ArrayList<>();
+        for (int i = 0; i < allDevicesList.size(); i++) {
+            if (!allDevicesList.get(i).isSle()) {
+                deleteList.add(allDevicesList.get(i));
             }
         }
-        collectList.clear();
-        collectList.addAll(stayList);
+        allDevicesList.removeAll(deleteList);
         collectAdapter.notifyDataSetChanged();
+        //delete stayList in db
     }
 
-    private boolean isSelectedItem(){
+    private boolean isSelectedItem() {
         boolean isSelected = false;
-        for(int i = 0;i<collectList.size();i++){
-            if(collectList.get(i).isSle()){
+        for (int i = 0; i < allDevicesList.size(); i++) {
+            if (allDevicesList.get(i).isSle()) {
                 isSelected = true;
-                continue;
+                break;
             }
         }
         return isSelected;
     }
 
-    private void allSelectedFreshen(boolean isSelected){
-        for(int i = 0;i<collectList.size();i++){
-            collectList.get(i).setSle(isSelected);
+    private void selectAllItem(boolean isSelected) {
+        for (int i = 0; i < allDevicesList.size(); i++) {
+            allDevicesList.get(i).setSle(isSelected);
         }
         collectAdapter.notifyDataSetChanged();
     }

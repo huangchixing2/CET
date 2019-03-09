@@ -72,7 +72,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 //                editor.apply();
 
 
-
                 Log.d("logout", "退出登录成功");
             }
         });

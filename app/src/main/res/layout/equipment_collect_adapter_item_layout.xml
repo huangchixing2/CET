@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="15dp"
             android:button="@null"
             android:drawableRight="@drawable/cet_checkbox_style"
             android:focusable="false"
@@ -40,7 +40,7 @@
             android:layout_marginRight="25dp">
 
             <ImageView
-                android:id="@+id/equipment_collect_item_statu"
+                android:id="@+id/equipment_collect_item_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true" />

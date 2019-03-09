@@ -8,9 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/cet_search_bg"
         android:orientation="horizontal">
 
@@ -37,18 +37,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/cet_equipment_working_type_ll"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:background="@drawable/cet_equipment_collect_gry_bg"
-            android:gravity="center"
+            android:gravity="right"
             android:orientation="horizontal">
 
             <TextView
@@ -63,30 +61,30 @@
                 android:layout_marginLeft="10dp"
                 android:src="@mipmap/arrow_down"/>
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/cet_equipment_working_group_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:background="@drawable/cet_equipment_collect_gry_bg"
-            android:gravity="center"
-            android:orientation="horizontal">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/cet_equipment_working_group_ll"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:paddingLeft="20dp"-->
+            <!--android:paddingRight="20dp"-->
+            <!--android:background="@drawable/cet_equipment_collect_gry_bg"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/cet_main_nor_color"
-                android:text="@string/cet_equipment_group"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:src="@mipmap/arrow_down"/>
-        </LinearLayout>
-    </LinearLayout>
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="15sp"-->
+                <!--android:textColor="@color/cet_main_nor_color"-->
+                <!--android:text="@string/cet_equipment_group"/>-->
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:src="@mipmap/arrow_down"/>-->
+        <!--</LinearLayout>-->
+    </LinearLayout>equipment_working_title_type
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -96,51 +94,57 @@
             android:layout_width="match_parent"
             android:background="@color/cet_main_bg_color"
             android:layout_height="25dp">
-            <CheckBox
-                android:id="@+id/equipment_working_title_cb"
-                android:visibility="invisible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_centerVertical="true"
-                android:textColor="@color/cet_main_nor_color"
-                android:button="@null"
-                android:drawableRight="@drawable/cet_checkbox_style"
-                android:text=""/>
+
             <TextView
                 android:id="@+id/equipment_working_title_address"
                 android:text="@string/cet_equipment_install_address"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/equipment_working_title_cb"
                 android:textSize="15sp"
                 android:textColor="@color/cet_main_nor_color"
-                android:layout_marginLeft="25dp"
+                android:layout_marginLeft="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/equipment_working_title_statu"
-                android:text="@string/cet_equipment_title_statu"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="25dp"
-                android:textSize="15sp"
-                android:gravity="center_horizontal"
-                android:textColor="@color/cet_main_nor_color"
-                android:layout_marginLeft="25dp"
-                android:layout_width="50dp"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/equipment_working_title_type"
                 android:text="@string/cet_equipment_title_type"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/equipment_working_title_statu"
-                android:layout_marginRight="25dp"
-                android:gravity="center_horizontal"
+                android:layout_toLeftOf="@+id/equipment_working_title_status"
                 android:textSize="15sp"
                 android:textColor="@color/cet_main_nor_color"
-                android:layout_marginLeft="25dp"
+                android:layout_marginLeft="5dp"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/equipment_working_title_status"
+                android:text="@string/cet_equipment_title_statu"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/equipment_working_title_communication"
+                android:textSize="15sp"
+                android:textColor="@color/cet_main_nor_color"
+                android:layout_marginLeft="5dp"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/equipment_working_title_communication"
+                android:text="@string/cet_equipment_title_communication"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/equipment_working_title_sim"
+                android:textSize="15sp"
+                android:textColor="@color/cet_main_nor_color"
+                android:layout_marginLeft="5dp"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/equipment_working_title_sim"
+                android:text="@string/cet_equipment_title_sim"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="5dp"
+                android:textSize="15sp"
+                android:textColor="@color/cet_main_nor_color"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
         </RelativeLayout>
         <ListView
             android:id="@+id/cet_equipment_working_lv"

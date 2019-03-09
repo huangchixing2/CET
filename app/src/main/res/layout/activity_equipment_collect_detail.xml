@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/cet_equipment_detail"
+            android:text="@string/cet_equipment_collect_detail"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="18sp" />
 
@@ -56,7 +56,6 @@
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/equipment_collect_detail_city"
             android:textColor="@color/cet_main_nor_color"
-            android:text="武汉市"
             android:textSize="15sp" />
 
         <View
@@ -85,7 +84,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:text="武昌区"
             android:layout_toRightOf="@+id/equipment_collect_detail_country"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />
@@ -116,7 +114,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:text="中电局"
             android:layout_toRightOf="@+id/equipment_collect_detail_powersupply"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />
@@ -147,7 +144,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:text="HJD345553"
             android:layout_toRightOf="@+id/equipment_collect_detail_type"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />
@@ -178,7 +174,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:text="677778"
             android:layout_toRightOf="@+id/equipment_collect_detail_route"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />
@@ -210,7 +205,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:text="西北区"
             android:layout_toRightOf="@+id/equipment_collect_detail_zonearea"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />
@@ -243,7 +237,6 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/equipment_collect_detail_sim"
-            android:text="正常"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />
 
@@ -274,7 +267,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:text="正常"
             android:layout_toRightOf="@+id/equipment_collect_detail_vender"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />
@@ -306,7 +298,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:text="QWE9990987"
             android:layout_toRightOf="@+id/equipment_collect_detail_model"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />
@@ -317,66 +308,66 @@
             android:layout_alignParentBottom="true"
             android:background="@color/cet_main_bg_color" />
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp">
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="45dp">-->
 
-        <TextView
-            android:id="@+id/equipment_collect_detail_phases"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="@string/cet_equipment_collect_phases"
-            android:textColor="@color/cet_main_nor_color"
-            android:textSize="15sp" />
+        <!--<TextView-->
+            <!--android:id="@+id/equipment_collect_detail_phases"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:text="@string/cet_equipment_collect_phases"-->
+            <!--android:textColor="@color/cet_main_nor_color"-->
+            <!--android:textSize="15sp" />-->
 
-        <TextView
-            android:id="@+id/equipment_collect_detail_phases_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:text="90987"
-            android:layout_toRightOf="@+id/equipment_collect_detail_phases"
-            android:textColor="@color/cet_main_nor_color"
-            android:textSize="15sp" />
+        <!--<TextView-->
+            <!--android:id="@+id/equipment_collect_detail_phases_tv"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:text="90987"-->
+            <!--android:layout_toRightOf="@+id/equipment_collect_detail_phases"-->
+            <!--android:textColor="@color/cet_main_nor_color"-->
+            <!--android:textSize="15sp" />-->
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:background="@color/cet_main_bg_color" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp">
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@color/cet_main_bg_color" />-->
+    <!--</RelativeLayout>-->
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="45dp">-->
 
-        <TextView
-            android:id="@+id/equipment_collect_detail_capacity"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="@string/cet_equipment_collect_capacity"
-            android:textColor="@color/cet_main_nor_color"
-            android:textSize="15sp" />
+        <!--<TextView-->
+            <!--android:id="@+id/equipment_collect_detail_capacity"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:text="@string/cet_equipment_collect_capacity"-->
+            <!--android:textColor="@color/cet_main_nor_color"-->
+            <!--android:textSize="15sp" />-->
 
-        <TextView
-            android:id="@+id/equipment_collect_detail_capacity_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:text="90升"
-            android:layout_toRightOf="@+id/equipment_collect_detail_capacity"
-            android:textColor="@color/cet_main_nor_color"
-            android:textSize="15sp" />
+        <!--<TextView-->
+            <!--android:id="@+id/equipment_collect_detail_capacity_tv"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:text="90升"-->
+            <!--android:layout_toRightOf="@+id/equipment_collect_detail_capacity"-->
+            <!--android:textColor="@color/cet_main_nor_color"-->
+            <!--android:textSize="15sp" />-->
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:background="@color/cet_main_bg_color" />
-    </RelativeLayout>
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@color/cet_main_bg_color" />-->
+    <!--</RelativeLayout>-->
 </LinearLayout>

@@ -1,5 +1,7 @@
 package com.electric.cet.mobile.android.pq.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -46,7 +48,7 @@ public class OkHttpUtils {
     public static Response response = null;
 
 
-    public static void postLogin(String url, final Request request) {
+    public static void postLogin(final Context context, String url, final Request request) {
 
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
@@ -71,18 +73,14 @@ public class OkHttpUtils {
                     //响应成功,判断状态码
                     if (ResponseCode == 200) {
                         Log.i("登录状态", "登录成功");
-                        String data = loginData.getData().toString();
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(data);
-//                            String mToken = jsonObject.optString("token");
-////                            SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
-//                            Log.d("login11",mToken);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
+                        String data = loginData.getData().toString(); //这个就是token
                         //保存token
-                        //用sp工具保存
-//                        PreferenceUtils.putString(getApplicationContext(), "token", mToken);
+                        //用sp工具保存token
+                        SharedPreferences sp = context.getSharedPreferences("TokenData", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("token", data);
+                        editor.apply();
+
 
                         
 

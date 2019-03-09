@@ -23,17 +23,13 @@ import java.util.List;
 public class EquipmentWorkingAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-//    private List<DataBean> list = new ArrayList<>();
-    private List<EquipmentWorkingModel> list;
-    public EquipmentWorkingAdapter(Context context, List<EquipmentWorkingModel> list) {
+    private List<DataBean> list;
+    public EquipmentWorkingAdapter(Context context, List<DataBean> list) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.list = list;
     }
 
-    public EquipmentWorkingAdapter(EquipmentFragment equipmentFragment, List<DataBean> workingData) {
-
-    }
 
     @Override
     public int getCount() {
@@ -56,33 +52,31 @@ public class EquipmentWorkingAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.equipment_working_adapter_item_layout, null);
             holder = new ViewHolder();
-            holder.cb = (CheckBox) convertView.findViewById(R.id.equipment_working_item_cb);
             holder.address = (TextView) convertView.findViewById(R.id.equipment_working_item_address);
             holder.type = (TextView) convertView.findViewById(R.id.equipment_working_item_type);
-            holder.statu = (ImageView) convertView.findViewById(R.id.equipment_working_item_statu);
+            holder.status = (ImageView) convertView.findViewById(R.id.equipment_working_item_status);
+            holder.communication = (TextView) convertView.findViewById(R.id.equipment_working_item_communication);
+            holder.sim = (TextView) convertView.findViewById(R.id.equipment_working_item_sim);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-//        是否被选中
-        if(list.get(position).isSle()){
-            holder.cb.setChecked(true);
+        holder.address.setText(list.get(position).getCityId()+""+list.get(position).getCountyId()+""+list.get(position).getPowerSupplyId()+""+list.get(position).getDeviceName()+"");
+        holder.type.setText(list.get(position).getDeviceTypeId()+"");  //此字段服务器未提供
+        if(list.get(position).getState()){
+            holder.status.setImageResource(R.mipmap.equipment_online);
         }else{
-            holder.cb.setChecked(false);
+            holder.status.setImageResource(R.mipmap.equipment_offline);
         }
-        holder.address.setText(list.get(position).getAddress());
-        holder.type.setText(list.get(position).getType());  //此字段服务器未提供
-        if(list.get(position).isStatu()){
-            holder.statu.setImageResource(R.mipmap.equipment_online);
-        }else{
-            holder.statu.setImageResource(R.mipmap.equipment_offline);
-        }
+        holder.communication.setText(list.get(position).getOnline()?"在线":"退出");
+        holder.sim.setText(list.get(position).getSIMCardOnline()?"正常":"异常");
         return convertView;
     }
     class ViewHolder{
-        CheckBox cb;
         TextView address;
         TextView type;
-        ImageView statu;
+        ImageView status;
+        TextView communication;
+        TextView sim;
     }
 }

@@ -145,7 +145,7 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
 //        if(data == null){
 //            Log.i("devicesId",data.getIntExtra("devicesId",-1)+"null");
 //        }
-        Log.i("MainActivity","search --" +data.getStringExtra("deviceID"));
+//        Log.i("MainActivity","search --" +data.getStringExtra("deviceID"));
         if(resultCode == 1002){
             dataRb.setChecked(true);
             data_fragment.getHandler().sendEmptyMessage(1002);

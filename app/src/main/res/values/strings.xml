@@ -409,7 +409,10 @@
     <string name="cet_equipment_install_address">安装地点</string>
     <string name="cet_equipment_title_type">类型</string>
     <string name="cet_equipment_title_statu">状态</string>
-    <string name="cet_equipment_detail">详情</string>
+    <string name="cet_equipment_title_communication">通信</string>
+    <string name="cet_equipment_title_sim">Sim卡</string>
+    <string name="cet_equipment_collect_detail">台账详情</string>
+    <string name="cet_equipment_working_detail">工况详情</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

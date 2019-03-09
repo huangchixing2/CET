@@ -1,6 +1,7 @@
 package com.electric.cet.mobile.android.pq.ui.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -26,6 +27,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private Button login_bt;
     private EditText username_et;
     private EditText psw_et;
+    private Context context = LoginActivity.this;
 //    public static String url_login  = "http://192.168.2.102/LowLineSys/user/login";
 
 
@@ -69,7 +71,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             RequestBody formBody = new FormBody.Builder().add("UserName", UserName).add("EncryptPwd ", EncryptPwd).build();
 
             final Request request = new Request.Builder().url(Constans.URL_LOGIN).post(formBody).build();
-            OkHttpUtils.postLogin(Constans.URL_LOGIN, request);
+            OkHttpUtils.postLogin(context,Constans.URL_LOGIN, request);
         }
 
 

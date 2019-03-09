@@ -8,9 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/cet_search_bg"
         android:orientation="horizontal">
 
@@ -37,16 +37,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/cet_equipment_collect_type_ll"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
             android:background="@drawable/cet_equipment_collect_gry_bg"
-            android:gravity="center"
+            android:gravity="right"
             android:orientation="horizontal"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
@@ -65,30 +63,30 @@
                 android:src="@mipmap/arrow_down" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/cet_equipment_collect_group_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/cet_equipment_collect_gry_bg"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/cet_equipment_collect_group_ll"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:background="@drawable/cet_equipment_collect_gry_bg"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:paddingLeft="20dp"-->
+            <!--android:paddingRight="20dp">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cet_equipment_group"
-                android:textColor="@color/cet_main_nor_color"
-                android:textSize="15sp" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/cet_equipment_group"-->
+                <!--android:textColor="@color/cet_main_nor_color"-->
+                <!--android:textSize="15sp" />-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:src="@mipmap/arrow_down" />
-        </LinearLayout>
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:src="@mipmap/arrow_down" />-->
+        <!--</LinearLayout>-->
     </LinearLayout>
 
     <RelativeLayout
@@ -107,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="25dp"
+                android:layout_marginLeft="15dp"
                 android:button="@null"
                 android:drawableRight="@drawable/cet_checkbox_style"
                 android:text=""

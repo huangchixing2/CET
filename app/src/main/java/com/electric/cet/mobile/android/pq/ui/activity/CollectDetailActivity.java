@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.R;
 
-public class EquipmentDetailActivity extends Activity {
+public class CollectDetailActivity extends Activity {
     private LinearLayout back;
     private TextView city;
     private TextView country;
@@ -20,15 +20,15 @@ public class EquipmentDetailActivity extends Activity {
     private TextView sim;
     private TextView vendor;
     private TextView model;
-    private TextView phase;
-    private TextView capacity;
+    //private TextView phase;
+    //private TextView capacity;
 
 
     private DataBean dataBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_equipment_detail);
+        setContentView(R.layout.activity_equipment_collect_detail);
         dataBean = (DataBean) getIntent().getSerializableExtra("data");
         initView();
         initData();
@@ -50,8 +50,8 @@ public class EquipmentDetailActivity extends Activity {
         sim = (TextView) findViewById(R.id.equipment_collect_detail_sim_tv);
         vendor = (TextView) findViewById(R.id.equipment_collect_detail_vender);
         model = (TextView) findViewById(R.id.equipment_collect_detail_model_tv);
-        phase = (TextView) findViewById(R.id.equipment_collect_detail_phases_tv);
-        capacity = (TextView) findViewById(R.id.equipment_collect_detail_capacity_tv);
+        //phase = (TextView) findViewById(R.id.equipment_collect_detail_phases_tv);
+        //capacity = (TextView) findViewById(R.id.equipment_collect_detail_capacity_tv);
     }
 
 
@@ -76,7 +76,7 @@ public class EquipmentDetailActivity extends Activity {
             vendor.setText(getResources().getString(R.string.cet_count_abnor));
         }
         model.setText(dataBean.getModel());
-        phase.setText(dataBean.getPhaseTypeId() + "");
-        capacity.setText(dataBean.getCapacity() + "");
+        //phase.setText(dataBean.getPhaseTypeId() + "");
+        //capacity.setText(dataBean.getCapacity() + "");
     }
 }
