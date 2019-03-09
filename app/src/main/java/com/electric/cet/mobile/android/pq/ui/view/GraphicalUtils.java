@@ -1,15 +1,12 @@
 package com.electric.cet.mobile.android.pq.ui.view;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-
 import android.graphics.Point;
 import android.util.Log;
 
 import com.electric.cet.mobile.android.pq.model.DataTrend;
-import com.electric.cet.mobile.android.pq.utils.DateUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GraphicalUtils {
 	/**
@@ -87,23 +84,23 @@ public class GraphicalUtils {
 		ArrayList<String> ylist = new ArrayList<String>();
 		// 对应电压曲线
 		ArrayList<Float> y_flist1 = new ArrayList<Float>();
-        ArrayList<Float> y_flist2 = new ArrayList<Float>();
-        ArrayList<Float> y_flist4 = new ArrayList<Float>();
+//        ArrayList<Float> y_flist2 = new ArrayList<Float>();
+//        ArrayList<Float> y_flist4 = new ArrayList<Float>();
 		ylist.add("0");
-		ylist.add("220");
+		ylist.add(String.valueOf(totalScore));
 		para.setYlist(ylist);
 		para.setYtwoPoint(true);
 		for (int i = 0; i < list.size(); i++) {
 			DataTrend dataTrend = list.get(i);
 			xlist.add(dataTrend.getData());
 			y_flist1.add(Float.parseFloat(dataTrend.getVoltage()));
-            y_flist2.add(Float.parseFloat(dataTrend.getCurrent()));
-            y_flist4.add(Float.parseFloat(dataTrend.getPower()));
+//            y_flist2.add(Float.parseFloat(dataTrend.getCurrent()));
+//            y_flist4.add(Float.parseFloat(dataTrend.getPower()));
 		}
 		para.setXlist(xlist);
 		para.setYdatas1(y_flist1);
-        para.setYdatas2(y_flist2);
-        para.setYdatas4(y_flist4);
+//        para.setYdatas2(y_flist2);
+//        para.setYdatas4(y_flist4);
 		para.setTotal_score(totalScore);
 		para.setDrawTextAndLine(true);
 		para.setWhichPosition(which + 1);

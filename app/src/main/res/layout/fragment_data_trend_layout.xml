@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/cet_data_trend_search_rl"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginLeft="40dp"
@@ -20,6 +21,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="40dp"
             android:background="@color/transparent"
+            android:clickable="false"
+            android:focusable="false"
             android:hint="@string/cet_search_hint"
             android:textSize="14sp" />
 

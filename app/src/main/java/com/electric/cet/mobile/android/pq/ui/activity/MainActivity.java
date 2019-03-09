@@ -162,6 +162,16 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
             message.what = 1001;
             message.getData().putString("deviceID",data.getStringExtra("deviceID"));
             data_fragment.getHandler().sendMessage(message);
+        }else if(resultCode == 1003){
+            Message message = data_fragment.getHandler().obtainMessage();
+            message.what = 1003;
+            message.getData().putString("deviceID",data.getStringExtra("deviceID"));
+            data_fragment.getHandler().sendMessage(message);
+        }else if(resultCode == 1004){
+            Message message = data_fragment.getHandler().obtainMessage();
+            message.what = 1004;
+            message.getData().putString("deviceID",data.getStringExtra("deviceID"));
+            data_fragment.getHandler().sendMessage(message);
         }
     }
 }

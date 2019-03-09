@@ -65,8 +65,9 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private TextView equipment_collect_title_address;
     private TextView equipment_collect_title_type;
     private TextView equipment_collect_title_statu;
-//    private List<DataBean> devicesList = new ArrayList<>();
     private int sourceFlag = -1;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -133,11 +134,9 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         switch (i) {
             case 0:
                 collectRB.setChecked(true);
-                initCollectView(viewPager);//旋转台账显示
                 break;
             case 1:
                 workingRB.setChecked(true);
-                initWorkingView(viewPager);//选择工况显示
                 break;
             default:
                 break;
@@ -165,7 +164,6 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
 
 //台账view显示
     private void initCollectView(View view){
-
         collect_lv = (ListView) view.findViewById(R.id.cet_equipment_collect_lv);
         collectAdapter = new EquipmentCollectAdapter(getActivity(), getCollectData());
         collect_lv.setAdapter(collectAdapter);
@@ -210,16 +208,10 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
 
     //台账信息查询数据库
     private List<EquipmentCollectModel> getCollectData() {
-        /*
-        collects.clear();
-        collects = SQLhelper_Device.Instance(getActivity()).queryDeviceList(); //参数如何传递
-        return collects;
-         */
-
         collectList.clear();
         collects.clear();
+        List<EquipmentCollectModel> a;
         collectList = SQLhelper_Device.Instance(getActivity()).queryDeviceList(); //参数如何传递
-//            Log.d("guol","devicesList.size:"+collectList.size());//为何只有一条数据？
         for (int i = 0; i < collectList.size(); i++) {
             EquipmentCollectModel equipmentCollectModel = new EquipmentCollectModel();
             equipmentCollectModel.setSle(false);
@@ -240,7 +232,6 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         works.clear();
         collects.clear();
         collectList = SQLhelper_Device.Instance(getActivity()).queryDeviceList(); //参数如何传递
-//            Log.d("guol","devicesList.size:"+collectList.size());//为何只有一条数据？
         for (int i = 0; i < collectList.size(); i++) {
             EquipmentWorkingModel equipmentWorkingModel = new EquipmentWorkingModel();
             equipmentWorkingModel.setSle(false); //默认设置为不勾选
@@ -255,73 +246,6 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         }
         return works;
     }
-
-//        EquipmentCollectModel equipmentCollectModel = new EquipmentCollectModel();
-//        equipmentCollectModel.setSle(true);
-//        equipmentCollectModel.setAddress("武汉花山台区1");
-//        equipmentCollectModel.setType("调压器");
-//        equipmentCollectModel.setStatu(true);
-//        collectList.add(equipmentCollectModel);
-//        equipmentCollectModel = new EquipmentCollectModel();
-//        equipmentCollectModel.setSle(false);
-//        equipmentCollectModel.setAddress("武汉花山台区2");
-//        equipmentCollectModel.setType("调压器");
-//        equipmentCollectModel.setStatu(true);
-//        collectList.add(equipmentCollectModel);
-//        equipmentCollectModel = new EquipmentCollectModel();
-//        equipmentCollectModel.setSle(false);
-//        equipmentCollectModel.setAddress("武汉花山台区3");
-//        equipmentCollectModel.setType("调压器");
-//        equipmentCollectModel.setStatu(true);
-//        collectList.add(equipmentCollectModel);
-//        equipmentCollectModel = new EquipmentCollectModel();
-//        equipmentCollectModel.setSle(false);
-//        equipmentCollectModel.setAddress("武汉花山台区4");
-//        equipmentCollectModel.setType("调压器");
-//        equipmentCollectModel.setStatu(true);
-//        collectList.add(equipmentCollectModel);
-//        equipmentCollectModel = new EquipmentCollectModel();
-//        equipmentCollectModel.setSle(false);
-//        equipmentCollectModel.setAddress("武汉花山台区5");
-//        equipmentCollectModel.setType("调压器");
-//        equipmentCollectModel.setStatu(false);
-//        collectList.add(equipmentCollectModel);
-//        return collectList;
-
-
-
-//        workingList.clear();
-//        EquipmentWorkingModel equipmentWorkingModel = new EquipmentWorkingModel();
-//        equipmentWorkingModel.setSle(true);
-//        equipmentWorkingModel.setAddress("武汉花山台区1");
-//        equipmentWorkingModel.setType("调压器");
-//        equipmentWorkingModel.setStatu(true);
-//        workingList.add(equipmentWorkingModel);
-//        equipmentWorkingModel = new EquipmentWorkingModel();
-//        equipmentWorkingModel.setSle(false);
-//        equipmentWorkingModel.setAddress("武汉花山台区2");
-//        equipmentWorkingModel.setType("调压器");
-//        equipmentWorkingModel.setStatu(true);
-//        workingList.add(equipmentWorkingModel);
-//        equipmentWorkingModel = new EquipmentWorkingModel();
-//        equipmentWorkingModel.setSle(false);
-//        equipmentWorkingModel.setAddress("武汉花山台区3");
-//        equipmentWorkingModel.setType("调压器");
-//        equipmentWorkingModel.setStatu(true);
-//        workingList.add(equipmentWorkingModel);
-//        equipmentWorkingModel = new EquipmentWorkingModel();
-//        equipmentWorkingModel.setSle(false);
-//        equipmentWorkingModel.setAddress("武汉花山台区4");
-//        equipmentWorkingModel.setType("调压器");
-//        equipmentWorkingModel.setStatu(true);
-//        workingList.add(equipmentWorkingModel);
-//        equipmentWorkingModel = new EquipmentWorkingModel();
-//        equipmentWorkingModel.setSle(false);
-//        equipmentWorkingModel.setAddress("武汉花山台区5");
-//        equipmentWorkingModel.setType("调压器");
-//        equipmentWorkingModel.setStatu(false);
-//        workingList.add(equipmentWorkingModel);
-//        return workingList;
 
 
     @Override

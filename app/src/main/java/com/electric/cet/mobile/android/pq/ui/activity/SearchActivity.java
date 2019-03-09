@@ -26,6 +26,7 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
     private SearchListAdapter adapter;
     private List<String> list = new ArrayList<>();
     private List<DataBean> dataBeans = new ArrayList<>();
+    private int requestCode = 0;
 
     private Handler handler = new Handler() {
         @Override
@@ -46,6 +47,7 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
         setContentView(R.layout.activity_search);
         initView();
         initData();
+        requestCode = getIntent().getIntExtra("requestCode",-1);
     }
 
     private void initView() {
@@ -90,7 +92,7 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent();
         intent.putExtra("deviceID",dataBeans.get(position).getDeviceId()+"");
-        setResult(1001,intent);
+        setResult(requestCode,intent);
         //返回选中的数据
         finish();
     }

@@ -7,9 +7,6 @@ import android.util.Log;
 import com.electric.cet.mobile.android.pq.Bean.LoginBean;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -48,6 +45,7 @@ public class OkHttpUtils {
 
     public static Response response = null;
 
+
     public static void postLogin(String url, final Request request) {
 
         Call call = client.newCall(request);
@@ -74,16 +72,19 @@ public class OkHttpUtils {
                     if (ResponseCode == 200) {
                         Log.i("登录状态", "登录成功");
                         String data = loginData.getData().toString();
-                        try {
-                            JSONObject jsonObject = new JSONObject(data);
-                            String mToken = jsonObject.optString("token");
-                            Log.d("login11",mToken);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(data);
+//                            String mToken = jsonObject.optString("token");
+////                            SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
+//                            Log.d("login11",mToken);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
                         //保存token
                         //用sp工具保存
 //                        PreferenceUtils.putString(getApplicationContext(), "token", mToken);
+
+                        
 
                     }
                 }

@@ -1,7 +1,5 @@
 package com.electric.cet.mobile.android.pq.ui.view;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,6 +11,8 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.ArrayList;
 
 /**
  * 该类用于画曲线图
@@ -295,21 +295,21 @@ public class GraphicalView extends View {
         drawGrid(canvas);
         ArrayList<Point> list = GraphicalUtils.yDatas2PointCurve(
                 para.getYdatas1(), total_height, para.getTotal_score(), point);
-		ArrayList<Point> list1 = GraphicalUtils.yDatas2PointCurve(
-				para.getYdatas2(), total_height, para.getTotal_score(), point);
-		ArrayList<Point> list2 = GraphicalUtils.yDatas2PointCurve(
-				para.getYdatas4(), total_height, para.getTotal_score(), point);
+//		ArrayList<Point> list1 = GraphicalUtils.yDatas2PointCurve(
+//				para.getYdatas2(), total_height, para.getTotal_score(), point);
+//		ArrayList<Point> list2 = GraphicalUtils.yDatas2PointCurve(
+//				para.getYdatas4(), total_height, para.getTotal_score(), point);
         Paint paint = new Paint();
         paint.setAntiAlias(false);
         paint.setColor(Color.RED);
         drawMline(canvas, list, paint);
         drawMpoint(canvas, list, paint);
-		paint.setColor(Color.BLUE);
-		drawMline(canvas, list1, paint);
-		drawMpoint(canvas, list1, paint);
-		paint.setColor(Color.GREEN);
-		drawMline(canvas, list2, paint);
-		drawMpoint(canvas, list2, paint);
+//		paint.setColor(Color.BLUE);
+//		drawMline(canvas, list1, paint);
+//		drawMpoint(canvas, list1, paint);
+//		paint.setColor(Color.GREEN);
+//		drawMline(canvas, list2, paint);
+//		drawMpoint(canvas, list2, paint);
         if (para.isDrawTextAndLine()) {
             drawCurveTextAndLine(canvas);
         }

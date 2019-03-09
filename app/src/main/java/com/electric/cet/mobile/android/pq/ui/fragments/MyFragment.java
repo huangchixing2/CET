@@ -55,7 +55,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     }
 
     //退出登录请求GET
-    public void logOut(){
+    public void logOut(final String token){
         OkHttpClient client_option = new OkHttpClient();
         Request request = new Request.Builder().url(Constans.URL_LOGINOUT).get().build();
         client_option.newCall(request).enqueue(new Callback() {
@@ -66,13 +66,20 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+//                SharedPreferences sp = getContext().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sp.edit();
+//                editor.remove(token);
+//                editor.apply();
+
+
 
                 Log.d("logout", "退出登录成功");
             }
         });
+
     }
 
-
+private static String token;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -87,7 +94,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(abountIntent);
                 break;
             case R.id.cet_my_login_out:
-                logOut();
+                logOut(token);
+                getActivity().onBackPressed();
+
                 break;
             default:
                 break;

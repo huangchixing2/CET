@@ -20,10 +20,13 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.electric.cet.mobile.android.pq.Bean.CurrDataList;
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.Bean.DeviceBean;
+import com.electric.cet.mobile.android.pq.Bean.PowerDataListBean;
 import com.electric.cet.mobile.android.pq.Bean.RealTimeBean;
 import com.electric.cet.mobile.android.pq.Bean.TrendBean;
+import com.electric.cet.mobile.android.pq.Bean.VoteDateListBean;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.model.DataTrend;
@@ -61,6 +64,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     private TextView bdate_tv;
     private TextView adate_tv;
     private boolean isbdate;
+    private LinearLayout trend_ll;
 
     private List<View> views;
     private ViewPager viewPager;
@@ -79,6 +83,8 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     private TextView circuit;
     private TextView location;
     private RelativeLayout count_rl;
+    private TrendBean trendBean;
+    private RelativeLayout trend_rl;
 
     private TextView cet_realtime_input_avoltage;
     private TextView cet_realtime_out_avoltage;
@@ -100,6 +106,9 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     private TextView cet_realtime_out_cpower;
     private TextView cet_realtime_voltage_adjust;
     private TextView cet_realtime_nopower;
+    private RelativeLayout cet_realtime_rl;
+
+    private int rb = 0;
 
     private DataBean dataBean;
     private DeviceBean deviceBean;
@@ -152,6 +161,23 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                 case 1001:
                     refreshCountData(Integer.parseInt(msg.getData().getString("deviceID")));
                     break;
+                case 1003:
+                    initRealtimeData(msg.getData().getString("deviceID"));
+                    break;
+                case 1004:
+                    initTrendData(msg.getData().getString("deviceID"));
+                    break;
+                case 101:
+                    trend_ll.removeAllViews();
+                    if (rb == 0) {
+                        trend_ll.addView(new GraphicalView(getActivity(), GraphicalUtils.drawDataTrend(getTrendData(), 20, 0)));
+                    } else if (rb == 1) {
+                        trend_ll.addView(new GraphicalView(getActivity(), GraphicalUtils.drawDataTrend(getTrendData(), 10, 0)));
+                    } else if (rb == 2) {
+                        trend_ll.addView(new GraphicalView(getActivity(), GraphicalUtils.drawDataTrend(getTrendData(), 15, 0)));
+                    }
+                    break;
+
                 default:
                     break;
             }
@@ -255,7 +281,7 @@ private void refreshCountData(int deviceId){
 
 
     //Get方式请求趋势数据
-    public void initTrendData() {
+    public void initTrendData(String deviceId) {
         OkHttpClient client = new OkHttpClient();
         String DeviceId = null;
 
@@ -263,7 +289,7 @@ private void refreshCountData(int deviceId){
 //                .add("startTime", "2019-02-22")  //参数如何填入？
 ////        bdate_tv.getText().toString().trim().replace("/","-")
 //                .add("endTime", "2019-02-28").build();
-        String url_trend = Constans.URL_BEFORE + dataBean.getDeviceId() + Constans.URL_AFTERTREND + bdate_tv.getText().toString().trim().replace("/", "-") + "/" + adate_tv.getText().toString().trim().replace("/", "-");
+        String url_trend = Constans.URL_BEFORE + deviceId + Constans.URL_AFTERTREND + bdate_tv.getText().toString().trim().replace("/", "-") + "/" + adate_tv.getText().toString().trim().replace("/", "-");
         Request request = new Request.Builder().url(url_trend).get().build();
 //        doGET(url_trend, request);
         client.newCall(request).enqueue(new Callback() {
@@ -284,11 +310,11 @@ private void refreshCountData(int deviceId){
                 //new一个Gson对象
                 Gson gson = new Gson();
                 //将json字符串转为dataBean对象
-                TrendBean trendBean = gson.fromJson(jsonData, TrendBean.class);
-                Log.d("huangchixing22",trendBean.getData().getDeviceId() + "");
-                Log.d("huangchixing22",trendBean.getData().getVoltData().get(1).getPhaseType() + "");
-                Log.d("huangchixing22", trendBean.getData().getCurrData().get(0).getDataList().get(0).getRecordTime());
-
+                trendBean = gson.fromJson(jsonData, TrendBean.class);
+//                Log.d("huangchixing22", trendBean.getData().getDeviceId() + "");
+//                Log.d("huangchixing22", trendBean.getData().getVoltData().get(1).getPhaseType() + "");
+//                Log.d("huangchixing22", trendBean.getData().getCurrData().get(0).getDataList().get(0).getRecordTime());
+                handler.sendEmptyMessage(101);
 
             }
         });
@@ -297,14 +323,14 @@ private void refreshCountData(int deviceId){
     private SQLhelper_Device dbHelper;
 
     //请求实时数据
-    public void initRealtimeData() {
+    public void initRealtimeData(String deviceId) {
         OkHttpClient client = new OkHttpClient();
         String deviceid = null;
 
 
 //        RequestBody formBody = new FormBody.Builder().add("deviceId", "98").build(); //参数如何填入？
         Log.i("deviceid", dataBean.getDeviceId() + "");
-        String url_realTime = Constans.URL_BEFORE + dataBean.getDeviceId() + Constans.URL_AFTER;
+        String url_realTime = Constans.URL_BEFORE + deviceId + Constans.URL_AFTER;
         Request request = new Request.Builder().url(url_realTime).get().build();
 //        doGET(url_realTime, request);
         client.newCall(request).enqueue(new Callback() {
@@ -379,11 +405,11 @@ private void refreshCountData(int deviceId){
                 break;
             case 1:
                 realtimeRB.setChecked(true);
-                initRealtimeData();
+                initRealtimeData(String.valueOf(dataBean.getDeviceId()));
                 break;
             case 2:
                 trendRB.setChecked(true);
-                initTrendData();
+                initTrendData(String.valueOf(dataBean.getDeviceId()));
                 break;
             default:
                 break;
@@ -409,12 +435,18 @@ private void refreshCountData(int deviceId){
                 break;
             case R.id.cet_data_trend_voltage_rb:
                 voltageRB.setChecked(true);
+                rb = 0;
+                handler.sendEmptyMessage(101);
                 break;
             case R.id.cet_data_trend_current_rb:
                 currentRB.setChecked(true);
+                rb = 1;
+                handler.sendEmptyMessage(101);
                 break;
             case R.id.cet_data_trend_power_rb:
                 powerRB.setChecked(true);
+                rb = 2;
+                handler.sendEmptyMessage(101);
                 break;
             default:
                 break;
@@ -423,36 +455,61 @@ private void refreshCountData(int deviceId){
 
     private List<DataTrend> getTrendData() {
         List<DataTrend> list = new ArrayList<>();
-        DataTrend dataTrend = new DataTrend();
-        dataTrend.setData("1-15");
-        dataTrend.setVoltage("100");
-        dataTrend.setCurrent("60");
-        dataTrend.setPower("150");
-        list.add(dataTrend);
-        dataTrend = new DataTrend();
-        dataTrend.setData("1-16");
-        dataTrend.setVoltage("120");
-        dataTrend.setCurrent("50");
-        dataTrend.setPower("130");
-        list.add(dataTrend);
-        dataTrend = new DataTrend();
-        dataTrend.setData("1-17");
-        dataTrend.setVoltage("150");
-        dataTrend.setCurrent("90");
-        dataTrend.setPower("180");
-        list.add(dataTrend);
-        dataTrend = new DataTrend();
-        dataTrend.setData("1-18");
-        dataTrend.setVoltage("130");
-        dataTrend.setCurrent("100");
-        dataTrend.setPower("200");
-        list.add(dataTrend);
-        dataTrend = new DataTrend();
-        dataTrend.setData("1-19");
-        dataTrend.setVoltage("90");
-        dataTrend.setCurrent("10");
-        dataTrend.setPower("20");
-        list.add(dataTrend);
+        if(rb == 0){
+            List<VoteDateListBean> voteDateList = trendBean.getData().getVoltData().get(0).getDataList();
+            for(int i = 0;i<voteDateList.size();i++){
+                DataTrend dataTrend = new DataTrend();
+                dataTrend.setData(voteDateList.get(i).getRecordTime().substring(5,10));
+                dataTrend.setVoltage(String.valueOf(voteDateList.get(i).getValue()));
+                list.add(dataTrend);
+            }
+        }else if(rb == 1){
+            List<CurrDataList> currDataList = trendBean.getData().getCurrData().get(0).getDataList();
+            for(int i = 0;i<currDataList.size();i++){
+                DataTrend dataTrend = new DataTrend();
+                dataTrend.setData(currDataList.get(i).getRecordTime().substring(5,10));
+                dataTrend.setVoltage(String.valueOf(currDataList.get(i).getValue()));
+                list.add(dataTrend);
+            }
+        }else if(rb == 2){
+            List<PowerDataListBean> powerDataList = trendBean.getData().getPowerData().get(0).getDataList();
+            for(int i = 0;i<powerDataList.size();i++){
+                DataTrend dataTrend = new DataTrend();
+                dataTrend.setData(powerDataList.get(i).getRecordTime().substring(5,10));
+                dataTrend.setVoltage(String.valueOf(powerDataList.get(i).getValue()));
+                list.add(dataTrend);
+            }
+        }
+//        DataTrend dataTrend = new DataTrend();
+//        dataTrend.setData("1-15");
+//        dataTrend.setVoltage("100");
+//        dataTrend.setCurrent("60");
+//        dataTrend.setPower("150");
+//        list.add(dataTrend);
+//        dataTrend = new DataTrend();
+//        dataTrend.setData("1-16");
+//        dataTrend.setVoltage("120");
+//        dataTrend.setCurrent("50");
+//        dataTrend.setPower("130");
+//        list.add(dataTrend);
+//        dataTrend = new DataTrend();
+//        dataTrend.setData("1-17");
+//        dataTrend.setVoltage("150");
+//        dataTrend.setCurrent("90");
+//        dataTrend.setPower("180");
+//        list.add(dataTrend);
+//        dataTrend = new DataTrend();
+//        dataTrend.setData("1-18");
+//        dataTrend.setVoltage("130");
+//        dataTrend.setCurrent("100");
+//        dataTrend.setPower("200");
+//        list.add(dataTrend);
+//        dataTrend = new DataTrend();
+//        dataTrend.setData("1-19");
+//        dataTrend.setVoltage("90");
+//        dataTrend.setCurrent("10");
+//        dataTrend.setPower("20");
+//        list.add(dataTrend);
         return list;
     }
 
@@ -473,6 +530,7 @@ private void refreshCountData(int deviceId){
            public void onClick(View v) {
                Intent intent = new Intent();
                intent.setClass(getActivity(),SearchActivity.class);
+               intent.putExtra("requestCode",1001);
                getActivity().startActivityForResult(intent,1001);
            }
        });
@@ -501,12 +559,21 @@ private void refreshCountData(int deviceId){
         cet_realtime_out_cpower = (TextView) view.findViewById(R.id.cet_realtime_out_cpower);
         cet_realtime_voltage_adjust = (TextView) view.findViewById(R.id.cet_realtime_voltage_adjust);
         cet_realtime_nopower = (TextView) view.findViewById(R.id.cet_realtime_nopower);
-
+        cet_realtime_rl = (RelativeLayout) view.findViewById(R.id.cet_data_realtime_search_rl);
+        cet_realtime_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(),SearchActivity.class);
+                intent.putExtra("requestCode",1003);
+                getActivity().startActivityForResult(intent,1003);
+            }
+        });
     }
 
     private void initTrendView(View view) {
-        LinearLayout layout = (LinearLayout) view.findViewById(R.id.cet_data_trend_layout);
-        layout.addView(new GraphicalView(getActivity(), GraphicalUtils.drawDataTrend(getTrendData(), 220, 0)));
+        trend_rl = (RelativeLayout) view.findViewById(R.id.cet_data_trend_search_rl);
+         trend_ll = (LinearLayout) view.findViewById(R.id.cet_data_trend_layout);
         trendRadioGroup = (RadioGroup) view.findViewById(R.id.cet_data_trend_rg);
         voltageRB = (RadioButton) view.findViewById(R.id.cet_data_trend_voltage_rb);
         currentRB = (RadioButton) view.findViewById(R.id.cet_data_trend_current_rb);
@@ -516,6 +583,15 @@ private void refreshCountData(int deviceId){
         adate_tv = (TextView) view.findViewById(R.id.cet_data_trend_date_after);
         bdate_tv.setOnClickListener(this);
         adate_tv.setOnClickListener(this);
+        trend_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(),SearchActivity.class);
+                intent.putExtra("requestCode",1004);
+                getActivity().startActivityForResult(intent,1004);
+            }
+        });
     }
 
     private void showDataPickerView() {
@@ -528,6 +604,7 @@ private void refreshCountData(int deviceId){
                 } else {
                     adate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                 }
+                initTrendData(String.valueOf(dataBean.getDeviceId()));
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         dialog.show();
