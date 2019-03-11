@@ -9,6 +9,7 @@ public class Constans {
     public final static int EXCEPT_NUM = 5; //功能异常数量
     public final static int POWEROFF_NUM = 6;//停电数量
 
+
     public static String URL_DEVICEINFO = "http://192.168.2.199/LowLineSys/device/data/all?token=123"; //所有信息接口url
     public static String URL_OPTION = "http://192.168.2.199/LowLineSys/device/data/options?token=123";//tree接口url
     public static String URL_LOGIN  = "http://192.168.2.199/LowLineSys/user/login"; //登录接口url

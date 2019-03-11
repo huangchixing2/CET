@@ -1,6 +1,7 @@
 package com.electric.cet.mobile.android.pq.ui.activity;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -90,27 +91,41 @@ public class MyPwdActivity extends AppCompatActivity implements TextWatcher, Vie
         if (checkNull()) {
             return;
         }
+
+        //旧密码需要从sp中恢复
+        SharedPreferences sp = getSharedPreferences("UserData", MODE_PRIVATE);
+        final String orinalPassWd = sp.getString("passWd",""); //获取原始登录的密码
+
         //新密码与确认密码是否一致
         if (!et_confirm.getText().toString().equals(et_new.getText().toString())) {
             et_confirm.setText("");
             requstFocus(et_confirm, "两次密码不一致", Color.RED, true);
             return;
         }
+
         dialog = ProgressDialog.show(this, "", "修改中,请稍后...", true);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //判断旧密码是否正确
-                //旧密码需要从sp中恢复
-                if (!"123456".equals(et_orgin.getText().toString())) {
+                //判断原始密码是否正确输入
+                if (!orinalPassWd.equals(et_orgin.getText().toString())) {
                     et_orgin.setText("");
                     requstFocus(et_orgin, "原密码错误", Color.RED, true);
-                } else {
+                } else if(et_new.getText().toString().equals(et_orgin.getText().toString())){   //判断新密码是否和原始密码相同
+                    et_new.setText("");
+                    requstFocus(et_new, "新密码和原始密码不能相同", Color.RED, true);
+                }
+                else {
                     Toast.makeText(MyPwdActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
                 }
+
+
+
                 dialog.dismiss();
             }
         }, 3000);
+
+
         postPwdData();
     }
 
@@ -189,31 +204,6 @@ public class MyPwdActivity extends AppCompatActivity implements TextWatcher, Vie
 
     }
 
-//    private ProgressDialog dialog;
-//    @Override
-//    public void onClick(View v) {
-//        if(checkNull()){
-//            return;
-//        }
-//        if(!et_confirm.getText().toString().equals(et_new.getText().toString())){
-//            et_confirm.setText("");
-//            requstFocus(et_confirm, "两次密码不一致", Color.RED,true);
-//            return;
-//        }
-//        dialog=ProgressDialog.show(this,"","修改中,请稍后...",true);
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                if(!"123456".equals(et_orgin.getText().toString())){
-//                    et_orgin.setText("");
-//                    requstFocus(et_orgin, "原密码错误", Color.RED, true);
-//                }else{
-//                    Toast.makeText(MyPwdActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
-//                }
-//                dialog.dismiss();
-//            }
-//        },3000);
-//    }
 
     private boolean checkNull() {
         //还需要判断原始密码是否正确？
