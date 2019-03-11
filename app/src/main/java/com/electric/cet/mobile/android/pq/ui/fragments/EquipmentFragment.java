@@ -22,10 +22,9 @@ import android.widget.Toast;
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
-import com.electric.cet.mobile.android.pq.model.EquipmentCollectModel;
 import com.electric.cet.mobile.android.pq.model.EquipmentWorkingModel;
-import com.electric.cet.mobile.android.pq.ui.activity.EquipmentCollectAddActivity;
 import com.electric.cet.mobile.android.pq.ui.activity.CollectDetailActivity;
+import com.electric.cet.mobile.android.pq.ui.activity.EquipmentCollectAddActivity;
 import com.electric.cet.mobile.android.pq.ui.activity.WorkingDetailActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.BasePagerAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentCollectAdapter;
@@ -35,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageChangeListener,RadioGroup.OnCheckedChangeListener,View.OnClickListener {
+public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageChangeListener, RadioGroup.OnCheckedChangeListener, View.OnClickListener {
     private RadioGroup equipmentRadioGroup;
     private RadioButton collectRB;
     private RadioButton workingRB;
@@ -69,8 +68,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private TextView equipment_collect_title_statu;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_equipment, container, false);
         initView(view);
         initData();
@@ -78,29 +76,23 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     }
 
     private void initView(View view) {
-        View collectView = LayoutInflater.from(getActivity()).inflate(
-                R.layout.fragment_equipment_collect_layout, null);
+        View collectView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_equipment_collect_layout, null);
         initCollectView(collectView);
-        View workingView = LayoutInflater.from(getActivity()).inflate(
-                R.layout.fragment_equipment_working_layout, null);
+        View workingView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_equipment_working_layout, null);
         initWorkingView(workingView);
         views.add(collectView);
         views.add(workingView);
         equipmentRadioGroup = (RadioGroup) view.findViewById(R.id.cet_equipment_list_rg);
-        collectRB = (RadioButton) view
-                .findViewById(R.id.cet_equipment_collect_tab);
-        workingRB = (RadioButton) view
-                .findViewById(R.id.cet_equipment_working_tab);
+        collectRB = (RadioButton) view.findViewById(R.id.cet_equipment_collect_tab);
+        workingRB = (RadioButton) view.findViewById(R.id.cet_equipment_working_tab);
         equipmentRadioGroup.setOnCheckedChangeListener(this);
-        tabLineLayout = (LinearLayout) view
-                .findViewById(R.id.cet_equipment_tab_line_layout);
+        tabLineLayout = (LinearLayout) view.findViewById(R.id.cet_equipment_tab_line_layout);
         tablineImg = (ImageView) view.findViewById(R.id.cet_equipment_list_tab_line_img);
         viewPager = (ViewPager) view.findViewById(R.id.cet_equipment_list_viewpager);
 
         equipment_collect_title_address = (TextView) view.findViewById(R.id.equipment_collect_title_address);
         equipment_collect_title_type = (TextView) view.findViewById(R.id.equipment_collect_title_type);
         equipment_collect_title_statu = (TextView) view.findViewById(R.id.equipment_collect_title_statu);
-
 
 
         DisplayMetrics metrics = new DisplayMetrics();
@@ -121,7 +113,6 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         collectAdapter.notifyDataSetChanged();
         workingAdapter.notifyDataSetChanged();
     }
-
 
 
     @Override
@@ -165,8 +156,8 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         }
     }
 
-//台账view显示
-    private void initCollectView(View view){
+    //台账view显示
+    private void initCollectView(View view) {
         collect_lv = (ListView) view.findViewById(R.id.cet_equipment_collect_lv);
         collectAdapter = new EquipmentCollectAdapter(getActivity(), allDevicesList);
         collect_lv.setAdapter(collectAdapter);
@@ -193,8 +184,9 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
             }
         });
     }
-//工况view显示
-    private  void initWorkingView(View view){
+
+    //工况view显示
+    private void initWorkingView(View view) {
         working_lv = (ListView) view.findViewById(R.id.cet_equipment_working_lv);
         workingAdapter = new EquipmentWorkingAdapter(getActivity(), allDevicesList);
         working_lv.setAdapter(workingAdapter);
@@ -239,15 +231,15 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.cet_equipment_collect_add:
                 Intent addIntent = new Intent();
-                addIntent.setClass(getActivity(),EquipmentCollectAddActivity.class);
+                addIntent.setClass(getActivity(), EquipmentCollectAddActivity.class);
                 startActivity(addIntent);
                 break;
             case R.id.cet_equipment_collect_edit:
                 Intent editIntent = new Intent();
-                editIntent.setClass(getActivity(),EquipmentCollectAddActivity.class);
+                editIntent.setClass(getActivity(), EquipmentCollectAddActivity.class);
                 startActivity(editIntent);
                 break;
             case R.id.cet_equipment_collect_del:
@@ -257,8 +249,8 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
                     deleteSelectedData();
                 }
                 break;
-               default:
-                   break;
+            default:
+                break;
         }
     }
 

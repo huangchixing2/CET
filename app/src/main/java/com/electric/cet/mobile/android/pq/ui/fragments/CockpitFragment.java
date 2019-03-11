@@ -44,8 +44,6 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout sim_rl;
     private RelativeLayout dysfunction_rl;
     private RelativeLayout power_rl;
-//    public static String url_deviceInfo = "http://192.168.2.102/LowLineSys/device/data/all?token=123";
-//    public static String url_option = "http://192.168.2.102/LowLineSys/device/data/options?token=123";
     private String json = null;
 
     private TextView install_tv;
@@ -62,7 +60,6 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-
                   ArrayList<Integer> list = (ArrayList<Integer>) msg.getData().getBundle("data").get("list");
                     install_tv.setText(list.get(0)+""); // int转换为string，否则报错
                     online_tv.setText(list.get(1)+"");
@@ -86,7 +83,6 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
 
         return view;
     }
-
 
     private void initView(View view) {
         install_rl = (RelativeLayout) view.findViewById(R.id.cockpit_install_num_rl);
@@ -127,13 +123,9 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
      * 显示所有数据
      */
     private void initAllData() {
-//        GetAsyncTaskData getAsyncTaskData = new GetAsyncTaskData();
-//        getAsyncTaskData.execute();
 
         OkHttpClient client = new OkHttpClient();
-//        RequestBody formBody = new FormBody.Builder().add("Token", "123").build();
         final Request request = new Request.Builder().url(Constans.URL_DEVICEINFO).get().build();
-//        doGET(url_deviceInfo, request);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -160,7 +152,6 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                     SQLhelper_Device.Instance(getActivity()).clearAllUserInfo();
                     //网络请求到的数据写入数据库
                    SQLhelper_Device.Instance(getActivity()).insertUserInfo(deviceBean.getData());
-
                     //发送消息给主线程
                     Message message = handler.obtainMessage();
                     Bundle bundle = new Bundle();

@@ -368,27 +368,6 @@ private void refreshCountData(int deviceId){
     }
 
 
-//                cet_realtime_input_avoltage.setText("A相电压：" + realTimeBean.getData().getAVoltageInput() + "");
-//                cet_realtime_out_avoltage.setText("A相电压：" + realTimeBean.getData().getAVoltageOutput() + "");
-//                cet_realtime_input_bvoltage.setText("B相电压：" + realTimeBean.getData().getBVoltageInput() + "");
-//                cet_realtime_out_bvoltage.setText("B相电压：" + realTimeBean.getData().getBVoltageOutput() + "");
-//                cet_realtime_input_cvoltage.setText("C相电压：" + realTimeBean.getData().getCVoltageInput() + "");
-//                cet_realtime_out_cvoltage.setText("C相电压：" + realTimeBean.getData().getCVoltageOutput() + "");
-//                cet_realtime_input_acurrent.setText("A相电流：" + realTimeBean.getData().getACurrentInput() + "");
-//                cet_realtime_out_acurrent.setText("A相电流：" + realTimeBean.getData().getACurrentOutput() + "");
-//                cet_realtime_input_bcurrent.setText("B相电流：" + realTimeBean.getData().getBCurrentInput() + "");
-//                cet_realtime_out_bcurrent.setText("B相电流：" + realTimeBean.getData().getBCurrentOutput() + "");
-//                cet_realtime_input_ccurrent.setText("C相电流：" + realTimeBean.getData().getCCurrentInput() + "");
-//                cet_realtime_out_ccurrent.setText("C相电压：" + realTimeBean.getData().getCCurrentOutput() + "");
-//                cet_realtime_input_apower.setText("A相功率因数：" + realTimeBean.getData().getAPowerFactorInput() + "");
-//                cet_realtime_out_apower.setText("A相功率因数：" + realTimeBean.getData().getAPowerFactorOutput() + "");
-//                cet_realtime_input_bpower.setText("B相功率因数：" + realTimeBean.getData().getBBowerFactorInput() + "");
-//                cet_realtime_out_bpower.setText("B相功率因数：" + realTimeBean.getData().getBBowerFactorOutput() + "");
-//                cet_realtime_input_cpower.setText("C相功率因数：" + realTimeBean.getData().getCPowerFactorInput() + "");
-//                cet_realtime_out_cpower.setText("C相功率因数：" + realTimeBean.getData().getCPowerFactorOutput() + "");
-//                cet_realtime_voltage_adjust.setText("调压档位：" + realTimeBean.getData().getVoltageRegulate() + "");
-//                cet_realtime_nopower.setText("无功投入：" + realTimeBean.getData().getReactivePowerInput() + "");
-
 
     @Override
     public void onPageScrolled(int i, float v, int i1) {
