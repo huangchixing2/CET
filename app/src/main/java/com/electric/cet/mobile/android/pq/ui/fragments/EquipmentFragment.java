@@ -3,12 +3,15 @@ package com.electric.cet.mobile.android.pq.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -16,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +30,12 @@ import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.model.EquipmentWorkingModel;
 import com.electric.cet.mobile.android.pq.ui.activity.CollectDetailActivity;
 import com.electric.cet.mobile.android.pq.ui.activity.EquipmentCollectAddActivity;
+import com.electric.cet.mobile.android.pq.ui.activity.SearchActivity;
 import com.electric.cet.mobile.android.pq.ui.activity.WorkingDetailActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.BasePagerAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentCollectAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentWorkingAdapter;
+import com.electric.cet.mobile.android.pq.utils.Constans;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +73,24 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private TextView equipment_collect_title_address;
     private TextView equipment_collect_title_type;
     private TextView equipment_collect_title_statu;
+    private Spinner spinner_collect;
+    private List<String> data_list;
+    private RelativeLayout collect_rl; //台账
+    private RelativeLayout work_rl; //工况
+    ArrayAdapter mAdapter;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 100:
+                break;
+                default:
+                    break;
+            }
+        }
+    };
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -156,10 +181,51 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         }
     }
 
+    //使用数组形式操作
+    class SpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), CollectDetailActivity.class);
+            intent.putExtra("data", allDevicesList.get(arg2));
+            startActivity(intent);
+        }
+
+        public void onNothingSelected(AdapterView<?> arg0) {
+        }
+    }
+
     //台账view显示
     private void initCollectView(View view) {
         collect_lv = (ListView) view.findViewById(R.id.cet_equipment_collect_lv);
         collectAdapter = new EquipmentCollectAdapter(getActivity(), allDevicesList);
+        collect_rl = (RelativeLayout)view.findViewById(R.id.cet_device_search_rl);
+        spinner_collect = (Spinner) view.findViewById(R.id.spinner_collect);
+        //设置spinner监听
+        spinner_collect.setOnItemSelectedListener(new SpinnerSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                super.onItemSelected(parent, view, pos, id);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                super.onNothingSelected(arg0);
+            }
+        });
+
+        collect_rl.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(),SearchActivity.class);
+                intent.putExtra("requestCode",Constans.COLLECT_CODE);
+                getActivity().startActivityForResult(intent,Constans.COLLECT_CODE);
+            }
+        }));
+
+
         collect_lv.setAdapter(collectAdapter);
         collect_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -177,6 +243,8 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         add_tv.setOnClickListener(this);
         edit_tv.setOnClickListener(this);
         del_tv.setOnClickListener(this);
+
+
         all_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -189,6 +257,18 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private void initWorkingView(View view) {
         working_lv = (ListView) view.findViewById(R.id.cet_equipment_working_lv);
         workingAdapter = new EquipmentWorkingAdapter(getActivity(), allDevicesList);
+
+        work_rl = (RelativeLayout)view.findViewById(R.id.cet_working_search_rl);
+        work_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(),SearchActivity.class);
+                intent.putExtra("requestCode",Constans.WORKING_CODE);
+                getActivity().startActivityForResult(intent,Constans.WORKING_CODE);
+            }
+        });
+
         working_lv.setAdapter(workingAdapter);
         working_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -283,4 +363,9 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         }
         collectAdapter.notifyDataSetChanged();
     }
+
+    public Handler getHandler() {
+        return handler;
+    }
+
 }

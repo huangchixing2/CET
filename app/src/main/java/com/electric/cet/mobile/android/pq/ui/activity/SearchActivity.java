@@ -68,7 +68,7 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
-
+            //按照设备名称查询并搜索
             @Override
             public void afterTextChanged(Editable s) {
                 dataBeans = SQLhelper_Device.Instance(SearchActivity.this).queryDeviceListByName(s.toString());
@@ -95,5 +95,10 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
         setResult(requestCode,intent);
         //返回选中的数据
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

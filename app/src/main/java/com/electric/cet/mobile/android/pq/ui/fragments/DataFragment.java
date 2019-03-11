@@ -113,11 +113,6 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     private DataBean dataBean;
     private DeviceBean deviceBean;
 
-
-//    String url_before = "http://192.168.2.102/LowLineSys/device/";
-//    String url_after = "/data/realtime";
-//    String url_afterTrend = "/data/trend/";
-
     private int baseDistance;
 
     private Handler handler = new Handler() {
@@ -492,6 +487,7 @@ private void refreshCountData(int deviceId){
         return list;
     }
 
+    //统计数据界面初始化
     private void initCountView(View view) {
         data_address = (TextView) view.findViewById(R.id.data_address);
         voltageRegulateTime = (TextView) view.findViewById(R.id.voltageRegulateTime);
@@ -509,8 +505,8 @@ private void refreshCountData(int deviceId){
            public void onClick(View v) {
                Intent intent = new Intent();
                intent.setClass(getActivity(),SearchActivity.class);
-               intent.putExtra("requestCode",1001);
-               getActivity().startActivityForResult(intent,1001);
+               intent.putExtra("requestCode",Constans.COUNT_CODE);
+               getActivity().startActivityForResult(intent,Constans.COUNT_CODE);
            }
        });
     }
@@ -544,8 +540,8 @@ private void refreshCountData(int deviceId){
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(),SearchActivity.class);
-                intent.putExtra("requestCode",1003);
-                getActivity().startActivityForResult(intent,1003);
+                intent.putExtra("requestCode",Constans.REALTIME_CODE);
+                getActivity().startActivityForResult(intent,Constans.REALTIME_CODE);
             }
         });
     }
@@ -567,8 +563,8 @@ private void refreshCountData(int deviceId){
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(),SearchActivity.class);
-                intent.putExtra("requestCode",1004);
-                getActivity().startActivityForResult(intent,1004);
+                intent.putExtra("requestCode",Constans.TREND_CODE);
+                getActivity().startActivityForResult(intent,Constans.TREND_CODE);
             }
         });
     }

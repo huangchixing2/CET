@@ -15,6 +15,7 @@ import com.electric.cet.mobile.android.pq.ui.fragments.CockpitFragment;
 import com.electric.cet.mobile.android.pq.ui.fragments.DataFragment;
 import com.electric.cet.mobile.android.pq.ui.fragments.EquipmentFragment;
 import com.electric.cet.mobile.android.pq.ui.fragments.MyFragment;
+import com.electric.cet.mobile.android.pq.utils.Constans;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
 
 
     private DataFragment data_fragment;
+    private EquipmentFragment equipment_fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,8 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
         fragments.add(new CockpitFragment());
         data_fragment = new DataFragment();
         fragments.add(data_fragment);
-        fragments.add(new EquipmentFragment());
+        equipment_fragment = new EquipmentFragment();
+        fragments.add(equipment_fragment);
         fragments.add(new MyFragment());
     }
 
@@ -146,6 +149,11 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
 //            Log.i("devicesId",data.getIntExtra("devicesId",-1)+"null");
 //        }
 //        Log.i("MainActivity","search --" +data.getStringExtra("deviceID"));
+        //如果数据为空，直接返回
+        if(data == null){
+            Log.e("MainActivity","data-> null");
+            return;
+        }
         if(resultCode == 1002){
             dataRb.setChecked(true);
             data_fragment.getHandler().sendEmptyMessage(1002);
@@ -157,21 +165,31 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
 //            datahandler.sendMessage(message);
 //            data_fragment.getHandler().sendEmptyMessage(1002);
             ;
-        } else if(resultCode == 1001){
+        } else if(resultCode == Constans.COUNT_CODE){
             Message message = data_fragment.getHandler().obtainMessage();
-            message.what = 1001;
+            message.what = Constans.COUNT_CODE;
             message.getData().putString("deviceID",data.getStringExtra("deviceID"));
             data_fragment.getHandler().sendMessage(message);
-        }else if(resultCode == 1003){
+        }else if(resultCode == Constans.REALTIME_CODE){
             Message message = data_fragment.getHandler().obtainMessage();
-            message.what = 1003;
+            message.what = Constans.REALTIME_CODE;
             message.getData().putString("deviceID",data.getStringExtra("deviceID"));
             data_fragment.getHandler().sendMessage(message);
-        }else if(resultCode == 1004){
+        }else if(resultCode == Constans.TREND_CODE){
             Message message = data_fragment.getHandler().obtainMessage();
-            message.what = 1004;
+            message.what = Constans.TREND_CODE;
             message.getData().putString("deviceID",data.getStringExtra("deviceID"));
             data_fragment.getHandler().sendMessage(message);
+        }
+        else if (requestCode == Constans.COLLECT_CODE){
+            Message message = equipment_fragment.getHandler().obtainMessage();
+            message.what = Constans.COLLECT_CODE;
+            message.getData().putString("deviceID", data.getStringExtra("deviceID"));
+        }
+        else if (requestCode == Constans.WORKING_CODE){
+            Message message = equipment_fragment.getHandler().obtainMessage();
+            message.what = Constans.WORKING_CODE;
+            message.getData().putString("deviceID", data.getStringExtra("deviceID"));
         }
     }
 }
