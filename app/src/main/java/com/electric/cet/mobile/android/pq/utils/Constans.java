@@ -10,14 +10,14 @@ public class Constans {
     public final static int POWEROFF_NUM = 6;//停电数量
 
 
-    public static String URL_DEVICEINFO = "http://192.168.2.199/LowLineSys/device/data/all?token=123"; //所有信息接口url
-    public static String URL_OPTION = "http://192.168.2.199/LowLineSys/device/data/options?token=123";//tree接口url
-    public static String URL_LOGIN  = "http://192.168.2.199/LowLineSys/user/login"; //登录接口url
-    public static String URL_BEFORE = "http://192.168.2.199/LowLineSys/device/";
+    public static String URL_DEVICEINFO = "http://192.168.0.103/LowLineSys/device/data/all?token=123"; //所有信息接口url
+    public static String URL_OPTION = "http://192.168.0.103/LowLineSys/device/data/options?token=123";//tree接口url
+    public static String URL_LOGIN  = "http://192.168.0.103/LowLineSys/user/login"; //登录接口url
+    public static String URL_BEFORE = "http://192.168.0.103/LowLineSys/device/";
     public static String URL_AFTER = "/data/realtime"; //实时数据url
     public static String URL_AFTERTREND = "/data/trend/"; //趋势数据url
-    public static String URL_LOGINOUT = "http://192.168.2.199/LowLineSys/user/logout?token=123"; //退出登录接口
-    public static String URL_USERDATA = "http://192.168.2.199/LowLineSys/user/data";  //用户管理接口
+    public static String URL_LOGINOUT = "http://192.168.0.103/LowLineSys/user/logout?token=123"; //退出登录接口
+    public static String URL_USERDATA = "http://192.168.0.103/LowLineSys/user/data";  //用户管理接口
 
     public final static int COUNT_CODE = 1001;
     public final static int REALTIME_CODE = 1003;

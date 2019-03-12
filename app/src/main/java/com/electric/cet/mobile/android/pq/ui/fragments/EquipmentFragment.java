@@ -1,6 +1,8 @@
 package com.electric.cet.mobile.android.pq.ui.fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -349,6 +351,26 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         return works;
     }
 
+    //删除数据时提示用户，避免误操作
+    private void dialog(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            //删除
+                deleteSelectedData();
+            }
+        });
+        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setMessage("确定要删除此设备吗？");
+        dialog.setTitle("提示");
+        dialog.show();
+    }
 
     @Override
     public void onClick(View v) {
@@ -367,7 +389,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
                 if (!isSelectedItem()) {
                     Toast.makeText(getActivity(), "请先选择删除项", Toast.LENGTH_SHORT).show();
                 } else {
-                    deleteSelectedData();
+                    dialog();//删除数据时提示用户，避免误操作
                 }
                 break;
             default:
