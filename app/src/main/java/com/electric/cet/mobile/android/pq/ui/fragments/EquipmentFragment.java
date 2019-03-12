@@ -337,7 +337,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private void deleteSelectedData() {
         List<DataBean> deleteList = new ArrayList<>();
         for (int i = 0; i < allDevicesList.size(); i++) {
-            if (!allDevicesList.get(i).isSle()) {
+            if (allDevicesList.get(i).isSle()) {
                 deleteList.add(allDevicesList.get(i));
             }
         }

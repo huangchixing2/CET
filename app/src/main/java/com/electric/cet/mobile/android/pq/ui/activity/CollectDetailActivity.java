@@ -48,7 +48,7 @@ public class CollectDetailActivity extends Activity {
         route = (TextView) findViewById(R.id.equipment_collect_detail_route_tv);
         zonearea = (TextView) findViewById(R.id.equipment_collect_detail_zonearea_tv);
         sim = (TextView) findViewById(R.id.equipment_collect_detail_sim_tv);
-        vendor = (TextView) findViewById(R.id.equipment_collect_detail_vender);
+        vendor = (TextView) findViewById(R.id.equipment_collect_detail_vender_tv);
         model = (TextView) findViewById(R.id.equipment_collect_detail_model_tv);
         //phase = (TextView) findViewById(R.id.equipment_collect_detail_phases_tv);
         //capacity = (TextView) findViewById(R.id.equipment_collect_detail_capacity_tv);
