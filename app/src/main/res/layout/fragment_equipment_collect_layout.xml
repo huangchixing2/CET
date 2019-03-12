@@ -4,38 +4,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/cet_device_search_rl"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/cet_search_bg"
-        android:orientation="horizontal">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/cet_device_search_rl"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_marginLeft="30dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_marginRight="30dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:background="@drawable/cet_search_bg"-->
+        <!--android:orientation="horizontal">-->
 
-        <EditText
-            android:id="@+id/cet_equipment_collect_search_et"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="40dp"
-            android:background="@color/transparent"
-            android:hint="@string/cet_search_hint"
-            android:focusable="false"
-            android:clickable="false"
-            android:textSize="14sp" />
+        <!--&lt;!&ndash;<EditText&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/cet_equipment_collect_search_et"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginLeft="10dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginRight="40dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@color/transparent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:hint="@string/cet_search_hint"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:focusable="false"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:clickable="false"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textSize="14sp" />&ndash;&gt;-->
 
-        <ImageView
-            android:id="@+id/cet_equipment_collect_search_iv"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@mipmap/seach_button" />
-    </RelativeLayout>
+        <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/cet_equipment_collect_search_iv"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="17dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="17dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_alignParentRight="true"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginRight="10dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:src="@mipmap/seach_button" />&ndash;&gt;-->
+    <!--</RelativeLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"

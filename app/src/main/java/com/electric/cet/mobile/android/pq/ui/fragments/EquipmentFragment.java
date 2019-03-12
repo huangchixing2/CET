@@ -30,12 +30,10 @@ import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.model.EquipmentWorkingModel;
 import com.electric.cet.mobile.android.pq.ui.activity.CollectDetailActivity;
 import com.electric.cet.mobile.android.pq.ui.activity.EquipmentCollectAddActivity;
-import com.electric.cet.mobile.android.pq.ui.activity.SearchActivity;
 import com.electric.cet.mobile.android.pq.ui.activity.WorkingDetailActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.BasePagerAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentCollectAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentWorkingAdapter;
-import com.electric.cet.mobile.android.pq.utils.Constans;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +73,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private TextView equipment_collect_title_statu;
     private Spinner spinner_collect;
     private List<String> data_list;
-    private RelativeLayout collect_rl; //台账
+//    private RelativeLayout collect_rl; //台账
     private RelativeLayout work_rl; //工况
     ArrayAdapter mAdapter;
 
@@ -199,7 +197,8 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private void initCollectView(View view) {
         collect_lv = (ListView) view.findViewById(R.id.cet_equipment_collect_lv);
         collectAdapter = new EquipmentCollectAdapter(getActivity(), allDevicesList);
-        collect_rl = (RelativeLayout)view.findViewById(R.id.cet_device_search_rl);
+        //去掉搜索框
+//        cet_working_search_rl = (RelativeLayout)view.findViewById(R.id.cet_device_search_rl);
         spinner_collect = (Spinner) view.findViewById(R.id.spinner_collect);
         //设置spinner监听
         spinner_collect.setOnItemSelectedListener(new SpinnerSelectedListener(){
@@ -215,15 +214,16 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
             }
         });
 
-        collect_rl.setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(),SearchActivity.class);
-                intent.putExtra("requestCode",Constans.COLLECT_CODE);
-                getActivity().startActivityForResult(intent,Constans.COLLECT_CODE);
-            }
-        }));
+        //去掉搜索框功能
+//        collect_rl.setOnClickListener((new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(),SearchActivity.class);
+//                intent.putExtra("requestCode",Constans.COLLECT_CODE);
+//                getActivity().startActivityForResult(intent,Constans.COLLECT_CODE);
+//            }
+//        }));
 
 
         collect_lv.setAdapter(collectAdapter);
@@ -258,16 +258,17 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         working_lv = (ListView) view.findViewById(R.id.cet_equipment_working_lv);
         workingAdapter = new EquipmentWorkingAdapter(getActivity(), allDevicesList);
 
-        work_rl = (RelativeLayout)view.findViewById(R.id.cet_working_search_rl);
-        work_rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(),SearchActivity.class);
-                intent.putExtra("requestCode",Constans.WORKING_CODE);
-                getActivity().startActivityForResult(intent,Constans.WORKING_CODE);
-            }
-        });
+        //去掉搜索框功能
+//        work_rl = (RelativeLayout)view.findViewById(R.id.cet_working_search_rl);
+//        work_rl.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(),SearchActivity.class);
+//                intent.putExtra("requestCode",Constans.WORKING_CODE);
+//                getActivity().startActivityForResult(intent,Constans.WORKING_CODE);
+//            }
+//        });
 
         working_lv.setAdapter(workingAdapter);
         working_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
