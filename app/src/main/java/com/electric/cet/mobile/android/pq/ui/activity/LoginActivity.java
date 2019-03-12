@@ -56,34 +56,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
     }
 
-//判空检查
-    private boolean checkNull() {
-
-        //用户名是否为空
-        if (TextUtils.isEmpty(username_et.getText().toString())) {
-            Toast.makeText(LoginActivity.this,"账号不能为空",Toast.LENGTH_SHORT).show();
-        }
-        //用户名长度是否小于6
-        if (username_et.getText().toString().length() < 6) {
-            username_et.setText("");
-            Toast.makeText(LoginActivity.this,"用户名格式错误",Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        //密码是否为空
-        if (TextUtils.isEmpty(psw_et.getText().toString())) {
-            Toast.makeText(LoginActivity.this,"密码不能为空",Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        //密码长度是否小于6
-        if (psw_et.getText().toString().length() < 6) {
-            psw_et.setText("");
-            Toast.makeText(LoginActivity.this,"密码格式错误",Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
-        return false;
-    }
-
 
     //用户登录
     public void login() {
@@ -100,23 +72,16 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         editor.putString("EncryptPwd", EncryptPwd);
         editor.apply();
 
-        if (checkNull()) {
-            return;
-        }
-
-
-//        //执行用户名密码校验
-//        if (!TextUtils.isEmpty(UserName) && !TextUtils.isEmpty(passWd)){
-            OkHttpClient client = new OkHttpClient();
+        //发起post请求给服务器
+        OkHttpClient client = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder().add("UserName", UserName).add("EncryptPwd ", EncryptPwd).build();
 
         final Request request = new Request.Builder().url(Constans.URL_LOGIN).post(formBody).build();
         OkHttpUtils.postLogin(context, Constans.URL_LOGIN, request);
 
-//        }
-
-
     }
+
+
 
     /**
      * @param v add login logic
@@ -126,6 +91,29 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_login:
+
+                //密码长度为6位数，且不能为空
+                if (TextUtils.isEmpty(username_et.getText())) {
+                    Toast.makeText(LoginActivity.this, R.string.phone_num_can_not_be_empty, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(psw_et.getText())) {
+                    Toast.makeText(LoginActivity.this, R.string.passwd_can_not_be_empty, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                //用户名长度是否小于6
+                if (username_et.getText().toString().length() < 6) {
+                    username_et.setText("");
+                    Toast.makeText(LoginActivity.this, "用户名格式错误", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //密码长度是否小于6
+                if (psw_et.getText().toString().length() < 6) {
+                    psw_et.setText("");
+                    Toast.makeText(LoginActivity.this, "密码格式错误", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 login();  //处理登录事件
                 finish();
                 break;
