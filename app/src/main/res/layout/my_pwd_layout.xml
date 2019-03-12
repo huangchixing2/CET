@@ -66,7 +66,9 @@
             android:id="@+id/cet_my_old_psw_et"
             style="@style/input_edit_bg_style"
             android:layout_marginLeft="5dp"
-            android:hint="@string/cet_my_set_old_psw" />
+            android:hint="@string/cet_my_set_old_psw"
+            android:inputType="textPassword"
+            />
 
         <View
             android:layout_width="match_parent"
@@ -91,7 +93,9 @@
             android:id="@+id/cet_my_new_psw_et"
             style="@style/input_edit_bg_style"
             android:layout_marginLeft="5dp"
-            android:hint="@string/cet_my_input_new_psw" />
+            android:hint="@string/cet_my_input_new_psw"
+            android:inputType="textPassword"
+            />
 
         <View
             android:layout_width="match_parent"
@@ -116,7 +120,9 @@
             android:id="@+id/cet_my_confirm_new_psw_et"
             style="@style/input_edit_bg_style"
             android:layout_marginLeft="5dp"
-            android:hint="@string/cet_my_input_new_psw_again" />
+            android:hint="@string/cet_my_input_new_psw_again"
+            android:inputType="textPassword"
+            />
 
         <View
             android:layout_width="match_parent"

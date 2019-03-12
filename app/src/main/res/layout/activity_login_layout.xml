@@ -29,7 +29,7 @@
             style="@style/input_edit_bg_style"
             android:layout_marginTop="@dimen/margin_15"
             android:hint="@string/cet_login_username"
-            android:inputType="textPassword" />
+            />
 
         <EditText
             android:id="@+id/login_psw"
