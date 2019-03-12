@@ -55,14 +55,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:text="@string/cet_equipment_type"
                 android:textColor="@color/cet_main_nor_color"
-                android:text="@string/cet_equipment_type"/>
-            <ImageView
+                android:layout_marginRight="25dp"
+                android:textSize="15sp" />
+            <Spinner
+                android:id="@+id/spinner_work"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:src="@mipmap/arrow_down"/>
+                android:layout_marginLeft="18dp"
+                />
         </LinearLayout>
         <!--<LinearLayout-->
             <!--android:id="@+id/cet_equipment_working_group_ll"-->

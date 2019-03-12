@@ -72,10 +72,11 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private TextView equipment_collect_title_type;
     private TextView equipment_collect_title_statu;
     private Spinner spinner_collect;
-    private List<String> data_list;
+    private Spinner spinner_work;
 //    private RelativeLayout collect_rl; //台账
     private RelativeLayout work_rl; //工况
-    ArrayAdapter mAdapter;
+    private ArrayAdapter cAdapter;
+    private ArrayAdapter wAdapter;
 
     private Handler handler = new Handler(){
         @Override
@@ -192,6 +193,8 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         public void onNothingSelected(AdapterView<?> arg0) {
         }
     }
+    //设备类型定义
+    private static final String[] deviceType = {"低压调压器", "无功补偿装置", "静止无功发生器", "混合型无功补偿装置", "中压调压器", "中压静止无功发生器", "中压串补"};
 
     //台账view显示
     private void initCollectView(View view) {
@@ -200,6 +203,17 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         //去掉搜索框
 //        cet_working_search_rl = (RelativeLayout)view.findViewById(R.id.cet_device_search_rl);
         spinner_collect = (Spinner) view.findViewById(R.id.spinner_collect);
+        //将可选内容与ArrayAdapter连接起来
+        cAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,deviceType);
+
+        //设置下拉列表的风格
+        cAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        //将adapter 添加到spinner中
+        spinner_collect.setAdapter(cAdapter);
+        //设置默认值
+        spinner_collect.setVisibility(View.VISIBLE);
+
         //设置spinner监听
         spinner_collect.setOnItemSelectedListener(new SpinnerSelectedListener(){
             @Override
@@ -257,6 +271,32 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private void initWorkingView(View view) {
         working_lv = (ListView) view.findViewById(R.id.cet_equipment_working_lv);
         workingAdapter = new EquipmentWorkingAdapter(getActivity(), allDevicesList);
+
+        spinner_work = (Spinner) view.findViewById(R.id.spinner_work);
+        //将可选内容与ArrayAdapter连接起来
+        wAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,deviceType);
+
+        //设置下拉列表的风格
+        wAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        //将adapter 添加到spinner中
+        spinner_work.setAdapter(wAdapter);
+        //设置默认值
+        spinner_work.setVisibility(View.VISIBLE);
+
+        //设置spinner监听
+        spinner_work.setOnItemSelectedListener(new SpinnerSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                super.onItemSelected(parent, view, pos, id);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                super.onNothingSelected(arg0);
+            }
+        });
 
         //去掉搜索框功能
 //        work_rl = (RelativeLayout)view.findViewById(R.id.cet_working_search_rl);

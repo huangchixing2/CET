@@ -57,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/cet_equipment_type"
                 android:textColor="@color/cet_main_nor_color"
+                android:layout_marginRight="25dp"
                 android:textSize="15sp" />
 
 
@@ -67,11 +68,11 @@
                 <!--android:src="@mipmap/arrow_down" />-->
 
             <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
                 android:id="@+id/spinner_collect"
-                android:entries="@array/types"
+                android:layout_width="wrap_content"
+                android:gravity="center|center_horizontal"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="18dp"
                 />
         </LinearLayout>
 
