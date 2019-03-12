@@ -14,17 +14,17 @@
         android:background="@drawable/cet_search_bg"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/cet_data_count_search_et"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="40dp"
-            android:background="@color/transparent"
-            android:clickable="false"
-            android:focusable="false"
-            android:hint="@string/cet_search_hint"
-            android:textSize="14sp" />
+        <!--<EditText-->
+            <!--android:id="@+id/cet_data_count_search_et"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginRight="40dp"-->
+            <!--android:background="@color/transparent"-->
+            <!--android:clickable="false"-->
+            <!--android:focusable="false"-->
+            <!--android:hint="@string/cet_search_hint"-->
+            <!--android:textSize="14sp" />-->
 
         <ImageView
             android:id="@+id/cet_data_count_search_iv"

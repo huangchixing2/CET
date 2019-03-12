@@ -47,6 +47,7 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
     }
 
     private void initFragments(){
+        //添加驾驶舱，数据，设备，我的
         fragments.add(new CockpitFragment());
         data_fragment = new DataFragment();
         fragments.add(data_fragment);
@@ -67,7 +68,7 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
         myRb = (RadioButton) findViewById(R.id.main_my_tab);
         selectRb = cockpitRb;
         // 显示第一个tab
-        getSupportFragmentManager()
+            getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.main_content, fragments.get(0),
                         fragments.get(0).getClass().getName())
@@ -141,6 +142,7 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
         }
     }
 
+    //onActivityResult方法用于启动指定 Activity，而且期望获取指定 Activity 返回的结果。
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -76,6 +76,8 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
             }
         });
         listView.setOnItemClickListener(this);
+        dataBeans = SQLhelper_Device.Instance(SearchActivity.this).queryDeviceListByName("");
+        refreshList(dataBeans);
     }
 
     private void refreshList(List<DataBean> dataBeans) {

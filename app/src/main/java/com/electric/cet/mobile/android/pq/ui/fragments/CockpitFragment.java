@@ -182,6 +182,8 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 final String str_tree = response.body().string();
                 System.out.println("cockpit tree 打印" + str_tree);
                 Log.d("cockpittree", str_tree );
+                //用sp保存json数据，在台账页面初始化时候就解析出来
+
                 //使用gson解析json数据
                 //new一个Gson对象
                 Gson gson = new Gson();
