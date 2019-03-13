@@ -41,9 +41,9 @@ public class MainActivity extends BaseFragmentActivity implements RadioGroup.OnC
         initFragments();
         initData();
         initView();
-        Intent intent = new Intent();
-        intent.setClass(this,LoginActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent();
+////        intent.setClass(this,LoginActivity.class);
+////        startActivity(intent);
     }
 
     private void initFragments(){

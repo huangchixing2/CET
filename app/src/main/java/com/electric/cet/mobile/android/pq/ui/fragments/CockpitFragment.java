@@ -1,7 +1,9 @@
 package com.electric.cet.mobile.android.pq.ui.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -53,6 +55,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private TextView dysfunction_tv;
     private TextView power_tv;
     private SQLhelper_Device dbHelper;
+    private DeviceBean deviceBean;
 
     private Handler handler = new Handler() {
         //驾驶舱数据显示
@@ -144,7 +147,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                     //new一个Gson对象
                     Gson gson = new Gson();
                     //将json字符串转为dataBean对象
-                    DeviceBean deviceBean = gson.fromJson(json, DeviceBean.class);
+                    deviceBean = gson.fromJson(json, DeviceBean.class);
                     Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(0).getDeviceName());
                     Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(1).getDeviceId());
                     Log.d("COCKPITACTIVITY", "------数据解析成功------");
@@ -165,6 +168,9 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 }
             }
         });
+
+//        countData(deviceBean.getData());
+
     }
    //获取tree信息的请求
     public void initTreeData() {
@@ -183,6 +189,11 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 System.out.println("cockpit tree 打印" + str_tree);
                 Log.d("cockpittree", str_tree );
                 //用sp保存json数据，在台账页面初始化时候就解析出来
+                SharedPreferences sp = getActivity().getSharedPreferences("treeData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("str_Tree", str_tree);
+                editor.apply();
+
 
                 //使用gson解析json数据
                 //new一个Gson对象
@@ -204,11 +215,6 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
 
             }
         });
-
-
-
-
-
 
     }
 
@@ -272,27 +278,27 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private List<CockpitGridViewItem> getData() {
         List<CockpitGridViewItem> list = new ArrayList<>();
         CockpitGridViewItem item = new CockpitGridViewItem();
-        item.setNum("99");
+        item.setNum("0");
         item.setTitle(getActivity().getString(R.string.cet_cockpit_install_num));
         list.add(item);
         item = new CockpitGridViewItem();
-        item.setNum("80");
+        item.setNum("0");
         item.setTitle(getActivity().getString(R.string.cet_cockpit_online_num));
         list.add(item);
         item = new CockpitGridViewItem();
-        item.setNum("81");
+        item.setNum("0");
         item.setTitle(getActivity().getString(R.string.cet_cockpit_usable_num));
         list.add(item);
         item = new CockpitGridViewItem();
-        item.setNum("10");
+        item.setNum("0");
         item.setTitle(getActivity().getString(R.string.cet_cockpit_sim_arrearage));
         list.add(item);
         item = new CockpitGridViewItem();
-        item.setNum("20");
+        item.setNum("0");
         item.setTitle(getActivity().getString(R.string.cet_cockpit_dysfunction));
         list.add(item);
         item = new CockpitGridViewItem();
-        item.setNum("10");
+        item.setNum("0");
         item.setTitle(getActivity().getString(R.string.cet_cockpit_power_cut));
         list.add(item);
         return list;

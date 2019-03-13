@@ -138,12 +138,11 @@
 
             <TextView
                 android:id="@+id/equipment_collect_title_statu"
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginRight="5dp"
                 android:gravity="center_horizontal"
                 android:text="@string/cet_equipment_title_statu"
                 android:textColor="@color/cet_main_nor_color"
@@ -151,11 +150,11 @@
 
             <TextView
                 android:id="@+id/equipment_collect_title_type"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/equipment_collect_title_address"
                 android:layout_toLeftOf="@+id/equipment_collect_title_statu"
                 android:gravity="center_horizontal"
                 android:text="@string/cet_equipment_title_type"

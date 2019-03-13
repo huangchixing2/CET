@@ -48,7 +48,7 @@ public class OkHttpUtils {
     public static Response response = null;
 
 
-    public static void postLogin(final Context context, String url, final Request request) {
+    public static void postLogin(final Context context, String url, final Request request, final Handler handler) {
 
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
@@ -80,9 +80,8 @@ public class OkHttpUtils {
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString("token", data);
                         editor.apply();
+                        handler.sendEmptyMessage(100);
 
-
-                        
 
                     }
                 }

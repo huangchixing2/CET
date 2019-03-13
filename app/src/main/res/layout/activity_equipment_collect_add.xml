@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/equipment_collect_add_parent_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg_color"
@@ -64,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/equipment_collect_add_city"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />
@@ -103,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/equipment_collect_add_country"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />

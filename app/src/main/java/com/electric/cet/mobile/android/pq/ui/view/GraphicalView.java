@@ -9,7 +9,6 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -88,35 +87,35 @@ public class GraphicalView extends View {
      *
      * 用于处理拖动事件
      */
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction();
-        int x = (int) event.getX();
-
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:// 按下
-                x0 = x;
-                break;
-            case MotionEvent.ACTION_MOVE:// 移动
-                if (point.x < (x_coordinates - total_distacne + GraphicalParametes.X_COORDINATES_DISTACNE)
-                        && (x - x0) < 0) {
-
-                } else if (point.x > (total_width - GraphicalParametes.X_DISTANCE - 2 * GraphicalParametes.X_COORDINATES_DISTACNE)
-                        && (x - x0) > 0) {
-
-                } else {
-                    point.x += x - x0;
-                    x0 = x;
-                    invalidate();
-                }
-                break;
-            case MotionEvent.ACTION_UP:// 弹起
-                break;
-            default:
-                break;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        int action = event.getAction();
+//        int x = (int) event.getX();
+//
+//        switch (action) {
+//            case MotionEvent.ACTION_DOWN:// 按下
+//                x0 = x;
+//                break;
+//            case MotionEvent.ACTION_MOVE:// 移动
+//                if (point.x < (x_coordinates - total_distacne + GraphicalParametes.X_COORDINATES_DISTACNE)
+//                        && (x - x0) < 0) {
+//
+//                } else if (point.x > (total_width - GraphicalParametes.X_DISTANCE - 2 * GraphicalParametes.X_COORDINATES_DISTACNE)
+//                        && (x - x0) > 0) {
+//
+//                } else {
+//                    point.x += x - x0;
+//                    x0 = x;
+//                    invalidate();
+//                }
+//                break;
+//            case MotionEvent.ACTION_UP:// 弹起
+//                break;
+//            default:
+//                break;
+//        }
+//        return true;
+//    }
 
     /**
      * 绘制柱状图
@@ -477,7 +476,7 @@ public class GraphicalView extends View {
                     paint1);
         } else {
             if (para.getX_len() == null) {// 一一对应的关系
-                for (int i = 0; i < para.getXlist().size(); i++) {
+                for (int i = 0; i < 1; i++) {
                     canvas.drawText(para.getXlist().get(i) == null ? "" : para.getXlist().get(i), point.x + (i + 1)
                                     * GraphicalParametes.X_COORDINATES_DISTACNE,
                             point.y + GraphicalParametes.Y_DISTANCE - GraphicalParametes.ERROR_DISTANCE, paint1);

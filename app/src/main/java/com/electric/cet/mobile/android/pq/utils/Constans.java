@@ -10,15 +10,25 @@ public class Constans {
     public final static int POWEROFF_NUM = 6;//停电数量
 
 
-    public static String BASE_URL = "http://192.168.2.199";
-    public static String URL_DEVICEINFO =  BASE_URL + "/LowLineSys/device/data/all?token=123"; //所有信息接口url
-    public static String URL_OPTION = BASE_URL + "/LowLineSys/device/data/options?token=123";//tree接口url
-    public static String URL_LOGIN  = BASE_URL + "/LowLineSys/user/login"; //登录接口url
-    public static String URL_BEFORE = BASE_URL + "/LowLineSys/device/";
-    public static String URL_AFTER = "/data/realtime"; //实时数据url
-    public static String URL_AFTERTREND = "/data/trend/"; //趋势数据url
-    public static String URL_LOGINOUT = BASE_URL + "/LowLineSys/user/logout?token=123"; //退出登录接口
-    public static String URL_USERDATA = BASE_URL + "/LowLineSys/user/data";  //用户管理接口
+    public final static String BASE_URL = "http://192.168.2.199";
+    public final static String URL_DEVICEINFO =  BASE_URL + "/LowLineSys/device/data/all?token=123"; //所有信息接口url
+    public final static String URL_OPTION = BASE_URL + "/LowLineSys/device/data/options?token=123";//tree接口url
+    public final static String URL_LOGIN  = BASE_URL + "/LowLineSys/user/login"; //登录接口url
+    public final static String URL_BEFORE = BASE_URL + "/LowLineSys/device/";
+    public final static String URL_AFTER = "/data/realtime"; //实时数据url
+    public final static String URL_AFTERTREND = "/data/trend/"; //趋势数据url
+    public final static String URL_LOGINOUT = BASE_URL + "/LowLineSys/user/logout?token=123"; //退出登录接口
+    public final static String URL_USERDATA = BASE_URL + "/LowLineSys/user/data";  //用户管理接口
+
+    public final static int TYPE_ALL = 0;  //全部类型
+    public final static int TYPE_LOW = 1;  //低压调压器
+    public final static int TYPE_REACTIVE = 2;  //无功补偿装置
+    public final static int TYPE_MOTIONLESS_REACTIVE = 3;//静止无功发生器
+    public final static int TYPE_MIXTURE = 4; //混合型无功补偿装置
+    public final static int TYPE_MIDDLE = 5;  //中压调压器
+    public final static int TYPE_MIDDLE_MOTIONLESS = 6; //中压静止无功调压器
+    public final static int TYPE_SERIES_COMPENSATION =7; //中压串补
+
 
 
 

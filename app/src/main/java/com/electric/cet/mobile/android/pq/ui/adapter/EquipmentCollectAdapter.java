@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.R;
-import com.electric.cet.mobile.android.pq.model.EquipmentCollectModel;
+import com.electric.cet.mobile.android.pq.utils.ChangeTypeUtil;
 
 import java.util.List;
 
@@ -74,7 +74,7 @@ public class EquipmentCollectAdapter extends BaseAdapter {
             }
         });
         holder.address.setText(list.get(position).getCityId()+""+list.get(position).getCountyId()+""+list.get(position).getPowerSupplyId()+""+list.get(position).getDeviceName()+"");
-        holder.type.setText(list.get(position).getDeviceTypeId()+"");
+        holder.type.setText(ChangeTypeUtil.changI2S(list.get(position).getDeviceTypeId()));
         if(list.get(position).getState()){
             holder.status.setImageResource(R.mipmap.equipment_online);
         }else{

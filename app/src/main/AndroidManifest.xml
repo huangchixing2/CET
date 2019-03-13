@@ -37,6 +37,11 @@
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,7 +49,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.BaseFragmentActivity" />
-        <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.EquipmentCollectAddActivity" />
         <activity android:name=".ui.activity.AccountManageActivity" />
         <activity android:name=".ui.activity.SetContactActivity" />

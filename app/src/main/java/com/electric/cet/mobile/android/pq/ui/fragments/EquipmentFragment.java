@@ -4,6 +4,7 @@ package com.electric.cet.mobile.android.pq.ui.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
+import com.electric.cet.mobile.android.pq.Bean.OptionBean;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.model.EquipmentWorkingModel;
@@ -36,9 +38,13 @@ import com.electric.cet.mobile.android.pq.ui.activity.WorkingDetailActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.BasePagerAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentCollectAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentWorkingAdapter;
+import com.electric.cet.mobile.android.pq.utils.ChangeTypeUtil;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageChangeListener, RadioGroup.OnCheckedChangeListener, View.OnClickListener {
@@ -86,6 +92,13 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
             switch (msg.what){
                 case 100:
                 break;
+                case 101:
+                    int type = msg.getData().getInt("type",0);
+                    List<DataBean> devicesList = SQLhelper_Device.Instance(getActivity()).queryDeviceListByType(type); //参数如何传递
+                    allDevicesList.clear();
+                    allDevicesList.addAll(devicesList);
+                    collectAdapter.notifyDataSetChanged();
+                    break;
                 default:
                     break;
             }
@@ -134,6 +147,15 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     }
 
     private void initData() {
+
+
+        //解析出节点数据
+        SharedPreferences sp = getActivity().getSharedPreferences("treeData", MODE_PRIVATE);
+        final String str_tree = sp.getString("str_Tree",""); //获取原始登录的密码
+        Gson gson = new Gson();
+        //将json字符串转为dataBean对象
+        OptionBean optionBean = gson.fromJson(str_tree, OptionBean.class);
+
         allDevicesList.clear();
         allDevicesList.addAll(getCollectData());
         collectAdapter.notifyDataSetChanged();
@@ -182,21 +204,33 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         }
     }
 
-    //使用数组形式操作
-    class SpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
+//    //使用数组形式操作
+//    class SpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
+//
+//        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+//            Intent intent = new Intent();
+//            intent.setClass(getActivity(), CollectDetailActivity.class);
+//            intent.putExtra("data", allDevicesList.get(arg2));
+//            startActivity(intent);
+//        }
+//
+//        public void onNothingSelected(AdapterView<?> arg0) {
+//        }
+//    }
+    //设备类型定义
+    private static final String[] deviceType = {"全部类型", "低压调压器", "无功补偿装置", "静止无功发生器", "混合型无功补偿装置", "中压调压器", "中压静止无功发生器", "中压串补"};
 
-        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-            Intent intent = new Intent();
-            intent.setClass(getActivity(), CollectDetailActivity.class);
-            intent.putExtra("data", allDevicesList.get(arg2));
-            startActivity(intent);
-        }
 
-        public void onNothingSelected(AdapterView<?> arg0) {
+
+    public void setSpinnerItemSelectedByValue(Spinner spinner,String element){
+//        collectAdapter = (EquipmentCollectAdapter) spinner_collect.getAdapter();
+        for(int i = 0 ; i < allDevicesList.size(); i++){
+            if(element.equals(allDevicesList.get(i).getDeviceTypeId())){
+                spinner.setSelection(i);
+                break;
+            }
         }
     }
-    //设备类型定义
-    private static final String[] deviceType = {"低压调压器", "无功补偿装置", "静止无功发生器", "混合型无功补偿装置", "中压调压器", "中压静止无功发生器", "中压串补"};
 
     //台账view显示
     private void initCollectView(View view) {
@@ -215,20 +249,82 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         spinner_collect.setAdapter(cAdapter);
         //设置默认值
         spinner_collect.setVisibility(View.VISIBLE);
-
-        //设置spinner监听
-        spinner_collect.setOnItemSelectedListener(new SpinnerSelectedListener(){
+        spinner_collect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                super.onItemSelected(parent, view, pos, id);
-
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Message message = handler.obtainMessage();
+                message.what = 101;
+                message.getData().putInt("type", ChangeTypeUtil.changS2I(deviceType[position]));
+                handler.sendMessage(message);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                super.onNothingSelected(arg0);
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
+//        //设置spinner监听
+//        spinner_collect.setOnItemSelectedListener(new SpinnerSelectedListener(){
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+//                Message message = handler.obtainMessage();
+//                message.what = 101;
+//                message.getData().putInt("type", ChangeTypeUtil.changS2I(deviceType[pos]));
+//                handler.sendMessage(message);
+////                switch (pos){
+////                    case Constans.TYPE_ALL:
+////                        //显示所有类型数据
+////                        String element = parent.getItemAtPosition(pos).toString();
+////                        setSpinnerItemSelectedByValue(spinner_collect,element);
+////                        collectAdapter.notifyDataSetChanged();
+////                        break;
+////                    case Constans.TYPE_LOW:
+////                        //显示低压调压器类型数据
+////                        setSpinnerItemSelectedByValue(spinner_collect,String.valueOf(pos));
+////                        collectAdapter.notifyDataSetChanged();
+////                        break;
+////                    case Constans.TYPE_REACTIVE:
+////                        //显示无功补偿装置
+////                        setSpinnerItemSelectedByValue(spinner_collect,String.valueOf(pos));
+////                        collectAdapter.notifyDataSetChanged();
+////                        break;
+////                    case Constans.TYPE_MOTIONLESS_REACTIVE:
+////                        //静止无功发生器
+////                        setSpinnerItemSelectedByValue(spinner_collect,String.valueOf(pos));
+////                        collectAdapter.notifyDataSetChanged();
+////                        break;
+////                    case Constans.TYPE_MIXTURE:
+////                        //混合型无功补偿装置
+////                        setSpinnerItemSelectedByValue(spinner_collect,String.valueOf(pos));
+////                        collectAdapter.notifyDataSetChanged();
+////                        break;
+////                    case Constans.TYPE_MIDDLE:
+////                        //中压调压器
+////                        setSpinnerItemSelectedByValue(spinner_collect,String.valueOf(pos));
+////                        collectAdapter.notifyDataSetChanged();
+////                        break;
+////                    case Constans.TYPE_MIDDLE_MOTIONLESS:
+////                        //中压静止无功调压器
+////                        setSpinnerItemSelectedByValue(spinner_collect,String.valueOf(pos));
+////                        collectAdapter.notifyDataSetChanged();
+////                        break;
+////                    case Constans.TYPE_SERIES_COMPENSATION:
+////                        //中压串补
+////                        setSpinnerItemSelectedByValue(spinner_collect,String.valueOf(pos));
+////                        collectAdapter.notifyDataSetChanged();
+////                        break;
+////                    default:
+////                        break;
+////                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> arg0) {
+//                super.onNothingSelected(arg0);
+//            }
+//        });
 
         //去掉搜索框功能
 //        collect_rl.setOnClickListener((new View.OnClickListener() {
@@ -286,19 +382,19 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         //设置默认值
         spinner_work.setVisibility(View.VISIBLE);
 
-        //设置spinner监听
-        spinner_work.setOnItemSelectedListener(new SpinnerSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                super.onItemSelected(parent, view, pos, id);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                super.onNothingSelected(arg0);
-            }
-        });
+//        //设置spinner监听
+//        spinner_work.setOnItemSelectedListener(new SpinnerSelectedListener(){
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+//                super.onItemSelected(parent, view, pos, id);
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> arg0) {
+//                super.onNothingSelected(arg0);
+//            }
+//        });
 
         //去掉搜索框功能
 //        work_rl = (RelativeLayout)view.findViewById(R.id.cet_working_search_rl);
