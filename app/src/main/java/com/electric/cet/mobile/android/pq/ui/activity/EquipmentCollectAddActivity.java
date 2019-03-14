@@ -90,8 +90,9 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
     }
 
     private void initData() {
+        //获取节点tree数据
         SharedPreferences sp = getSharedPreferences("treeData", MODE_PRIVATE);
-        String str_tree = sp.getString("str_Tree", ""); //获取原始登录的密码
+        String str_tree = sp.getString("str_Tree", "");
         Gson gson = new Gson();
         //将json字符串转为dataBean对象
         optionBean = gson.fromJson(str_tree, OptionBean.class);

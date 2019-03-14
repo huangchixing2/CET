@@ -29,6 +29,9 @@ public class Constans {
     public final static int TYPE_MIDDLE_MOTIONLESS = 6; //中压静止无功调压器
     public final static int TYPE_SERIES_COMPENSATION =7; //中压串补
 
+    public final static int collect_spanner = 101;
+    public final static int work_spanner = 102;
+
 
 
 

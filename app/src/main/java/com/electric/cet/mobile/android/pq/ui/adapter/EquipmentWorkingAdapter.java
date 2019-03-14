@@ -5,14 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.R;
-import com.electric.cet.mobile.android.pq.model.EquipmentWorkingModel;
-import com.electric.cet.mobile.android.pq.ui.fragments.EquipmentFragment;
+import com.electric.cet.mobile.android.pq.utils.ChangeTypeUtil;
 
 import java.util.List;
 
@@ -62,7 +60,7 @@ public class EquipmentWorkingAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.address.setText(list.get(position).getCityId()+""+list.get(position).getCountyId()+""+list.get(position).getPowerSupplyId()+""+list.get(position).getDeviceName()+"");
-        holder.type.setText(list.get(position).getDeviceTypeId()+"");  //此字段服务器未提供
+        holder.type.setText(ChangeTypeUtil.changI2S(list.get(position).getDeviceTypeId()));  //此字段服务器未提供
         if(list.get(position).getState()){
             holder.status.setImageResource(R.mipmap.equipment_online);
         }else{

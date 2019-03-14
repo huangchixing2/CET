@@ -338,6 +338,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
         return list;
     }
 
+    //设备界面按照类型查询
     public static List<DataBean> queryDeviceListByType( int type) {
         SQLiteDatabase db = instance.getReadableDatabase();
 //        Cursor cursor = db.query("DeviceData", null, null, null, null, null, null);
@@ -348,11 +349,12 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
         List<DataBean> list = new ArrayList<>();
         Cursor cursor;
         if(type == 0){
+            //如果类型为全部类型，查询所有数据
             cursor = db.rawQuery("select * from DeviceData ",null,null);
         }else{
             cursor = db.rawQuery("select * from DeviceData where DeviceTypeId = ?",new String[]{String.valueOf(type)},null);
         }
-        Log.d("guol","size="+cursor.getCount());
+//        Log.d("guol","size="+cursor.getCount());
         while (cursor.moveToNext()) {
             DataBean dataBean = new DataBean();
 //            String code = cursor.getString(cursor.getColumnIndex(CODE));  //需要确定和添加

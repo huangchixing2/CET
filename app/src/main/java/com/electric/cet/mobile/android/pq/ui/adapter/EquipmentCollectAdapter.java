@@ -74,6 +74,7 @@ public class EquipmentCollectAdapter extends BaseAdapter {
             }
         });
         holder.address.setText(list.get(position).getCityId()+""+list.get(position).getCountyId()+""+list.get(position).getPowerSupplyId()+""+list.get(position).getDeviceName()+"");
+        //把数字类型转换为字符串类型
         holder.type.setText(ChangeTypeUtil.changI2S(list.get(position).getDeviceTypeId()));
         if(list.get(position).getState()){
             holder.status.setImageResource(R.mipmap.equipment_online);
