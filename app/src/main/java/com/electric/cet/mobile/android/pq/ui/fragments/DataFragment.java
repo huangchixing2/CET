@@ -316,7 +316,7 @@ private void refreshCountData(int deviceId){
     }
 
     private SQLhelper_Device dbHelper;
-
+    private Handler okHttpHandler;
     //请求实时数据
     public void initRealtimeData(String deviceId) {
         OkHttpClient client = new OkHttpClient();
@@ -331,8 +331,13 @@ private void refreshCountData(int deviceId){
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                // 提示错误信息
-                Log.d("DataFrament", "实时数据请求失败");
+
+                        // 提示错误信息
+//                        Looper.prepare();
+//                        Toast.makeText(getActivity(),"没有网络",Toast.LENGTH_SHORT);
+//                        Looper.loop();
+                        Log.d("DataFrament", "实时数据请求失败");
+
             }
 
             @Override
@@ -342,6 +347,7 @@ private void refreshCountData(int deviceId){
                     String jsonData = str;
                     Log.d("DataFrament", "实时数据请求打印" + jsonData);
                     Log.d("DataFrament", "实时数据打印成功");
+
                //使用gson解析json数据
                     Gson gson = new Gson();
                     //将json字符串转为dataBean对象
@@ -358,12 +364,10 @@ private void refreshCountData(int deviceId){
                 }catch (IOException e1){
                     e1.printStackTrace();
                 }
+
             }
         });
     }
-
-
-
     @Override
     public void onPageScrolled(int i, float v, int i1) {
         int location = Math.round(v * baseDistance) + i * baseDistance;

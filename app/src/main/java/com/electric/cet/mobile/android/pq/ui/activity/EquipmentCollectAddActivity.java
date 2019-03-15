@@ -64,6 +64,19 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
     private RelativeLayout power_rl;
     private List<String> power_list = new ArrayList<>();
 
+    /**
+     * 类型Pop
+     **/
+    private PopupWindow typePop;
+    private WheelView typeWV;
+    private CityAdapter2 typeAdapter;
+    private int typePos = -1;
+
+    private TextView type;
+    private RelativeLayout type_rl;
+    private List<String> type_list = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +100,12 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
         power = (TextView) findViewById(R.id.equipment_collect_add_powersupply_tv);
         power_rl = (RelativeLayout) findViewById(R.id.equipment_collect_add_powersupply_rl);
         power_rl.setOnClickListener(this);
+
+        //类型
+        type = (TextView) findViewById(R.id.equipment_collect_add_type_tv);
+        type_rl = (RelativeLayout) findViewById(R.id.equipment_collect_add_type_rl);
+        type_rl.setOnClickListener(this);
+
     }
 
     private void initData() {
@@ -120,6 +139,11 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
                     showPowerPop(getCollectPowers());
                 }
                 break;
+            case R.id.equipment_collect_add_type_rl:
+                if(powerPos != -1){
+                    showTypePop(getCollectTypes());
+                }
+                break;
             default:
                 break;
         }
@@ -147,6 +171,14 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
             power_list.add(optionBean.getData().getCities().get(cityPos).getCounties().get(countryPos).getPowerSupply().get(i).getName());
         }
         return power_list;
+    }
+
+    private List<String> getCollectTypes(){
+        type_list.clear();
+        for(int i = 0; i < optionBean.getData().getDeviceType().size(); i++){
+            type_list.add(optionBean.getData().getDeviceType().get(i).getName());
+        }
+        return type_list;
     }
 
     /**
@@ -271,4 +303,48 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
         });
 
     }
+
+
+    private void showTypePop(List<String> list) {
+        initTypePop(list);
+        typePop.showAtLocation(parentLayout, Gravity.BOTTOM, 0, 0);
+
+    }
+    /**
+     *
+     * 显示类型pop
+     * @param list
+     */
+    private void initTypePop(List<String> list) {
+        View cityView = LayoutInflater.from(this).inflate(R.layout.city_pop_layout, null);
+        TextView cancleBtn = (TextView) cityView.findViewById(R.id.add_bank_city_cancel);
+        TextView confirmBtn = (TextView) cityView.findViewById(R.id.add_bank_city_complete);
+        typeWV = (WheelView) cityView.findViewById(R.id.add_bank_city_wheel);
+        typeWV.setVisibleItems(7);
+        typePop = new PopupWindow(cityView, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        typePop.setOutsideTouchable(true);
+        typePop.setBackgroundDrawable(new BitmapDrawable());
+//        cityPop.setAnimationStyle(R.style.PopAnimation);
+        typeAdapter = new CityAdapter2(this, list);
+        typeWV.setViewAdapter(typeAdapter);
+        typeWV.setCurrentItem(0);
+        cancleBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                typePop.dismiss();
+            }
+        });
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                typePos = typeWV.getCurrentItem();
+                type.setText(type_list.get(typePos));
+                typePop.dismiss();
+            }
+        });
+
+    }
+
 }
