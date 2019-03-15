@@ -108,6 +108,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
+    //退出登录对话框提示用户
     private void dialog(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -124,7 +125,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 dialog.dismiss();
             }
         });
-        dialog.setMessage("确定要删除此设备吗？");
+        dialog.setMessage("确定要退出登录吗？");
         dialog.setTitle("提示");
         dialog.show();
     }

@@ -31,6 +31,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.electric.cet.mobile.android.pq.utils.OkHttpUtils.response;
+
 /**
  *
  */
@@ -69,6 +71,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         username_et = (EditText) findViewById(R.id.login_username);
         psw_et = (EditText) findViewById(R.id.login_psw);
 
+        //判断登录状态
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -118,7 +121,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                          @Override
                          public void onFailure(Call call, IOException e) {
                              //请求失败
-                             Log.i("请求情况：", "请求失败");
+                             if (!response.isSuccessful()) {
+                                 Log.i("请求情况：", "请求失败");
+                                 //提示用户无网络
+                                 Toast.makeText(LoginActivity.this,"没有网络",Toast.LENGTH_SHORT).show();
+                             }
                          }
 
                          @Override
