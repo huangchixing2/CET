@@ -8,21 +8,28 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.electric.cet.mobile.android.pq.Bean.LoginBean;
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.utils.Constans;
 import com.electric.cet.mobile.android.pq.utils.MD5Utils;
-import com.electric.cet.mobile.android.pq.utils.OkHttpUtils;
+import com.google.gson.Gson;
 
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  *
@@ -32,13 +39,15 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private EditText username_et;
     private EditText psw_et;
     private Context context = LoginActivity.this;
-    private Handler handler = new Handler(){
+    private SharedPreferences sp;
+
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 100:
                     Intent intent = new Intent();
-                    intent.setClass(LoginActivity.this,MainActivity.class);
+                    intent.setClass(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                     break;
@@ -54,9 +63,25 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     private void initView() {
+
+        sp = context.getSharedPreferences("TokenData", Context.MODE_PRIVATE);
         login_bt = (Button) findViewById(R.id.login_login);
         username_et = (EditText) findViewById(R.id.login_username);
         psw_et = (EditText) findViewById(R.id.login_psw);
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent;
+                if (sp.getBoolean("isLogin", false)) {
+                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+
+
         login_bt.setOnClickListener(this);
 
     }
@@ -81,41 +106,80 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         final String EncryptPwd = MD5Utils.getDigest(passWd);
         System.out.println("加密后的密码为 " + EncryptPwd);
 
-        //sp保存数据
-        SharedPreferences sp = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("UserName", UserName);
-        editor.putString("passWd", passWd);
-        editor.putString("EncryptPwd", EncryptPwd);
-        editor.apply();
+
 
         //发起post请求给服务器
         OkHttpClient client = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder().add("UserName", UserName).add("EncryptPwd ", EncryptPwd).build();
 
         final Request request = new Request.Builder().url(Constans.URL_LOGIN).post(formBody).build();
-        OkHttpUtils.postLogin(context, Constans.URL_LOGIN, request,handler);
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+                         @Override
+                         public void onFailure(Call call, IOException e) {
+                             //请求失败
+                             Log.i("请求情况：", "请求失败");
+                         }
+
+                         @Override
+                         public void onResponse(Call call, Response response) throws IOException {
+
+                             if (response.isSuccessful()) {
+                                 Log.i("响应状态", "响应成功");
+                                 String loginBody = response.body().string();
+                                 Gson gson = new Gson();
+                                 LoginBean loginData = gson.fromJson(loginBody, LoginBean.class);
+
+                                 int loginResultCode = loginData.getCode();
+                                 Log.i("resultcode", loginResultCode + "");
+                                 int ResponseCode = response.code();
+
+                                 //无法获取token
+                                 //响应成功,判断状态码
+                                 if (ResponseCode == 200) {
+                                     Log.i("登录状态", "登录成功");
+                                     String data = loginData.getData().toString(); //这个就是token
+                                     //保存token
+                                     //sp保存数据
+                                     SharedPreferences sp = context.getSharedPreferences("TokenData", Context.MODE_PRIVATE);
+                                     SharedPreferences.Editor editor = sp.edit();
+                                     editor.putString("UserName", loginBody);
+                                     editor.putString("passWd", passWd);
+                                     editor.putString("EncryptPwd", EncryptPwd);
+                                     editor.putBoolean("isLogin", true);
+                                     editor.apply();
+
+                                     handler.sendEmptyMessage(100);
+
+
+                                 }
+                             }
+                         }
+                     });
+
+//        OkHttpUtils.postLogin(context, Constans.URL_LOGIN, request, handler);
+
 
     }
 
     //点击两次返回键退出
     private long exitTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                        && event.getAction() == KeyEvent.ACTION_DOWN) {
-                       if ((System.currentTimeMillis() - exitTime) > 2000) {
-                               //弹出提示，可以有多种方式
-                                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
-                                 exitTime = System.currentTimeMillis();
-                           } else {
-                             finish();
-                          }
-                        return true;
-                   }
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                //弹出提示，可以有多种方式
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+            return true;
+        }
 
-              return super.onKeyDown(keyCode, event);
+        return super.onKeyDown(keyCode, event);
 
     }
 
@@ -125,7 +189,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         finish();
     }
-
 
 
     /**

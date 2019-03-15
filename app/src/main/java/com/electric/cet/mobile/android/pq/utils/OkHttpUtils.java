@@ -17,6 +17,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+
 public class OkHttpUtils {
 
 
@@ -48,6 +49,7 @@ public class OkHttpUtils {
     public static Response response = null;
 
 
+
     public static void postLogin(final Context context, String url, final Request request, final Handler handler) {
 
         Call call = client.newCall(request);
@@ -69,17 +71,31 @@ public class OkHttpUtils {
                     int loginResultCode = loginData.getCode();
                     Log.i("resultcode", loginResultCode + "");
                     int ResponseCode = response.code();
+
                     //无法获取token
                     //响应成功,判断状态码
                     if (ResponseCode == 200) {
                         Log.i("登录状态", "登录成功");
                         String data = loginData.getData().toString(); //这个就是token
                         //保存token
-                        //用sp工具保存token
+//                        //用sp工具保存token
+//                        SharedPreferences sp = context.getSharedPreferences("TokenData", Context.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sp.edit();
+//                        editor.putBoolean("isLogin", true);
+//                        editor.putString("token", data);
+//                        editor.apply();
+
+                        //sp保存数据
+
                         SharedPreferences sp = context.getSharedPreferences("TokenData", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("token", data);
+                        editor.putString("UserName", loginBody);
+
+
+                        //用sp工具保存token
+                        editor.putBoolean("isLogin", true);
                         editor.apply();
+
                         handler.sendEmptyMessage(100);
 
 

@@ -1,7 +1,11 @@
 package com.electric.cet.mobile.android.pq.ui.fragments;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,8 +36,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private TextView name_tv;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my, container, false);
         initView(view);
         initData();
@@ -55,7 +58,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     }
 
     //退出登录请求GET
-    public void logOut(final String token){
+    public void logOut(final String token) {
         OkHttpClient client_option = new OkHttpClient();
         Request request = new Request.Builder().url(Constans.URL_LOGINOUT).get().build();
         client_option.newCall(request).enqueue(new Callback() {
@@ -70,35 +73,60 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 //                SharedPreferences.Editor editor = sp.edit();
 //                editor.remove(token);
 //                editor.apply();
+                SharedPreferences sp;
+                if (null!=getContext()){
+                    sp = getContext().getSharedPreferences("TokenData", Context.MODE_PRIVATE);
+                    sp.edit().clear().apply();
+                }
+                Log.d("logout","退出登录成功");
+        }
+    });
 
+}
 
-                Log.d("logout", "退出登录成功");
-            }
-        });
+    private static String token;
 
-    }
-
-private static String token;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.cet_my_account_mangage:
                 Intent accountIntent = new Intent();
-                accountIntent.setClass(getActivity(),AccountManageActivity.class);
+                accountIntent.setClass(getActivity(), AccountManageActivity.class);
                 startActivity(accountIntent);
                 break;
             case R.id.cet_my_abount:
                 Intent abountIntent = new Intent();
-                abountIntent.setClass(getActivity(),MyAboutActivity.class);
+                abountIntent.setClass(getActivity(), MyAboutActivity.class);
                 startActivity(abountIntent);
                 break;
             case R.id.cet_my_login_out:
-                logOut(token);
-                getActivity().onBackPressed();
-
+                //删除数据时提示用户，避免误操作
+                dialog();
                 break;
             default:
                 break;
         }
     }
+
+    private void dialog(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //删除
+                logOut(token);
+                getActivity().onBackPressed();
+            }
+        });
+        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setMessage("确定要删除此设备吗？");
+        dialog.setTitle("提示");
+        dialog.show();
+    }
+
 }
