@@ -35,7 +35,7 @@ public interface GraphicalParametes {
 	/**
 	 * X轴两个坐标点的距离
 	 */
-	public final static int X_COORDINATES_DISTACNE = 30;
+	public final static int X_COORDINATES_DISTACNE = 20;
 
 	/**
 	 * Y轴两个坐标点的距离

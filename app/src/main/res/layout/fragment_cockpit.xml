@@ -50,7 +50,7 @@
                 android:layout_alignTop="@+id/cockpit_install_num_iv"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/cockpit_install_num_iv"
-                android:text="99"
+                android:text="0"
                 android:textColor="@color/orange"
                 android:textSize="20sp" />
 
@@ -89,7 +89,7 @@
                 android:layout_alignTop="@+id/cockpit_online_num_iv"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/cockpit_online_num_iv"
-                android:text="81"
+                android:text="0"
                 android:textColor="@color/orange"
                 android:textSize="20sp" />
 
@@ -134,7 +134,7 @@
                 android:layout_alignTop="@+id/cockpit_usable_num_iv"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/cockpit_usable_num_iv"
-                android:text="80"
+                android:text="0"
                 android:textColor="@color/orange"
                 android:textSize="20sp" />
 
@@ -173,7 +173,7 @@
                 android:layout_alignTop="@+id/cockpit_sim_iv"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/cockpit_sim_iv"
-                android:text="10"
+                android:text="0"
                 android:textColor="@color/orange"
                 android:textSize="20sp" />
 
@@ -218,7 +218,7 @@
                 android:layout_alignTop="@+id/cockpit_dysfunction_iv"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/cockpit_dysfunction_iv"
-                android:text="20"
+                android:text="0"
                 android:textColor="@color/orange"
                 android:textSize="20sp" />
 
@@ -257,7 +257,7 @@
                 android:layout_alignTop="@+id/cockpit_power_cut_iv"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/cockpit_power_cut_iv"
-                android:text="10"
+                android:text="0"
                 android:textColor="@color/orange"
                 android:textSize="20sp" />
 

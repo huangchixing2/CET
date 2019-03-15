@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -19,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.electric.cet.mobile.android.pq.Bean.CurrDataList;
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
@@ -121,9 +123,9 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
             switch (msg.what) {
                 case 1:
                     //实时数据现在在界面
-                    RealTimeBean realTimeBean = (RealTimeBean)msg.obj;
-                    Log.d("huangchixing",realTimeBean.getData().getAVoltageInput()+ "");
-                    Log.d("huangchixing", realTimeBean.getData().getAVoltageOutput()+ "");
+                    RealTimeBean realTimeBean = (RealTimeBean) msg.obj;
+                    Log.d("huangchixing", realTimeBean.getData().getAVoltageInput() + "");
+                    Log.d("huangchixing", realTimeBean.getData().getAVoltageOutput() + "");
                     cet_realtime_input_avoltage.setText("A相电压：" + realTimeBean.getData().getAVoltageInput() + "");
                     cet_realtime_out_avoltage.setText("A相电压：" + realTimeBean.getData().getAVoltageOutput() + "");
                     cet_realtime_input_bvoltage.setText("B相电压：" + realTimeBean.getData().getBVoltageInput() + "");
@@ -149,9 +151,9 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                     break;
                 case 1002:
                     countRB.setChecked(true);
-                    Log.i("devicesId",(int)getActivity().getSharedPreferences("data",0).getLong("deviceId",-1l)+"datahandler");
+                    Log.i("devicesId", (int) getActivity().getSharedPreferences("data", 0).getLong("deviceId", -1l) + "datahandler");
                     //还原出统计数据存储的数据并显示在ui
-                    refreshCountData( (int)getActivity().getSharedPreferences("data",0).getLong("deviceId",-1l));
+                    refreshCountData((int) getActivity().getSharedPreferences("data", 0).getLong("deviceId", -1l));
                     break;
                 case 1001:
                     refreshCountData(Integer.parseInt(msg.getData().getString("deviceID")));
@@ -212,7 +214,6 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         viewPager = (ViewPager) view.findViewById(R.id.cet_data_list_viewpager);
 
 
-
         DisplayMetrics metrics = new DisplayMetrics();
         metrics = getResources().getDisplayMetrics();
         baseDistance = (int) Math.round(metrics.widthPixels / 3.0);
@@ -234,34 +235,33 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 
     }
 
-private void refreshCountData(int deviceId){
-    //查询数据库，并显示统计数据
-    dataBean = SQLhelper_Device.Instance(getActivity()).queryDeviceInfo(deviceId); //deviceId如何传参？
-    Log.d("statics",  dataBean.getInstallAddress() );
-    data_address.setText("台区: " + dataBean.getInstallAddress()); // int转换为string，否则报错
+    private void refreshCountData(int deviceId) {
+        //查询数据库，并显示统计数据
+        dataBean = SQLhelper_Device.Instance(getActivity()).queryDeviceInfo(deviceId); //deviceId如何传参？
+        Log.d("statics", dataBean.getInstallAddress());
+        data_address.setText("台区: " + dataBean.getInstallAddress()); // int转换为string，否则报错
 
-    voltageRegulateTime.setText("调压次数: "+ dataBean.getAdjustTime() + "");
-    //做一个判断，true显示正常，false显示异常
-    if(dataBean.getVoltageRegulateNormal()){
-        voltageRegulate.setText("调压: "+ getResources().getString(R.string.cet_count_nor));
-    }else{
-        voltageRegulate.setText("调压: "+ getResources().getString(R.string.cet_count_abnor));
-    }
+        voltageRegulateTime.setText("调压次数: " + dataBean.getAdjustTime() + "");
+        //做一个判断，true显示正常，false显示异常
+        if (dataBean.getVoltageRegulateNormal()) {
+            voltageRegulate.setText("调压: " + getResources().getString(R.string.cet_count_nor));
+        } else {
+            voltageRegulate.setText("调压: " + getResources().getString(R.string.cet_count_abnor));
+        }
 //    voltageRegulate.setText("调压: "+ dataBean.getVoltageRegulateNormal()); //怎么做判断正常和异常
-    if(dataBean.getReactiveCompensationNormal()){
-        reactiveCompensation.setText("无功补偿: " + getResources().getString(R.string.cet_count_nor));
-    }else{
-        reactiveCompensation.setText("无功补偿: " + getResources().getString(R.string.cet_count_abnor));
-    }
+        if (dataBean.getReactiveCompensationNormal()) {
+            reactiveCompensation.setText("无功补偿: " + getResources().getString(R.string.cet_count_nor));
+        } else {
+            reactiveCompensation.setText("无功补偿: " + getResources().getString(R.string.cet_count_abnor));
+        }
 //    reactiveCompensation.setText("无功补偿: " + dataBean.getReactiveCompensationNormal() + "");
-    manufacture.setText("厂家: "+dataBean.getManufacture() + "");
-    model.setText("型号: "+dataBean.getModel() + "");
-    capacity.setText("容量: "+dataBean.getCapacity() + " KG");
-    phrase.setText("相数: "+dataBean.getPhaseTypeId() + "");
-    circuit.setText("线路: "+dataBean.getCircuitId() + "");
-    location.setText("位置: "+dataBean.getLocation());
-}
-
+        manufacture.setText("厂家: " + dataBean.getManufacture() + "");
+        model.setText("型号: " + dataBean.getModel() + "");
+        capacity.setText("容量: " + dataBean.getCapacity() + " KG");
+        phrase.setText("相数: " + dataBean.getPhaseTypeId() + "");
+        circuit.setText("线路: " + dataBean.getCircuitId() + "");
+        location.setText("位置: " + dataBean.getLocation());
+    }
 
 
 ////请求统计数据
@@ -317,6 +317,7 @@ private void refreshCountData(int deviceId){
 
     private SQLhelper_Device dbHelper;
     private Handler okHttpHandler;
+
     //请求实时数据
     public void initRealtimeData(String deviceId) {
         OkHttpClient client = new OkHttpClient();
@@ -332,23 +333,23 @@ private void refreshCountData(int deviceId){
             @Override
             public void onFailure(Call call, IOException e) {
 
-                        // 提示错误信息
-//                        Looper.prepare();
-//                        Toast.makeText(getActivity(),"没有网络",Toast.LENGTH_SHORT);
-//                        Looper.loop();
-                        Log.d("DataFrament", "实时数据请求失败");
+                // 无网络时候提示用户
+                Looper.prepare();
+                Toast.makeText(getActivity(), "无网络", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+                Log.d("DataFrament", "实时数据请求失败");
 
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                try{
+                try {
                     final String str = response.body().string();
                     String jsonData = str;
                     Log.d("DataFrament", "实时数据请求打印" + jsonData);
                     Log.d("DataFrament", "实时数据打印成功");
 
-               //使用gson解析json数据
+                    //使用gson解析json数据
                     Gson gson = new Gson();
                     //将json字符串转为dataBean对象
                     RealTimeBean realTimeBean = gson.fromJson(jsonData, RealTimeBean.class);
@@ -361,13 +362,14 @@ private void refreshCountData(int deviceId){
                     message.what = 1;
                     message.obj = realTimeBean;
                     message.sendToTarget();
-                }catch (IOException e1){
+                } catch (IOException e1) {
                     e1.printStackTrace();
                 }
 
             }
         });
     }
+
     @Override
     public void onPageScrolled(int i, float v, int i1) {
         int location = Math.round(v * baseDistance) + i * baseDistance;
@@ -433,27 +435,27 @@ private void refreshCountData(int deviceId){
 
     private List<DataTrend> getTrendData() {
         List<DataTrend> list = new ArrayList<>();
-        if(rb == 0){
+        if (rb == 0) {
             List<VoteDateListBean> voteDateList = trendBean.getData().getVoltData().get(0).getDataList();
-            for(int i = 0;i<voteDateList.size();i++){
+            for (int i = 0; i < voteDateList.size(); i++) {
                 DataTrend dataTrend = new DataTrend();
-                dataTrend.setData(voteDateList.get(i).getRecordTime().substring(5,10));
+                dataTrend.setData(voteDateList.get(i).getRecordTime().substring(5, 10));
                 dataTrend.setVoltage(String.valueOf(voteDateList.get(i).getValue()));
                 list.add(dataTrend);
             }
-        }else if(rb == 1){
+        } else if (rb == 1) {
             List<CurrDataList> currDataList = trendBean.getData().getCurrData().get(0).getDataList();
-            for(int i = 0;i<currDataList.size();i++){
+            for (int i = 0; i < currDataList.size(); i++) {
                 DataTrend dataTrend = new DataTrend();
-                dataTrend.setData(currDataList.get(i).getRecordTime().substring(5,10));
+                dataTrend.setData(currDataList.get(i).getRecordTime().substring(5, 10));
                 dataTrend.setVoltage(String.valueOf(currDataList.get(i).getValue()));
                 list.add(dataTrend);
             }
-        }else if(rb == 2){
+        } else if (rb == 2) {
             List<PowerDataListBean> powerDataList = trendBean.getData().getPowerData().get(0).getDataList();
-            for(int i = 0;i<powerDataList.size();i++){
+            for (int i = 0; i < powerDataList.size(); i++) {
                 DataTrend dataTrend = new DataTrend();
-                dataTrend.setData(powerDataList.get(i).getRecordTime().substring(5,10));
+                dataTrend.setData(powerDataList.get(i).getRecordTime().substring(5, 10));
                 dataTrend.setVoltage(String.valueOf(powerDataList.get(i).getValue()));
                 list.add(dataTrend);
             }
@@ -503,16 +505,16 @@ private void refreshCountData(int deviceId){
         phrase = (TextView) view.findViewById(R.id.phrase);
         circuit = (TextView) view.findViewById(R.id.circuit);
         location = (TextView) view.findViewById(R.id.location);
-        count_rl = (RelativeLayout)view.findViewById(R.id.cet_data_search_rl);
-       count_rl.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Intent intent = new Intent();
-               intent.setClass(getActivity(),SearchActivity.class);
-               intent.putExtra("requestCode",Constans.COUNT_CODE);
-               getActivity().startActivityForResult(intent,Constans.COUNT_CODE);
-           }
-       });
+        count_rl = (RelativeLayout) view.findViewById(R.id.cet_data_search_rl);
+        count_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SearchActivity.class);
+                intent.putExtra("requestCode", Constans.COUNT_CODE);
+                getActivity().startActivityForResult(intent, Constans.COUNT_CODE);
+            }
+        });
     }
 
     private void initRealtimeView(View view) {
@@ -543,16 +545,16 @@ private void refreshCountData(int deviceId){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(),SearchActivity.class);
-                intent.putExtra("requestCode",Constans.REALTIME_CODE);
-                getActivity().startActivityForResult(intent,Constans.REALTIME_CODE);
+                intent.setClass(getActivity(), SearchActivity.class);
+                intent.putExtra("requestCode", Constans.REALTIME_CODE);
+                getActivity().startActivityForResult(intent, Constans.REALTIME_CODE);
             }
         });
     }
 
     private void initTrendView(View view) {
         trend_rl = (RelativeLayout) view.findViewById(R.id.cet_data_trend_search_rl);
-         trend_ll = (LinearLayout) view.findViewById(R.id.cet_data_trend_layout);
+        trend_ll = (LinearLayout) view.findViewById(R.id.cet_data_trend_layout);
         trendRadioGroup = (RadioGroup) view.findViewById(R.id.cet_data_trend_rg);
         voltageRB = (RadioButton) view.findViewById(R.id.cet_data_trend_voltage_rb);
         currentRB = (RadioButton) view.findViewById(R.id.cet_data_trend_current_rb);
@@ -566,9 +568,9 @@ private void refreshCountData(int deviceId){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(),SearchActivity.class);
-                intent.putExtra("requestCode",Constans.TREND_CODE);
-                getActivity().startActivityForResult(intent,Constans.TREND_CODE);
+                intent.setClass(getActivity(), SearchActivity.class);
+                intent.putExtra("requestCode", Constans.TREND_CODE);
+                getActivity().startActivityForResult(intent, Constans.TREND_CODE);
             }
         });
     }
@@ -608,10 +610,10 @@ private void refreshCountData(int deviceId){
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i("search","resultCode --" +resultCode);
-        Log.i("search","search --" +data.getStringExtra("search"));
+        Log.i("search", "resultCode --" + resultCode);
+        Log.i("search", "search --" + data.getStringExtra("search"));
 
-        if(resultCode == 1001){
+        if (resultCode == 1001) {
 
         }
     }

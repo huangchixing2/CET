@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -97,12 +98,35 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     }
 
+    //点击两次返回键退出
+    private long exitTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                        && event.getAction() == KeyEvent.ACTION_DOWN) {
+                       if ((System.currentTimeMillis() - exitTime) > 2000) {
+                               //弹出提示，可以有多种方式
+                                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                                 exitTime = System.currentTimeMillis();
+                           } else {
+                             finish();
+                          }
+                        return true;
+                   }
+
+              return super.onKeyDown(keyCode, event);
+
+    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
         finish();
     }
+
+
 
     /**
      * @param v add login logic

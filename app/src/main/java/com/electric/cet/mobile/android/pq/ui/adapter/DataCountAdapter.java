@@ -60,6 +60,8 @@ public class DataCountAdapter extends BaseAdapter {
         holder.address.setText(list.get(position).getInstallAddress());
         holder.num.setText(context.getResources().getString(R.string.cet_count_num,String.valueOf(list.get(position).getAdjustTime())));
         String vStatu = "";
+
+
         if(list.get(position).getVoltageRegulateNormal()){
             vStatu = context.getResources().getString(R.string.cet_count_nor);
         }else{

@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.Bean.DeviceBean;
@@ -87,6 +88,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         return view;
     }
 
+
     private void initView(View view) {
         install_rl = (RelativeLayout) view.findViewById(R.id.cockpit_install_num_rl);
         online_rl = (RelativeLayout) view.findViewById(R.id.cockpit_online_num_rl);
@@ -134,6 +136,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
             public void onFailure(Call call, IOException e) {
                 // 提示错误信息
                 Log.d("allinfo", "allinfo请求失败");
+                Toast.makeText(getActivity(),"无网络", Toast.LENGTH_SHORT).show();
             }
 
             @Override
