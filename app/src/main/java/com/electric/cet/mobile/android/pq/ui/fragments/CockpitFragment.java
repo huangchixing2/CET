@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
 import com.electric.cet.mobile.android.pq.Bean.DeviceBean;
@@ -26,6 +26,7 @@ import com.electric.cet.mobile.android.pq.model.CockpitGridViewItem;
 import com.electric.cet.mobile.android.pq.ui.activity.MapViewActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.CockpitGridviewAdapter;
 import com.electric.cet.mobile.android.pq.utils.Constans;
+import com.electric.cet.mobile.android.pq.utils.NetWorkUtil;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -40,6 +41,8 @@ import okhttp3.Response;
 
 // 驾驶舱
 public class CockpitFragment extends BaseFragment implements View.OnClickListener {
+    private RelativeLayout rlNoData;
+    private LinearLayout llContent;
     private GridView gridview;
     private RelativeLayout install_rl;
     private RelativeLayout online_rl;
@@ -64,13 +67,15 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                  ArrayList<Integer> list = (ArrayList<Integer>) msg.getData().getBundle("data").get("list");
-                    install_tv.setText(list.get(0)+""); // int转换为string，否则报错
-                    online_tv.setText(list.get(1)+"");
-                    usable_tv.setText(list.get(2)+"");
-                    sim_tv.setText(list.get(3)+"");
-                    dysfunction_tv.setText(list.get(4)+"");
-                    power_tv.setText(list.get(5)+"");
+                    rlNoData.setVisibility(View.GONE);
+                    llContent.setVisibility(View.VISIBLE);
+                    ArrayList<Integer> list = (ArrayList<Integer>) msg.getData().getBundle("data").get("list");
+                    install_tv.setText(list.get(0) + ""); // int转换为string，否则报错
+                    online_tv.setText(list.get(1) + "");
+                    usable_tv.setText(list.get(2) + "");
+                    sim_tv.setText(list.get(3) + "");
+                    dysfunction_tv.setText(list.get(4) + "");
+                    power_tv.setText(list.get(5) + "");
                     break;
                 default:
                     break;
@@ -90,6 +95,8 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
 
 
     private void initView(View view) {
+        rlNoData = (RelativeLayout) view.findViewById(R.id.rl_no_data);
+        llContent = (LinearLayout) view.findViewById(R.id.content_ll);
         install_rl = (RelativeLayout) view.findViewById(R.id.cockpit_install_num_rl);
         online_rl = (RelativeLayout) view.findViewById(R.id.cockpit_online_num_rl);
         usable_rl = (RelativeLayout) view.findViewById(R.id.cockpit_usable_num_rl);
@@ -110,7 +117,6 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         power_rl.setOnClickListener(this);
 
 
-
         gridview = (GridView) view.findViewById(R.id.cockpit_gridview);
         CockpitGridviewAdapter adapter = new CockpitGridviewAdapter(getActivity(), getData());
         gridview.setAdapter(adapter);
@@ -124,11 +130,20 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initAllData();
+    }
+
     /**
      * 显示所有数据
      */
     private void initAllData() {
-
+        if (!NetWorkUtil.isNetworkAvailable(getActivity())) {
+            initNoInternetView();
+            return;
+        }
         OkHttpClient client = new OkHttpClient();
         final Request request = new Request.Builder().url(Constans.URL_DEVICEINFO).get().build();
         client.newCall(request).enqueue(new Callback() {
@@ -136,7 +151,8 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
             public void onFailure(Call call, IOException e) {
                 // 提示错误信息
                 Log.d("allinfo", "allinfo请求失败");
-                Toast.makeText(getActivity(),"无网络", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "无网络", Toast.LENGTH_SHORT).show();
+                initNoInternetView();
             }
 
             @Override
@@ -157,13 +173,13 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                     //存入数据库,每次清除上一次数据
                     SQLhelper_Device.Instance(getActivity()).clearAllUserInfo();
                     //网络请求到的数据写入数据库
-                   SQLhelper_Device.Instance(getActivity()).insertUserInfo(deviceBean.getData());
+                    SQLhelper_Device.Instance(getActivity()).insertUserInfo(deviceBean.getData());
                     //发送消息给主线程
                     Message message = handler.obtainMessage();
                     Bundle bundle = new Bundle();
                     bundle.putIntegerArrayList("list", countData(deviceBean.getData()));
                     message.what = 1;
-                    message.getData().putBundle("data",bundle);
+                    message.getData().putBundle("data", bundle);
                     handler.sendMessage(message);
 
                 } catch (IOException e1) {
@@ -175,7 +191,8 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
 //        countData(deviceBean.getData());
 
     }
-   //获取tree信息的请求
+
+    //获取tree信息的请求
     public void initTreeData() {
         OkHttpClient client_option = new OkHttpClient();
         Request request = new Request.Builder().url(Constans.URL_OPTION).get().build();
@@ -190,7 +207,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
             public void onResponse(Call call, Response response) throws IOException {
                 final String str_tree = response.body().string();
                 System.out.println("cockpit tree 打印" + str_tree);
-                Log.d("cockpittree", str_tree );
+                Log.d("cockpittree", str_tree);
                 //用sp保存json数据，在台账页面初始化时候就解析出来
                 SharedPreferences sp = getActivity().getSharedPreferences("treeData", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
@@ -203,10 +220,10 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 Gson gson = new Gson();
                 //将json字符串转为dataBean对象
                 OptionBean optionBean = gson.fromJson(str_tree, OptionBean.class);
-                Log.d("huangchixingcc",optionBean.getData().getDeviceType().get(0).getName());
-                Log.d("huangchixingcc",optionBean.getData().getPhaseType().get(0).getName());
-                Log.d("huangchixing2",optionBean.getData().getCities().get(0).getName());
-                Log.d("huangchixing2",optionBean.getData().getCities().get(1).getName());
+                Log.d("huangchixingcc", optionBean.getData().getDeviceType().get(0).getName());
+                Log.d("huangchixingcc", optionBean.getData().getPhaseType().get(0).getName());
+                Log.d("huangchixing2", optionBean.getData().getCities().get(0).getName());
+                Log.d("huangchixing2", optionBean.getData().getCities().get(1).getName());
 
                 //存入数据库,每次清除上一次数据
 //                SQLhelper_Device.Instance(getActivity()).clearOptionInfo();
@@ -219,6 +236,13 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
             }
         });
 
+    }
+
+    //网络异常
+    private void initNoInternetView() {
+        if (rlNoData == null || llContent == null) return;
+        llContent.setVisibility(View.GONE);
+        rlNoData.setVisibility(View.VISIBLE);
     }
 
 
@@ -334,12 +358,12 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         }
     }
 
-    private void toDetailList(int sourceFlag, String title, int requestCode){
+    private void toDetailList(int sourceFlag, String title, int requestCode) {
         Intent power_intent = new Intent();
         power_intent.putExtra("source_flag", sourceFlag);
-        Log.d("huangchixing33","===============");
-        Log.d("huangchixing33" , sourceFlag + "");
-        power_intent.putExtra("title",title);
+        Log.d("huangchixing33", "===============");
+        Log.d("huangchixing33", sourceFlag + "");
+        power_intent.putExtra("title", title);
         power_intent.setClass(getActivity(), MapViewActivity.class);
         startActivityForResult(power_intent, requestCode);
     }

@@ -93,6 +93,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             values.put(LOCATION, deviceInfos.get(i).getLocation());
             db.insert("DeviceData", null, values);
             Log.d("huangchixingsq",values + "");
+
         }
 
     }

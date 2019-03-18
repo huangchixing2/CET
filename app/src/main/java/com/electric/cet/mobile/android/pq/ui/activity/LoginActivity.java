@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
@@ -110,7 +111,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         System.out.println("加密后的密码为 " + EncryptPwd);
 
 
-
         //发起post请求给服务器
         OkHttpClient client = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder().add("UserName", UserName).add("EncryptPwd ", EncryptPwd).build();
@@ -118,51 +118,53 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         final Request request = new Request.Builder().url(Constans.URL_LOGIN).post(formBody).build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
-                         @Override
-                         public void onFailure(Call call, IOException e) {
-                             //请求失败
-                             if (!response.isSuccessful()) {
-                                 Log.i("请求情况：", "请求失败");
-                                 //提示用户无网络
-                                 Toast.makeText(LoginActivity.this,"没有网络",Toast.LENGTH_SHORT).show();
-                             }
-                         }
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //请求失败
+                if (!response.isSuccessful()) {
+                    Log.i("请求情况：", "请求失败");
+                    Looper.prepare();
+                    //提示用户无网络
+                    Toast.makeText(LoginActivity.this, "没有网络", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+            }
 
-                         @Override
-                         public void onResponse(Call call, Response response) throws IOException {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
 
-                             if (response.isSuccessful()) {
-                                 Log.i("响应状态", "响应成功");
-                                 String loginBody = response.body().string();
-                                 Gson gson = new Gson();
-                                 LoginBean loginData = gson.fromJson(loginBody, LoginBean.class);
+                if (response.isSuccessful()) {
+                    Log.i("响应状态", "响应成功");
+                    String loginBody = response.body().string();
+                    Gson gson = new Gson();
+                    LoginBean loginData = gson.fromJson(loginBody, LoginBean.class);
 
-                                 int loginResultCode = loginData.getCode();
-                                 Log.i("resultcode", loginResultCode + "");
-                                 int ResponseCode = response.code();
+                    int loginResultCode = loginData.getCode();
+                    Log.i("resultcode", loginResultCode + "");
+                    int ResponseCode = response.code();
 
-                                 //无法获取token
-                                 //响应成功,判断状态码
-                                 if (ResponseCode == 200) {
-                                     Log.i("登录状态", "登录成功");
-                                     String data = loginData.getData().toString(); //这个就是token
-                                     //保存token
-                                     //sp保存数据
-                                     SharedPreferences sp = context.getSharedPreferences("TokenData", Context.MODE_PRIVATE);
-                                     SharedPreferences.Editor editor = sp.edit();
-                                     editor.putString("UserName", loginBody);
-                                     editor.putString("passWd", passWd);
-                                     editor.putString("EncryptPwd", EncryptPwd);
-                                     editor.putBoolean("isLogin", true);
-                                     editor.apply();
+                    //无法获取token
+                    //响应成功,判断状态码
+                    if (ResponseCode == 200) {
+                        Log.i("登录状态", "登录成功");
+                        String data = loginData.getData().toString(); //这个就是token
+                        //保存token
+                        //sp保存数据
+                        SharedPreferences sp = context.getSharedPreferences("TokenData", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("UserName", loginBody);
+                        editor.putString("passWd", passWd);
+                        editor.putString("EncryptPwd", EncryptPwd);
+                        editor.putBoolean("isLogin", true);
+                        editor.apply();
 
-                                     handler.sendEmptyMessage(100);
+                        handler.sendEmptyMessage(100);
 
 
-                                 }
-                             }
-                         }
-                     });
+                    }
+                }
+            }
+        });
 
 //        OkHttpUtils.postLogin(context, Constans.URL_LOGIN, request, handler);
 

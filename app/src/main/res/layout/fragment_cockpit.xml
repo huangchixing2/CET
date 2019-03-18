@@ -14,269 +14,292 @@
         android:textColor="@color/cet_main_nor_color"
         android:textSize="20sp" />
 
-    <ImageView
-        android:id="@+id/cet_cockpit_iv"
-        android:layout_width="220dp"
-        android:layout_height="110dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:src="@mipmap/cet_cockpit_main_bg" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/cockpit_install_num_rl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/cockpit_install_num_iv"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/cockpit_install_num" />
+            <LinearLayout
+                android:id="@+id/content_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/cockpit_install_num_tv"
-                android:layout_marginTop="5dp"
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/cockpit_install_num_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/cockpit_install_num_iv"
-                android:text="0"
-                android:textColor="@color/orange"
-                android:textSize="20sp" />
+                <ImageView
+                    android:id="@+id/cet_cockpit_iv"
+                    android:layout_width="220dp"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:src="@mipmap/cet_cockpit_main_bg" />
 
-            <TextView
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/cockpit_install_num_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/cockpit_install_num_iv"
-                android:text="@string/cet_cockpit_install_num"
-                android:textColor="@color/cet_main_nor_color"
-                android:textSize="14sp" />
-        </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
 
-        <RelativeLayout
-            android:id="@+id/cockpit_online_num_rl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1">
+                    <RelativeLayout
+                        android:id="@+id/cockpit_install_num_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/cockpit_online_num_iv"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/cockpit_onlin_num" />
+                        <ImageView
+                            android:id="@+id/cockpit_install_num_iv"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/cockpit_install_num" />
 
-            <TextView
-                android:id="@+id/cockpit_online_num_tv"
-                android:layout_marginTop="5dp"
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/cockpit_online_num_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/cockpit_online_num_iv"
-                android:text="0"
-                android:textColor="@color/orange"
-                android:textSize="20sp" />
+                        <TextView
+                            android:id="@+id/cockpit_install_num_tv"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/cockpit_install_num_iv"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@+id/cockpit_install_num_iv"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/orange"
+                            android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/cockpit_online_num_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/cockpit_online_num_iv"
-                android:text="@string/cet_cockpit_online_num"
-                android:textColor="@color/cet_main_nor_color"
-                android:textSize="14sp" />
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/cockpit_install_num_iv"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toRightOf="@+id/cockpit_install_num_iv"
+                            android:gravity="center"
+                            android:text="@string/cet_cockpit_install_num"
+                            android:textColor="@color/cet_main_nor_color"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/cockpit_online_num_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/cockpit_online_num_iv"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/cockpit_onlin_num" />
+
+                        <TextView
+                            android:id="@+id/cockpit_online_num_tv"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/cockpit_online_num_iv"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@+id/cockpit_online_num_iv"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/orange"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/cockpit_online_num_iv"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toRightOf="@+id/cockpit_online_num_iv"
+                            android:gravity="center"
+                            android:text="@string/cet_cockpit_online_num"
+                            android:textColor="@color/cet_main_nor_color"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/cockpit_usable_num_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/cockpit_usable_num_iv"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/cockpit_usable_num" />
+
+                        <TextView
+                            android:id="@+id/cockpit_usable_num_tv"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/cockpit_usable_num_iv"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@+id/cockpit_usable_num_iv"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/orange"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/cockpit_usable_num_iv"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toRightOf="@+id/cockpit_usable_num_iv"
+                            android:gravity="center"
+                            android:text="@string/cet_cockpit_usable_num"
+                            android:textColor="@color/cet_main_nor_color"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/cockpit_sim_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/cockpit_sim_iv"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/cockpit_sim" />
+
+                        <TextView
+                            android:id="@+id/cockpit_sim_tv"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/cockpit_sim_iv"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@+id/cockpit_sim_iv"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/orange"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/cockpit_sim_iv"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toRightOf="@+id/cockpit_sim_iv"
+                            android:gravity="center"
+                            android:text="@string/cet_cockpit_online_num"
+                            android:textColor="@color/cet_main_nor_color"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/cockpit_dysfunction_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/cockpit_dysfunction_iv"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/cockpit_dysfunction" />
+
+                        <TextView
+                            android:id="@+id/cockpit_dysfunction_tv"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/cockpit_dysfunction_iv"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@+id/cockpit_dysfunction_iv"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/orange"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/cockpit_dysfunction_iv"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toRightOf="@+id/cockpit_dysfunction_iv"
+                            android:gravity="center"
+                            android:text="@string/cet_cockpit_dysfunction"
+                            android:textColor="@color/cet_main_nor_color"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/cockpit_power_cut_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/cockpit_power_cut_iv"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/cockpit_power_cut" />
+
+                        <TextView
+                            android:id="@+id/cockpit_power_cut_tv"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/cockpit_power_cut_iv"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@+id/cockpit_power_cut_iv"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/orange"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/cockpit_power_cut_iv"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toRightOf="@+id/cockpit_power_cut_iv"
+                            android:gravity="center"
+                            android:text="@string/cet_cockpit_power_cut"
+                            android:textColor="@color/cet_main_nor_color"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <include layout="@layout/layout_no_data" />
+
         </RelativeLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
 
-        <RelativeLayout
-            android:id="@+id/cockpit_usable_num_rl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/cockpit_usable_num_iv"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/cockpit_usable_num" />
-
-            <TextView
-                android:id="@+id/cockpit_usable_num_tv"
-                android:layout_marginTop="5dp"
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/cockpit_usable_num_iv"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/cockpit_usable_num_iv"
-                android:text="0"
-                android:textColor="@color/orange"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/cockpit_usable_num_iv"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/cockpit_usable_num_iv"
-                android:text="@string/cet_cockpit_usable_num"
-                android:textColor="@color/cet_main_nor_color"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/cockpit_sim_rl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/cockpit_sim_iv"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/cockpit_sim" />
-
-            <TextView
-                android:id="@+id/cockpit_sim_tv"
-                android:layout_marginTop="5dp"
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/cockpit_sim_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/cockpit_sim_iv"
-                android:text="0"
-                android:textColor="@color/orange"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/cockpit_sim_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/cockpit_sim_iv"
-                android:text="@string/cet_cockpit_online_num"
-                android:textColor="@color/cet_main_nor_color"
-                android:textSize="14sp" />
-        </RelativeLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:id="@+id/cockpit_dysfunction_rl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/cockpit_dysfunction_iv"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/cockpit_dysfunction" />
-
-            <TextView
-                android:id="@+id/cockpit_dysfunction_tv"
-                android:layout_marginTop="5dp"
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/cockpit_dysfunction_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/cockpit_dysfunction_iv"
-                android:text="0"
-                android:textColor="@color/orange"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="60dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/cockpit_dysfunction_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/cockpit_dysfunction_iv"
-                android:text="@string/cet_cockpit_dysfunction"
-                android:textColor="@color/cet_main_nor_color"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/cockpit_power_cut_rl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/cockpit_power_cut_iv"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/cockpit_power_cut" />
-
-            <TextView
-                android:id="@+id/cockpit_power_cut_tv"
-                android:layout_marginTop="5dp"
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/cockpit_power_cut_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/cockpit_power_cut_iv"
-                android:text="0"
-                android:textColor="@color/orange"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/cockpit_power_cut_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/cockpit_power_cut_iv"
-                android:layout_marginBottom="5dp"
-                android:text="@string/cet_cockpit_power_cut"
-                android:textColor="@color/cet_main_nor_color"
-                android:textSize="14sp" />
-        </RelativeLayout>
-    </LinearLayout>
     <GridView
         android:id="@+id/cockpit_gridview"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
@@ -284,6 +307,7 @@
         android:layout_marginRight="25dp"
         android:horizontalSpacing="0dp"
         android:numColumns="3"
-        android:verticalSpacing="25dp"></GridView>
+        android:verticalSpacing="25dp"
+        android:visibility="gone"></GridView>
 
 </LinearLayout>

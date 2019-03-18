@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -20,7 +19,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.electric.cet.mobile.android.pq.Bean.CurrDataList;
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
@@ -37,6 +35,7 @@ import com.electric.cet.mobile.android.pq.ui.adapter.BasePagerAdapter;
 import com.electric.cet.mobile.android.pq.ui.view.GraphicalUtils;
 import com.electric.cet.mobile.android.pq.ui.view.GraphicalView;
 import com.electric.cet.mobile.android.pq.utils.Constans;
+import com.electric.cet.mobile.android.pq.utils.NetWorkUtil;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -116,12 +115,17 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     private DeviceBean deviceBean;
 
     private int baseDistance;
+    private RelativeLayout rlNoData;
+    private LinearLayout llContent;
+
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
+                    rlNoData.setVisibility(View.GONE);
+                    llContent.setVisibility(View.VISIBLE);
                     //实时数据现在在界面
                     RealTimeBean realTimeBean = (RealTimeBean) msg.obj;
                     Log.d("huangchixing", realTimeBean.getData().getAVoltageInput() + "");
@@ -166,6 +170,8 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                     break;
                 case 101:
                     trend_ll.removeAllViews();
+                    rlNoData.setVisibility(View.GONE);
+                    llContent.setVisibility(View.VISIBLE);
                     if (rb == 0) {
                         trend_ll.addView(new GraphicalView(getActivity(), GraphicalUtils.drawDataTrend(getTrendData(), 20, 0)));
                     } else if (rb == 1) {
@@ -180,26 +186,29 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
             }
         }
     };
+    private View countView;
+    private View realtimeView;
+    private View trendView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_data, container, false);
         initView(view);
-        initData();
+        initData(0);
 
         return view;
     }
 
     private void initView(View view) {
         views = new ArrayList<View>();
-        View countView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_data_count_layout, null);
+        countView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_data_count_layout, null);
 //        count_lv = (ListView) countView.findViewById(R.id.cet_data_count_lv);
 //        DataCountAdapter dcAdapter = new DataCountAdapter(getActivity(),getData());
 //        count_lv.setAdapter(dcAdapter);
         initCountView(countView);
-        View realtimeView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_data_realtime_layout, null);
+        realtimeView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_data_realtime_layout, null);
         initRealtimeView(realtimeView);
-        View trendView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_data_trend_layout, null);
+        trendView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_data_trend_layout, null);
         initTrendView(trendView);
         views.add(countView);
         views.add(realtimeView);
@@ -226,13 +235,49 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         viewPager.setOnPageChangeListener(this);
     }
 
-    private void initData() {
-//
-//        initRealtimeData();
-//        initTrendData();
-        refreshCountData(-1);
+    private void initData(int position) {
+        switch (position) {
+            case 0:
+                initCountView(countView);
+                if (NetWorkUtil.isNetworkAvailable(getActivity())) {
+                    refreshCountData(-1);
+                } else {
+                    initNoInternetView();
+                }
+                break;
+            case 1:
+                initRealtimeView(realtimeView);
+                if (NetWorkUtil.isNetworkAvailable(getActivity())) {
+                    if (String.valueOf(dataBean.getDeviceId()).isEmpty()) {
+                        initNoInternetView();
+                    } else {
+                        initRealtimeData(String.valueOf(dataBean.getDeviceId()));
+                    }
+                } else {
+                    initNoInternetView();
+                }
+                break;
+            case 2:
+                initTrendView(trendView);
+                if (NetWorkUtil.isNetworkAvailable(getActivity())) {
+                    if (String.valueOf(dataBean.getDeviceId()).isEmpty()) {
+                        initNoInternetView();
+                    } else {
+                        initTrendData(String.valueOf(dataBean.getDeviceId()));
+                    }
+                } else {
+                    initNoInternetView();
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData(viewPager.getCurrentItem());
     }
 
     private void refreshCountData(int deviceId) {
@@ -261,8 +306,8 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         phrase.setText("相数: " + dataBean.getPhaseTypeId() + "");
         circuit.setText("线路: " + dataBean.getCircuitId() + "");
         location.setText("位置: " + dataBean.getLocation());
-    }
 
+    }
 
 ////请求统计数据
 //    public void initStatisticsData(){
@@ -278,7 +323,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     //Get方式请求趋势数据
     public void initTrendData(String deviceId) {
         OkHttpClient client = new OkHttpClient();
-        String DeviceId = null;
+
 
 //        RequestBody formBody = new FormBody.Builder().add("deviceId","3" ) //deviceId如何传入？
 //                .add("startTime", "2019-02-22")  //参数如何填入？
@@ -292,6 +337,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
             public void onFailure(Call call, IOException e) {
                 // 提示错误信息
                 Log.d("DataFrament", "趋势数据请求失败");
+                initNoInternetView();
             }
 
             @Override
@@ -321,8 +367,6 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     //请求实时数据
     public void initRealtimeData(String deviceId) {
         OkHttpClient client = new OkHttpClient();
-        String deviceid = null;
-
 
 //        RequestBody formBody = new FormBody.Builder().add("deviceId", "98").build(); //参数如何填入？
         Log.i("deviceid", dataBean.getDeviceId() + "");
@@ -334,9 +378,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
             public void onFailure(Call call, IOException e) {
 
                 // 无网络时候提示用户
-                Looper.prepare();
-                Toast.makeText(getActivity(), "无网络", Toast.LENGTH_SHORT).show();
-                Looper.loop();
+                initNoInternetView();
                 Log.d("DataFrament", "实时数据请求失败");
 
             }
@@ -370,6 +412,13 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         });
     }
 
+    //网络异常
+    private void initNoInternetView() {
+        if (rlNoData == null || llContent == null) return;
+        llContent.setVisibility(View.GONE);
+        rlNoData.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onPageScrolled(int i, float v, int i1) {
         int location = Math.round(v * baseDistance) + i * baseDistance;
@@ -381,15 +430,16 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         switch (i) {
             case 0:
                 countRB.setChecked(true);
+                initData(0);
 //                initStatisticsData();
                 break;
             case 1:
                 realtimeRB.setChecked(true);
-                initRealtimeData(String.valueOf(dataBean.getDeviceId()));
+                initData(1);
                 break;
             case 2:
                 trendRB.setChecked(true);
-                initTrendData(String.valueOf(dataBean.getDeviceId()));
+                initData(2);
                 break;
             default:
                 break;
@@ -398,7 +448,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 
     @Override
     public void onPageScrollStateChanged(int i) {
-
+        initData(i);
     }
 
     @Override
@@ -495,6 +545,8 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 
     //统计数据界面初始化
     private void initCountView(View view) {
+        rlNoData = (RelativeLayout) view.findViewById(R.id.rl_no_data);
+        llContent = (LinearLayout) view.findViewById(R.id.content_ll);
         data_address = (TextView) view.findViewById(R.id.data_address);
         voltageRegulateTime = (TextView) view.findViewById(R.id.voltageRegulateTime);
         voltageRegulate = (TextView) view.findViewById(R.id.voltageRegulate);
@@ -519,7 +571,8 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 
     private void initRealtimeView(View view) {
 //        avo_tv = (TextView) view.findViewById(R.id.cet_realtime_input_avoltage);
-
+        rlNoData = (RelativeLayout) view.findViewById(R.id.rl_no_data);
+        llContent = (LinearLayout) view.findViewById(R.id.content_ll);
         cet_realtime_input_avoltage = (TextView) view.findViewById(R.id.cet_realtime_input_avoltage);
         cet_realtime_out_avoltage = (TextView) view.findViewById(R.id.cet_realtime_out_avoltage);
         cet_realtime_input_bvoltage = (TextView) view.findViewById(R.id.cet_realtime_input_bvoltage);
@@ -553,6 +606,8 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     }
 
     private void initTrendView(View view) {
+        rlNoData = (RelativeLayout) view.findViewById(R.id.rl_no_data);
+        llContent = (LinearLayout) view.findViewById(R.id.content_ll);
         trend_rl = (RelativeLayout) view.findViewById(R.id.cet_data_trend_search_rl);
         trend_ll = (LinearLayout) view.findViewById(R.id.cet_data_trend_layout);
         trendRadioGroup = (RadioGroup) view.findViewById(R.id.cet_data_trend_rg);

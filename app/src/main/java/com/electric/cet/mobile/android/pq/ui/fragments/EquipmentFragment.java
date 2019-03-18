@@ -41,6 +41,7 @@ import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentCollectAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentWorkingAdapter;
 import com.electric.cet.mobile.android.pq.utils.ChangeTypeUtil;
 import com.electric.cet.mobile.android.pq.utils.Constans;
+import com.electric.cet.mobile.android.pq.utils.NetWorkUtil;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -83,30 +84,37 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private TextView equipment_collect_title_statu;
     private Spinner spinner_collect;
     private Spinner spinner_work;
-//    private RelativeLayout collect_rl; //台账
+    //    private RelativeLayout collect_rl; //台账
     private RelativeLayout work_rl; //工况
     private ArrayAdapter cAdapter;
     private ArrayAdapter wAdapter;
     //设备类型定义
     private static final String[] deviceType = {"全部类型", "低压调压器", "无功补偿装置", "静止无功发生器", "混合型无功补偿装置", "中压调压器", "中压静止无功发生器", "中压串补"};
+    private RelativeLayout rlNoData;
+    private LinearLayout llContent;
+    View collectView;
+    View workingView;
 
 
-
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 100:
-                break;
+                    break;
                 case Constans.collect_spanner:
-                    int collectType = msg.getData().getInt("collectType",0);
+                    rlNoData.setVisibility(View.GONE);
+                    llContent.setVisibility(View.VISIBLE);
+                    int collectType = msg.getData().getInt("collectType", 0);
                     List<DataBean> devicesList = SQLhelper_Device.Instance(getActivity()).queryDeviceListByType(collectType); //参数如何传递
                     allDevicesList.clear();
                     allDevicesList.addAll(devicesList);
                     collectAdapter.notifyDataSetChanged();
                     break;
                 case Constans.work_spanner:
-                    int workType = msg.getData().getInt("workType",0);
+                    rlNoData.setVisibility(View.GONE);
+                    llContent.setVisibility(View.VISIBLE);
+                    int workType = msg.getData().getInt("workType", 0);
                     List<DataBean> workList = SQLhelper_Device.Instance(getActivity()).queryDeviceListByType(workType); //参数如何传递
                     allDevicesList.clear();
                     allDevicesList.addAll(workList);
@@ -123,14 +131,14 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_equipment, container, false);
         initView(view);
-        initData();
+        initData(0);
         return view;
     }
 
     private void initView(View view) {
-        View collectView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_equipment_collect_layout, null);
+        collectView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_equipment_collect_layout, null);
         initCollectView(collectView);
-        View workingView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_equipment_working_layout, null);
+        workingView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_equipment_working_layout, null);
         initWorkingView(workingView);
         views.add(collectView);
         views.add(workingView);
@@ -158,20 +166,67 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         viewPager.setOnPageChangeListener(this);
     }
 
-    private void initData() {
-
+    private void initData(int position) {
 
         //解析出节点数据
         SharedPreferences sp = getActivity().getSharedPreferences("treeData", MODE_PRIVATE);
-        final String str_tree = sp.getString("str_Tree",""); //获取原始登录的密码
+        final String str_tree = sp.getString("str_Tree", ""); //获取原始登录的密码
         Gson gson = new Gson();
         //将json字符串转为dataBean对象
         OptionBean optionBean = gson.fromJson(str_tree, OptionBean.class);
 
-        allDevicesList.clear();
-        allDevicesList.addAll(getCollectData());
-        collectAdapter.notifyDataSetChanged();
-        workingAdapter.notifyDataSetChanged();
+//        allDevicesList.clear();
+//        allDevicesList.addAll(getCollectData());
+//        collectAdapter.notifyDataSetChanged();
+//        workingAdapter.notifyDataSetChanged();
+        switch (position) {
+            case 0:
+                initCollectView(collectView);
+                if (NetWorkUtil.isNetworkAvailable(getActivity())) {
+                    if (llContent != null && llContent.getVisibility() != View.VISIBLE) {
+                        llContent.setVisibility(View.VISIBLE);
+                        if (allDevicesList.size() == 0) {
+                            allDevicesList.clear();
+                            allDevicesList.addAll(getCollectData());
+                            collectAdapter.notifyDataSetChanged();
+                        }
+                    }
+                    if (rlNoData != null && rlNoData.getVisibility() == View.VISIBLE) {
+                        rlNoData.setVisibility(View.GONE);
+                    }
+                } else {
+                    initNoInternetView();
+                }
+                break;
+            case 1:
+                initWorkingView(workingView);
+                if (NetWorkUtil.isNetworkAvailable(getActivity())) {
+                    if (llContent != null && llContent.getVisibility() != View.VISIBLE) {
+                        llContent.setVisibility(View.VISIBLE);
+                        if (allDevicesList.size() == 0) {
+                            allDevicesList.clear();
+                            allDevicesList.addAll(getCollectData());
+                            workingAdapter.notifyDataSetChanged();
+                        }
+                    }
+                    if (rlNoData != null && rlNoData.getVisibility() == View.VISIBLE) {
+                        rlNoData.setVisibility(View.GONE);
+                    }
+                } else {
+                    initNoInternetView();
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    //网络异常
+    private void initNoInternetView() {
+        if (rlNoData == null || llContent == null) return;
+        llContent.setVisibility(View.GONE);
+        rlNoData.setVisibility(View.VISIBLE);
     }
 
 
@@ -187,10 +242,12 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
             case pageCollect:
                 collectRB.setChecked(true);
 //                initCollectView(viewPager);//旋转台账显示
+                initData(0);
                 break;
             case pageWorking:
                 workingRB.setChecked(true);
 //                initWorkingView(viewPager);//选择工况显示
+                initData(1);
                 break;
             default:
                 break;
@@ -199,7 +256,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
 
     @Override
     public void onPageScrollStateChanged(int i) {
-
+        initData(i);
     }
 
     @Override
@@ -231,16 +288,17 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
 //    }
 
 
-
     //台账view显示
     private void initCollectView(View view) {
+        rlNoData = (RelativeLayout) view.findViewById(R.id.rl_no_data);
+        llContent = (LinearLayout) view.findViewById(R.id.content_ll);
         collect_lv = (ListView) view.findViewById(R.id.cet_equipment_collect_lv);
         collectAdapter = new EquipmentCollectAdapter(getActivity(), allDevicesList);
         //去掉搜索框
 //        cet_working_search_rl = (RelativeLayout)view.findViewById(R.id.cet_device_search_rl);
         spinner_collect = (Spinner) view.findViewById(R.id.spinner_collect);
         //将可选内容与ArrayAdapter连接起来
-        cAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,deviceType);
+        cAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, deviceType);
 
         //设置下拉列表的风格
         cAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -306,12 +364,14 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
 
     //工况view显示
     private void initWorkingView(View view) {
+        rlNoData = (RelativeLayout) view.findViewById(R.id.rl_no_data);
+        llContent = (LinearLayout) view.findViewById(R.id.content_ll);
         working_lv = (ListView) view.findViewById(R.id.cet_equipment_working_lv);
         workingAdapter = new EquipmentWorkingAdapter(getActivity(), allDevicesList);
 
         spinner_work = (Spinner) view.findViewById(R.id.spinner_work);
         //将可选内容与ArrayAdapter连接起来
-        wAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,deviceType);
+        wAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, deviceType);
 
         //设置下拉列表的风格
         wAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -328,7 +388,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
                 Message message = handler.obtainMessage();
                 message.what = Constans.work_spanner;
                 message.getData().putInt("workType", ChangeTypeUtil.changS2I(deviceType[position]));
-                Log.d("huangcc",ChangeTypeUtil.changS2I(deviceType[position])+ "");
+                Log.d("huangcc", ChangeTypeUtil.changS2I(deviceType[position]) + "");
                 handler.sendMessage(message);
             }
 
@@ -390,12 +450,12 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     }
 
     //删除数据时提示用户，避免误操作
-    private void dialog(){
+    private void dialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-            //删除
+                //删除
                 deleteSelectedData();
             }
         });
