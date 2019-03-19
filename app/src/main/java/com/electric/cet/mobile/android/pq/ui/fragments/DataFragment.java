@@ -289,7 +289,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 
     private void refreshCountData(int deviceId) {
         //查询数据库，并显示统计数据
-        if (needQueryData||rlNoData != null && rlNoData.getVisibility() == View.VISIBLE) {
+        if (needQueryData || rlNoData != null && rlNoData.getVisibility() == View.VISIBLE) {
             dataBean = SQLhelper_Device.Instance(getActivity()).queryDeviceInfo(deviceId); //deviceId如何传参？
             Log.d("statics", dataBean.getInstallAddress());
             data_address.setText("台区: " + dataBean.getInstallAddress()); // int转换为string，否则报错
@@ -366,7 +366,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 //                Log.d("huangchixing22", trendBean.getData().getDeviceId() + "");
 //                Log.d("huangchixing22", trendBean.getData().getVoltData().get(1).getPhaseType() + "");
 //                Log.d("huangchixing22", trendBean.getData().getCurrData().get(0).getDataList().get(0).getRecordTime());
-                if (needRequestTrendData||rlNoData != null && rlNoData.getVisibility() == View.VISIBLE) {
+                if (needRequestTrendData || rlNoData != null && rlNoData.getVisibility() == View.VISIBLE) {
                     handler.sendEmptyMessage(101);
                     Looper.prepare();
                     needRequestTrendData = false;
@@ -420,7 +420,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 //                Log.d("DataFragment", "DEVICE NAME IS" + realTimeBean.getRealTimeData().get(0).getDeviceId());
 //                    Log.d("DataFragment", "-------实时数据解析成功-------------");
 //                    Log.d("DataFragment",realTimeBean.getData().getAVoltageInput() + "");
-                    if (needRequestTimeData||rlNoData != null && rlNoData.getVisibility() == View.VISIBLE) {
+                    if (needRequestTimeData || rlNoData != null && rlNoData.getVisibility() == View.VISIBLE) {
                         Message message = handler.obtainMessage();
                         message.what = 1;
                         message.obj = realTimeBean;
@@ -666,6 +666,8 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                Date date = new Date();
+//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 if (isbdate) {
                     bdate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                 } else {

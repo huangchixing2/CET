@@ -12,10 +12,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="7dp"
             android:button="@null"
             android:drawableRight="@drawable/cet_checkbox_style"
             android:focusable="false"
+            android:padding="8dp"
             android:text=""
             android:textColor="@color/cet_main_nor_color" />
 
@@ -24,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="17dp"
             android:layout_toRightOf="@+id/equipment_collect_item_cb"
             android:text="武汉花山台区"
             android:textColor="@color/cet_main_nor_color"

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.ui.activity.AccountManageActivity;
@@ -64,6 +66,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         client_option.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                // 无网络时候提示用户
+                Looper.prepare();
+                Toast.makeText(getActivity(), "无网络无法退出", Toast.LENGTH_SHORT).show();
+                Looper.loop();
                 Log.d("logout", "退出登录请求失败");
             }
 
@@ -79,6 +85,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     sp.edit().clear().apply();
                 }
                 Log.d("logout","退出登录成功");
+                getActivity().onBackPressed();
         }
     });
 
@@ -116,7 +123,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(DialogInterface dialog, int which) {
                 //删除
                 logOut(token);
-                getActivity().onBackPressed();
             }
         });
         dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {

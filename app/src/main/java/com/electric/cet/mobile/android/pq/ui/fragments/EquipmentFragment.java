@@ -478,11 +478,39 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.cet_equipment_collect_add:
+
+                //如果选中大于0，弹框提示
+                List<DataBean> addList = new ArrayList<>();
+                for (int i = 0; i < allDevicesList.size(); i++) {
+                    if (allDevicesList.get(i).isSle()) {
+                        addList.add(allDevicesList.get(i));
+                    }
+                }
+                if (addList.size() > 0) {
+                    Toast.makeText(getActivity(), "选中数据时无法添加", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent addIntent = new Intent();
                 addIntent.setClass(getActivity(), EquipmentCollectAddActivity.class);
                 startActivity(addIntent);
                 break;
             case R.id.cet_equipment_collect_edit:
+                //如果选中大于1，弹框提示
+                List<DataBean> selectList = new ArrayList<>();
+                for (int i = 0; i < allDevicesList.size(); i++) {
+                    if (allDevicesList.get(i).isSle()) {
+                        selectList.add(allDevicesList.get(i));
+                    }
+                }
+                if (selectList.size() ==0) {
+                    Toast.makeText(getActivity(), "请选择一条数据", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (selectList.size() > 1) {
+                    Toast.makeText(getActivity(), "最多选择一条数据", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent editIntent = new Intent();
                 editIntent.setClass(getActivity(), EquipmentCollectAddActivity.class);
                 startActivity(editIntent);
@@ -509,6 +537,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         allDevicesList.removeAll(deleteList);
         collectAdapter.notifyDataSetChanged();
         //delete stayList in db
+//        SQLhelper_Device.Instance(getActivity()).delDevice(deleteList);
     }
 
     private boolean isSelectedItem() {
