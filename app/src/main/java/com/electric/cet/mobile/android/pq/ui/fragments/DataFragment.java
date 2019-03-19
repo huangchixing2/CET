@@ -4,7 +4,9 @@ package com.electric.cet.mobile.android.pq.ui.fragments;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -117,6 +119,11 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     private int baseDistance;
     private RelativeLayout rlNoData;
     private LinearLayout llContent;
+    private boolean needQueryData = true;
+    private boolean needRequestTimeData = true;
+    private boolean needRequestTrendData = true;
+    private RealTimeCount realTimeCount;
+    private TrendTimeCount trendTimeCount;
 
 
     private Handler handler = new Handler() {
@@ -282,31 +289,33 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 
     private void refreshCountData(int deviceId) {
         //查询数据库，并显示统计数据
-        dataBean = SQLhelper_Device.Instance(getActivity()).queryDeviceInfo(deviceId); //deviceId如何传参？
-        Log.d("statics", dataBean.getInstallAddress());
-        data_address.setText("台区: " + dataBean.getInstallAddress()); // int转换为string，否则报错
+        if (needQueryData||rlNoData != null && rlNoData.getVisibility() == View.VISIBLE) {
+            dataBean = SQLhelper_Device.Instance(getActivity()).queryDeviceInfo(deviceId); //deviceId如何传参？
+            Log.d("statics", dataBean.getInstallAddress());
+            data_address.setText("台区: " + dataBean.getInstallAddress()); // int转换为string，否则报错
 
-        voltageRegulateTime.setText("调压次数: " + dataBean.getAdjustTime() + "");
-        //做一个判断，true显示正常，false显示异常
-        if (dataBean.getVoltageRegulateNormal()) {
-            voltageRegulate.setText("调压: " + getResources().getString(R.string.cet_count_nor));
-        } else {
-            voltageRegulate.setText("调压: " + getResources().getString(R.string.cet_count_abnor));
-        }
+            voltageRegulateTime.setText("调压次数: " + dataBean.getAdjustTime() + "");
+            //做一个判断，true显示正常，false显示异常
+            if (dataBean.getVoltageRegulateNormal()) {
+                voltageRegulate.setText("调压: " + getResources().getString(R.string.cet_count_nor));
+            } else {
+                voltageRegulate.setText("调压: " + getResources().getString(R.string.cet_count_abnor));
+            }
 //    voltageRegulate.setText("调压: "+ dataBean.getVoltageRegulateNormal()); //怎么做判断正常和异常
-        if (dataBean.getReactiveCompensationNormal()) {
-            reactiveCompensation.setText("无功补偿: " + getResources().getString(R.string.cet_count_nor));
-        } else {
-            reactiveCompensation.setText("无功补偿: " + getResources().getString(R.string.cet_count_abnor));
-        }
+            if (dataBean.getReactiveCompensationNormal()) {
+                reactiveCompensation.setText("无功补偿: " + getResources().getString(R.string.cet_count_nor));
+            } else {
+                reactiveCompensation.setText("无功补偿: " + getResources().getString(R.string.cet_count_abnor));
+            }
 //    reactiveCompensation.setText("无功补偿: " + dataBean.getReactiveCompensationNormal() + "");
-        manufacture.setText("厂家: " + dataBean.getManufacture() + "");
-        model.setText("型号: " + dataBean.getModel() + "");
-        capacity.setText("容量: " + dataBean.getCapacity() + " KG");
-        phrase.setText("相数: " + dataBean.getPhaseTypeId() + "");
-        circuit.setText("线路: " + dataBean.getCircuitId() + "");
-        location.setText("位置: " + dataBean.getLocation());
-
+            manufacture.setText("厂家: " + dataBean.getManufacture() + "");
+            model.setText("型号: " + dataBean.getModel() + "");
+            capacity.setText("容量: " + dataBean.getCapacity() + " KG");
+            phrase.setText("相数: " + dataBean.getPhaseTypeId() + "");
+            circuit.setText("线路: " + dataBean.getCircuitId() + "");
+            location.setText("位置: " + dataBean.getLocation());
+        }
+        needQueryData = false;
     }
 
 ////请求统计数据
@@ -336,8 +345,10 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
             @Override
             public void onFailure(Call call, IOException e) {
                 // 提示错误信息
-                Log.d("DataFrament", "趋势数据请求失败");
+                Looper.prepare();
                 initNoInternetView();
+                Looper.loop();
+
             }
 
             @Override
@@ -355,8 +366,15 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 //                Log.d("huangchixing22", trendBean.getData().getDeviceId() + "");
 //                Log.d("huangchixing22", trendBean.getData().getVoltData().get(1).getPhaseType() + "");
 //                Log.d("huangchixing22", trendBean.getData().getCurrData().get(0).getDataList().get(0).getRecordTime());
-                handler.sendEmptyMessage(101);
-
+                if (needRequestTrendData||rlNoData != null && rlNoData.getVisibility() == View.VISIBLE) {
+                    handler.sendEmptyMessage(101);
+                    Looper.prepare();
+                    needRequestTrendData = false;
+                    //设置五分钟刷新趋势数据
+                    trendTimeCount = new TrendTimeCount(300000, 1000);
+                    trendTimeCount.start();
+                    Looper.loop();
+                }
             }
         });
     }
@@ -378,7 +396,9 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
             public void onFailure(Call call, IOException e) {
 
                 // 无网络时候提示用户
+                Looper.prepare();
                 initNoInternetView();
+                Looper.loop();
                 Log.d("DataFrament", "实时数据请求失败");
 
             }
@@ -400,10 +420,18 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 //                Log.d("DataFragment", "DEVICE NAME IS" + realTimeBean.getRealTimeData().get(0).getDeviceId());
 //                    Log.d("DataFragment", "-------实时数据解析成功-------------");
 //                    Log.d("DataFragment",realTimeBean.getData().getAVoltageInput() + "");
-                    Message message = handler.obtainMessage();
-                    message.what = 1;
-                    message.obj = realTimeBean;
-                    message.sendToTarget();
+                    if (needRequestTimeData||rlNoData != null && rlNoData.getVisibility() == View.VISIBLE) {
+                        Message message = handler.obtainMessage();
+                        message.what = 1;
+                        message.obj = realTimeBean;
+                        message.sendToTarget();
+                        needRequestTimeData = false;
+                        Looper.prepare();
+                        //设置五分钟刷新实时数据
+                        realTimeCount = new RealTimeCount(300000, 1000);
+                        realTimeCount.start();
+                        Looper.loop();
+                    }
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -414,6 +442,9 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
 
     //网络异常
     private void initNoInternetView() {
+        needQueryData = true;
+        needRequestTimeData = true;
+        needRequestTrendData = true;
         if (rlNoData == null || llContent == null) return;
         llContent.setVisibility(View.GONE);
         rlNoData.setVisibility(View.VISIBLE);
@@ -659,6 +690,42 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                 break;
             default:
                 break;
+        }
+    }
+
+    class RealTimeCount extends CountDownTimer {
+
+        public RealTimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+//            needRequestTimeData = false;
+        }
+
+        @Override
+        public void onFinish() {
+            needRequestTimeData = true;
+            initData(viewPager.getCurrentItem());
+        }
+    }
+
+    class TrendTimeCount extends CountDownTimer {
+
+        public TrendTimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+//            needRequestTrendData = false;
+        }
+
+        @Override
+        public void onFinish() {
+            needRequestTrendData = true;
+            initData(viewPager.getCurrentItem());
         }
     }
 

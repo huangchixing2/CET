@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,6 +61,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     private TextView power_tv;
     private SQLhelper_Device dbHelper;
     private DeviceBean deviceBean;
+    private boolean needRequestData = true;
 
     private Handler handler = new Handler() {
         //驾驶舱数据显示
@@ -152,7 +154,9 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 // 提示错误信息
                 Log.d("allinfo", "allinfo请求失败");
 //                Toast.makeText(getActivity(), "无网络", Toast.LENGTH_SHORT).show();
+                Looper.prepare();
                 initNoInternetView();
+                Looper.loop();
             }
 
             @Override
@@ -175,13 +179,15 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                     //网络请求到的数据写入数据库
                     SQLhelper_Device.Instance(getActivity()).insertUserInfo(deviceBean.getData());
                     //发送消息给主线程
-                    Message message = handler.obtainMessage();
-                    Bundle bundle = new Bundle();
-                    bundle.putIntegerArrayList("list", countData(deviceBean.getData()));
-                    message.what = 1;
-                    message.getData().putBundle("data", bundle);
-                    handler.sendMessage(message);
-
+                    if (needRequestData) {
+                        Message message = handler.obtainMessage();
+                        Bundle bundle = new Bundle();
+                        bundle.putIntegerArrayList("list", countData(deviceBean.getData()));
+                        message.what = 1;
+                        message.getData().putBundle("data", bundle);
+                        handler.sendMessage(message);
+                    }
+                    needRequestData = false;
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -240,6 +246,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
 
     //网络异常
     private void initNoInternetView() {
+        needRequestData = true;
         if (rlNoData == null || llContent == null) return;
         llContent.setVisibility(View.GONE);
         rlNoData.setVisibility(View.VISIBLE);

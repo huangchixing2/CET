@@ -167,7 +167,9 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     }
 
     private void initData(int position) {
-
+        if (!NetWorkUtil.isNetworkAvailable(getActivity())) {
+            initNoInternetView();
+        }
         //解析出节点数据
         SharedPreferences sp = getActivity().getSharedPreferences("treeData", MODE_PRIVATE);
         final String str_tree = sp.getString("str_Tree", ""); //获取原始登录的密码
@@ -179,6 +181,8 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
 //        allDevicesList.addAll(getCollectData());
 //        collectAdapter.notifyDataSetChanged();
 //        workingAdapter.notifyDataSetChanged();
+
+        //处理网络切换问题
         switch (position) {
             case 0:
                 initCollectView(collectView);

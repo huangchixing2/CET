@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@mipmap/cet_logo"/>
+            android:src="@mipmap/cet_head"/>
     </LinearLayout>
 
     <LinearLayout

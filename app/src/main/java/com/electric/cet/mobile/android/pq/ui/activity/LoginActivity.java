@@ -52,6 +52,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     Intent intent = new Intent();
                     intent.setClass(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
+                    Toast.makeText(LoginActivity.this,"登录成功!",Toast.LENGTH_SHORT).show();
                     finish();
                     break;
             }

@@ -16,8 +16,8 @@ public class DataBean implements Serializable {
          private Boolean IsSIMCardOnline;//simcard是否在线
          private Boolean IsAbnormal; //功能是否异常
          private Boolean IsPowerFailure;//是否停电
-         private long Longitude; //经度
-         private long Latitude; //纬度
+         private double Longitude; //经度
+         private double Latitude; //纬度
          private long AdjustTime;//调整次数
          private Boolean IsVoltageRegulateNormal;//调压是否正常
          private Boolean IsReactiveCompensationNormal; //无功补偿是否正常
@@ -130,7 +130,7 @@ public class DataBean implements Serializable {
         IsPowerFailure = powerFailure;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return Longitude;
     }
 
@@ -138,7 +138,7 @@ public class DataBean implements Serializable {
         Longitude = longitude;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return Latitude;
     }
 
