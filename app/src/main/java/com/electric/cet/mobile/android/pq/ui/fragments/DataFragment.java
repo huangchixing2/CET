@@ -21,6 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.electric.cet.mobile.android.pq.Bean.CurrDataList;
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
@@ -41,8 +42,11 @@ import com.electric.cet.mobile.android.pq.utils.NetWorkUtil;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -647,7 +651,12 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         powerRB = (RadioButton) view.findViewById(R.id.cet_data_trend_power_rb);
         trendRadioGroup.setOnCheckedChangeListener(this);
         bdate_tv = (TextView) view.findViewById(R.id.cet_data_trend_date_before);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");//设置日期格式
+        Date endDate = new Date();// new Date()为获取当前系统时间
+        Date startDate = new Date(endDate.getTime() - 6 * 24 * 60 * 60 * 1000);
+        bdate_tv.setText(df.format(startDate));
         adate_tv = (TextView) view.findViewById(R.id.cet_data_trend_date_after);
+        adate_tv.setText(df.format(endDate));
         bdate_tv.setOnClickListener(this);
         adate_tv.setOnClickListener(this);
         trend_rl.setOnClickListener(new View.OnClickListener() {
@@ -666,14 +675,61 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                Date date = new Date();
-//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                if (isbdate) {
-                    bdate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
-                } else {
-                    adate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String beforeString = bdate_tv.getText().toString().trim().replace("/", "-");
+                Date beforeDate = null;
+                try {
+                    beforeDate = sdf.parse(beforeString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-                initTrendData(String.valueOf(dataBean.getDeviceId()));
+                String afterString = adate_tv.getText().toString().trim().replace("/", "-");
+                Date afterDate = null;
+                try {
+                    afterDate = sdf.parse(afterString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (isbdate) {
+                    String selectBeforeString = year + "-" + (month + 1) + "-" + dayOfMonth;
+                    try {
+                        Date selectBeforeDate = sdf.parse(selectBeforeString);
+                        if (selectBeforeDate.getTime() == beforeDate.getTime()) {
+                            return;
+                        }
+                        if (selectBeforeDate.getTime() > afterDate.getTime()) {
+                            Toast.makeText(getActivity(), "开始日期不能大于截止日期", Toast.LENGTH_SHORT).show();
+                        } else if (afterDate.getTime() - selectBeforeDate.getTime() >  6 * 24 * 60 * 60 * 1000) {
+                            Toast.makeText(getActivity(), "日期选择范围不能超过七天", Toast.LENGTH_SHORT).show();
+                        } else {
+                            bdate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
+                            needRequestTrendData = true;
+                            initTrendData(String.valueOf(dataBean.getDeviceId()));
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    String selectAfterString = year + "-" + (month + 1) + "-" + dayOfMonth;
+                    try {
+                        Date selectAfterDate = sdf.parse(selectAfterString);
+                        if (selectAfterDate.getTime() == afterDate.getTime()) {
+                            return;
+                        }
+                        if (selectAfterDate.getTime() < beforeDate.getTime()) {
+                            Toast.makeText(getActivity(), "截止日期不能小于开始日期", Toast.LENGTH_SHORT).show();
+                        } else if (selectAfterDate.getTime() - beforeDate.getTime() > 6 * 24 * 60 * 60 * 1000) {
+                            Toast.makeText(getActivity(), "日期选择范围不能超过七天", Toast.LENGTH_SHORT).show();
+                        } else {
+                            adate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
+                            needRequestTrendData = true;
+                            initTrendData(String.valueOf(dataBean.getDeviceId()));
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         dialog.show();
