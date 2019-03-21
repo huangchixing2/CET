@@ -31,6 +31,7 @@ import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
@@ -56,6 +57,7 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
     private TextView title;
     private ListView listView;
     private int sourceFlag = -1;
+    private String title_name;
 
 
     private List<DataBean> devicesList = new ArrayList<>();
@@ -127,9 +129,21 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
         //图片点击事件，回到定位点
 //        mLocationClient.requestLocation();
         //点击不同按钮显示对应的标题文字
-        String  value = getIntent().getStringExtra("title");
-        title.setText(value);
-
+        title_name = getIntent().getStringExtra("title");
+        title.setText(title_name);
+        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                ;
+                Intent intent = new Intent();
+                //使用SharedPreferences存储数据
+                SharedPreferences sp = getSharedPreferences("data",0);
+                sp.edit().putLong("deviceId",marker.getExtraInfo().getLong("deviceId")).commit();
+                setResult(1002,intent);
+                finish();
+                return false;
+            }
+        });
 
     }
 
@@ -211,43 +225,49 @@ public class MapViewActivity extends Activity implements BDLocationListener, Rad
         BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromBitmap(((BitmapDrawable) getResources().getDrawable(R.mipmap.cet_nor_marker)).getBitmap());
         BitmapDescriptor markerIcon2 = BitmapDescriptorFactory.fromBitmap(((BitmapDrawable) getResources().getDrawable(R.mipmap.cet_selected_marker)).getBitmap());
         LatLng ll;
+        List<DataBean> dataBeans = SQLhelper_Device.Instance(MapViewActivity.this).queryDeviceListByTitle(title_name);
         MarkerOptions markerOptions;
-        ll = new LatLng(latitude + 0.00000000002, longitude + 0.00000000004);
-        markerOptions = new MarkerOptions();
-        markerOptions.position(ll);
-        markerOptions.icon(markerIcon);
-        markerOptions.draggable(false);
-        markerOptions.anchor(0.5f, 1.0f);
-        markerOptions.alpha(0.8f);
-        markerOptions.zIndex(1);
-        mBaiduMap.addOverlay(markerOptions);
-        ll = new LatLng(latitude + 0.0011100202, longitude + 0.00001000204);
-        markerOptions = new MarkerOptions();
-        markerOptions.position(ll);
-        markerOptions.icon(markerIcon);
-        markerOptions.draggable(false);
-        markerOptions.anchor(0.5f, 1.0f);
-        markerOptions.alpha(0.8f);
-        markerOptions.zIndex(1);
-        mBaiduMap.addOverlay(markerOptions);
-        ll = new LatLng(latitude + 0.0011100202, longitude + 0.00101000204);
-        markerOptions = new MarkerOptions();
-        markerOptions.position(ll);
-        markerOptions.icon(markerIcon2);
-        markerOptions.draggable(false);
-        markerOptions.anchor(0.5f, 1.0f);
-        markerOptions.alpha(0.8f);
-        markerOptions.zIndex(1);
-        mBaiduMap.addOverlay(markerOptions);
-        ll = new LatLng(latitude + 0.0031100202, longitude + 0.00201000204);
-        markerOptions = new MarkerOptions();
-        markerOptions.position(ll);
-        markerOptions.icon(markerIcon);
-        markerOptions.draggable(false);
-        markerOptions.anchor(0.5f, 1.0f);
-        markerOptions.alpha(0.8f);
-        markerOptions.zIndex(1);
-        mBaiduMap.addOverlay(markerOptions);
+        for(int i = 0;i<dataBeans.size();i++){
+            ll = new LatLng(dataBeans.get(i).getLatitude(), dataBeans.get(i).getLongitude());
+            markerOptions = new MarkerOptions();
+            markerOptions.position(ll);
+            markerOptions.icon(markerIcon);
+            markerOptions.draggable(false);
+            markerOptions.anchor(0.5f, 1.0f);
+            markerOptions.alpha(0.8f);
+            markerOptions.zIndex(1);
+            Bundle bundle = new Bundle();
+            bundle.putLong("deviceId",dataBeans.get(i).getDeviceId());
+            Marker marker = (Marker)mBaiduMap.addOverlay(markerOptions);
+            marker.setExtraInfo(bundle);
+        }
+//        ll = new LatLng(latitude + 0.0011100202, longitude + 0.00001000204);
+//        markerOptions = new MarkerOptions();
+//        markerOptions.position(ll);
+//        markerOptions.icon(markerIcon);
+//        markerOptions.draggable(false);
+//        markerOptions.anchor(0.5f, 1.0f);
+//        markerOptions.alpha(0.8f);
+//        markerOptions.zIndex(1);
+//        mBaiduMap.addOverlay(markerOptions);
+//        ll = new LatLng(latitude + 0.0011100202, longitude + 0.00101000204);
+//        markerOptions = new MarkerOptions();
+//        markerOptions.position(ll);
+//        markerOptions.icon(markerIcon2);
+//        markerOptions.draggable(false);
+//        markerOptions.anchor(0.5f, 1.0f);
+//        markerOptions.alpha(0.8f);
+//        markerOptions.zIndex(1);
+//        mBaiduMap.addOverlay(markerOptions);
+//        ll = new LatLng(latitude + 0.0031100202, longitude + 0.00201000204);
+//        markerOptions = new MarkerOptions();
+//        markerOptions.position(ll);
+//        markerOptions.icon(markerIcon);
+//        markerOptions.draggable(false);
+//        markerOptions.anchor(0.5f, 1.0f);
+//        markerOptions.alpha(0.8f);
+//        markerOptions.zIndex(1);
+//        mBaiduMap.addOverlay(markerOptions);
 
     }
 

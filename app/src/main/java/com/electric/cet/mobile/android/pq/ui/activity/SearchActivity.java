@@ -71,11 +71,13 @@ public class SearchActivity extends Activity implements AdapterView.OnItemClickL
             //按照设备名称查询并搜索
             @Override
             public void afterTextChanged(Editable s) {
+
                 dataBeans = SQLhelper_Device.Instance(SearchActivity.this).queryDeviceListByName(s.toString());
                 refreshList(dataBeans);
             }
         });
         listView.setOnItemClickListener(this);
+
         dataBeans = SQLhelper_Device.Instance(SearchActivity.this).queryDeviceListByName("");
         refreshList(dataBeans);
     }

@@ -19,6 +19,7 @@ public class Constans {
     public final static String URL_AFTERTREND = "/data/trend/"; //趋势数据url
     public final static String URL_LOGINOUT = BASE_URL + "/LowLineSys/user/logout?token=123"; //退出登录接口
     public final static String URL_USERDATA = BASE_URL + "/LowLineSys/user/data";  //用户管理接口
+    public static final String URL_ADD = BASE_URL + "/LowLineSys/device/data";  //添加设备信息
 
     public final static int TYPE_ALL = 0;  //全部类型
     public final static int TYPE_LOW = 1;  //低压调压器
@@ -49,5 +50,6 @@ public class Constans {
     public final static int TREND_CODE = 1004;
     public final static int COLLECT_CODE = 1005; //台账数据返回码
     public final static int WORKING_CODE = 1006; //工况数据返回码
+
 
 }

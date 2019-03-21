@@ -419,4 +419,6 @@
     <string name="phone_num_can_not_be_empty">Phone number can\'t be empty</string>
     <string name="passwd_can_not_be_empty">passwd can\'t be empty</string>
     <string name="cet_no_network">网络不给力，请检查网络设置</string>
+    <string name="cet_collect_add_route">请输入线路</string>
+    <string name="cet_collect_add_zonearea">请输入台区</string>
 </resources>

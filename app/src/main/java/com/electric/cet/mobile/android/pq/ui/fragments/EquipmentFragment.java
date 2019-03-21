@@ -474,10 +474,15 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         dialog.show();
     }
 
+
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.cet_equipment_collect_add:
+                //请求服务器
+
 
                 //如果选中大于0，弹框提示
                 List<DataBean> addList = new ArrayList<>();

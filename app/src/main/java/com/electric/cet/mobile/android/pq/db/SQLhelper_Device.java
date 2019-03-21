@@ -9,10 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.electric.cet.mobile.android.pq.Bean.DataBean;
-import com.electric.cet.mobile.android.pq.Bean.OptionBean;
+import com.electric.cet.mobile.android.pq.Bean.OptionDataBean;
 import com.electric.cet.mobile.android.pq.utils.Constans;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
 //        Log.i(TAG, "[CREATE_DEVICEDATA]:" + CREATE_DEVICEDATA);
         db.execSQL(deviceData); //创建所有信息表
         db.execSQL(optionData); //创建可选信息表
-        Log.d("create","SUCCEED");
+        Log.d("create", "SUCCEED");
 //        Log.i(TAG, "[CREATE_REALTIMEDATA]:" + CREATE_REALTIMEDATA);
 //        db.execSQL(CREATE_REALTIMEDATA);
     }
@@ -40,14 +39,15 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
     //升级数据库
     @Override
     public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
-        db.execSQL("DROP TABLE IF EXISTS "+deviceData);
+        db.execSQL("DROP TABLE IF EXISTS " + deviceData);
         onCreate(db);
     }
 
     private static SQLhelper_Device instance;
-//使用单例模式
+
+    //使用单例模式
     public static SQLhelper_Device Instance(Context context) {
-        if (instance == null){
+        if (instance == null) {
             instance = new SQLhelper_Device(context, SQLConfig.SQLNAME, null, 3);
             Log.i(TAG, "1111");
         }
@@ -61,7 +61,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
      */
     public static void insertUserInfo(List<DataBean> deviceInfos) {
         SQLiteDatabase db = instance.getWritableDatabase();
-        for(int i = 0;i< deviceInfos.size();i++){
+        for (int i = 0; i < deviceInfos.size(); i++) {
             ContentValues values = new ContentValues();
             values.put(DEVICEID, deviceInfos.get(i).getDeviceId());
             values.put(DEVICENAME, deviceInfos.get(i).getDeviceName());
@@ -92,7 +92,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             values.put(ISMANUFACTURENORMAL, deviceInfos.get(i).getManufactureNormal());
             values.put(LOCATION, deviceInfos.get(i).getLocation());
             db.insert("DeviceData", null, values);
-            Log.d("huangchixingsq",values + "");
+            Log.d("huangchixingsq", values + "");
 
         }
 
@@ -103,19 +103,39 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
      *
      * @param
      */
-    public static void insertOptionInfo(OptionBean optionBeans) {
-        SQLiteDatabase db = instance.getWritableDatabase();
+//    public static void insertOptionInfo(OptionDataBean optionBeans) {
+//        SQLiteDatabase db = instance.getWritableDatabase();
+//
+//
+//        ContentValues values = new ContentValues();
+//
+//
+//        for (int i = 0; i < optionBeans.getCities().size(); i++) {
+//            values.put(CITYID, optionBeans.getCities().get(i).getID());
+//            for (int j = 0; j < optionBeans.getCities().get(j).getCounties().size(); j++) {
+//                values.put(COUNTYID, optionBeans.getCities().get(j).getCounties().get(j).getID());
+//            }
+//            for (int k = 0; k < optionBeans.getCities().get(k).getCounties().get(k).getPowerSupply().size(); k++) {
+//                values.put(POWERSUPPLYID, optionBeans.getCities().get(k).getCounties().get(k).getPowerSupply().get(k).getID());
+//            }
+//        }
+//
+//
+//        for (int i = 0; i < optionBeans.getDeviceType().size(); i++) {
+//            values.put(DEVICETYPEID, optionBeans.getDeviceType().get(i).getID());
+//        }
+//        for (int i = 0; i < optionBeans.getSIMCardState().size(); i++) {
+//            values.put(ISSIMCARDONLINE, optionBeans.getSIMCardState().get(i).getID());
+//        }
+//        for (int i = 0; i < optionBeans.getPhaseType().size(); i++) {
+//            values.put(PHASETYPEID, optionBeans.getPhaseType().get(i).getID());
+//        }
+//
+//        db.insert("DeviceData", null, values);
+//    }
 
-        ContentValues values = new ContentValues();
 
-
-        db.insert("DeviceData", null, values);
-        Log.d("huangchixingsq1", values + "");
-    }
-
-
-
-//清除所有信息表格信息
+    //清除所有信息表格信息
     public static void clearAllUserInfo() {
         SQLiteDatabase db = instance.getWritableDatabase();
         db.delete("DeviceData", null, null);
@@ -131,11 +151,12 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
 
     /**
      * 修改设备信息
+     *
      * @param
      * @param userCode
      * @param
      */
-    public static void updateUserInfo(String userCode,DataBean deviceInfo){
+    public static void updateUserInfo(String userCode, DataBean deviceInfo) {
         SQLiteDatabase db = instance.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(DEVICEID, deviceInfo.getDeviceId());
@@ -166,7 +187,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
         values.put(COURTS, deviceInfo.getCourts());
         values.put(ISMANUFACTURENORMAL, deviceInfo.getManufactureNormal());
         values.put(LOCATION, deviceInfo.getLocation());
-        db.update(deviceData, values, "userCode=?", new String []{userCode});
+        db.update(deviceData, values, "userCode=?", new String[]{userCode});
     }
 
     /**
@@ -184,8 +205,8 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
 
         //降序查询
         List<DataBean> list = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select * from DeviceData where "+ getQryWhere(sourceFlag) ,null);
-        Log.d("guol","size="+cursor.getCount());
+        Cursor cursor = db.rawQuery("select * from DeviceData where " + getQryWhere(sourceFlag), null);
+        Log.d("guol", "size=" + cursor.getCount());
         while (cursor.moveToNext()) {
             DataBean dataBean = new DataBean();
 //            String code = cursor.getString(cursor.getColumnIndex(CODE));  //需要确定和添加
@@ -219,33 +240,33 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             String location = cursor.getString(cursor.getColumnIndex(LOCATION));
 
             dataBean.setDeviceId(devid);
-            Log.i("deviceid",devid+"~~~~~");
+            Log.i("deviceid", devid + "~~~~~");
             dataBean.setDeviceName(devicename);
             dataBean.setCityId(cityid);
             dataBean.setCountyId(countyid);
             dataBean.setPowerSupplyId(powersupplyid);
-            dataBean.setInstalled(isinstalled.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setOnline(isonline.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setUsable(isusable.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setSIMCardOnline(issimcardonline.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setAbnormal(isabnormal.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setPowerFailure(ispowerfailure.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setInstalled(isinstalled.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setOnline(isonline.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setUsable(isusable.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setSIMCardOnline(issimcardonline.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setAbnormal(isabnormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setPowerFailure(ispowerfailure.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setLongitude(longitude);
             dataBean.setLatitude(latitude);
             dataBean.setAdjustTime(adjusttime);
-            dataBean.setVoltageRegulateNormal(isvoltageregulatenormal.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setReactiveCompensationNormal(isreactivecompensationnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setVoltageRegulateNormal(isvoltageregulatenormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setReactiveCompensationNormal(isreactivecompensationnormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setManufacture(manufacture);
             dataBean.setModel(model);
             dataBean.setPhaseTypeId(phasetypeid);
             dataBean.setCapacity(capacity);
-            dataBean.setCircuitNormal(iscircuitnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setCircuitNormal(iscircuitnormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setInstallAddress(installaddress);
             dataBean.setDeviceTypeId(devicetypeid);
-            dataBean.setState(state.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setState(state.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setCircuitId(circuitid);
             dataBean.setCourts(courts);
-            dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setLocation(location);
             list.add(dataBean);
         }
@@ -255,7 +276,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
     }
 
 
-    public static String getType(){
+    public static String getType() {
 
 
         return "";
@@ -269,8 +290,8 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
 
         //降序查询
         List<DataBean> list = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select * from DeviceData ",null,null);
-        Log.d("guol","size="+cursor.getCount());
+        Cursor cursor = db.rawQuery("select * from DeviceData ", null, null);
+        Log.d("guol", "size=" + cursor.getCount());
         while (cursor.moveToNext()) {
             DataBean dataBean = new DataBean();
 //            String code = cursor.getString(cursor.getColumnIndex(CODE));  //需要确定和添加
@@ -304,33 +325,33 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             String location = cursor.getString(cursor.getColumnIndex(LOCATION));
 
             dataBean.setDeviceId(devid);
-            Log.i("deviceid",devid+"~~~~~");
+            Log.i("deviceid", devid + "~~~~~");
             dataBean.setDeviceName(devicename);
             dataBean.setCityId(cityid);
             dataBean.setCountyId(countyid);
             dataBean.setPowerSupplyId(powersupplyid);
-            dataBean.setInstalled(isinstalled.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setOnline(isonline.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setUsable(isusable.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setSIMCardOnline(issimcardonline.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setAbnormal(isabnormal.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setPowerFailure(ispowerfailure.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setInstalled(isinstalled.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setOnline(isonline.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setUsable(isusable.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setSIMCardOnline(issimcardonline.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setAbnormal(isabnormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setPowerFailure(ispowerfailure.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setLongitude(longitude);
             dataBean.setLatitude(latitude);
             dataBean.setAdjustTime(adjusttime);
-            dataBean.setVoltageRegulateNormal(isvoltageregulatenormal.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setReactiveCompensationNormal(isreactivecompensationnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setVoltageRegulateNormal(isvoltageregulatenormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setReactiveCompensationNormal(isreactivecompensationnormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setManufacture(manufacture);
             dataBean.setModel(model);
             dataBean.setPhaseTypeId(phasetypeid);
             dataBean.setCapacity(capacity);
-            dataBean.setCircuitNormal(iscircuitnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setCircuitNormal(iscircuitnormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setInstallAddress(installaddress);
             dataBean.setDeviceTypeId(devicetypeid);
-            dataBean.setState(state.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setState(state.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setCircuitId(circuitid);
             dataBean.setCourts(courts);
-            dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setLocation(location);
             list.add(dataBean);
         }
@@ -340,7 +361,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
     }
 
     //设备界面按照类型查询
-    public static List<DataBean> queryDeviceListByType( int type) {
+    public static List<DataBean> queryDeviceListByType(int type) {
         SQLiteDatabase db = instance.getReadableDatabase();
 //        Cursor cursor = db.query("DeviceData", null, null, null, null, null, null);
 //        Cursor cursor = db.execSQL("select * from DeviceData order by DeviceId desc");
@@ -349,11 +370,11 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
         //降序查询
         List<DataBean> list = new ArrayList<>();
         Cursor cursor;
-        if(type == 0){
+        if (type == 0) {
             //如果类型为全部类型，查询所有数据
-            cursor = db.rawQuery("select * from DeviceData ",null,null);
-        }else{
-            cursor = db.rawQuery("select * from DeviceData where DeviceTypeId = ?",new String[]{String.valueOf(type)},null);
+            cursor = db.rawQuery("select * from DeviceData ", null, null);
+        } else {
+            cursor = db.rawQuery("select * from DeviceData where DeviceTypeId = ?", new String[]{String.valueOf(type)}, null);
         }
 //        Log.d("guol","size="+cursor.getCount());
         while (cursor.moveToNext()) {
@@ -389,33 +410,33 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             String location = cursor.getString(cursor.getColumnIndex(LOCATION));
 
             dataBean.setDeviceId(devid);
-            Log.i("deviceid",devid+"~~~~~");
+            Log.i("deviceid", devid + "~~~~~");
             dataBean.setDeviceName(devicename);
             dataBean.setCityId(cityid);
             dataBean.setCountyId(countyid);
             dataBean.setPowerSupplyId(powersupplyid);
-            dataBean.setInstalled(isinstalled.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setOnline(isonline.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setUsable(isusable.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setSIMCardOnline(issimcardonline.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setAbnormal(isabnormal.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setPowerFailure(ispowerfailure.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setInstalled(isinstalled.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setOnline(isonline.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setUsable(isusable.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setSIMCardOnline(issimcardonline.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setAbnormal(isabnormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setPowerFailure(ispowerfailure.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setLongitude(longitude);
             dataBean.setLatitude(latitude);
             dataBean.setAdjustTime(adjusttime);
-            dataBean.setVoltageRegulateNormal(isvoltageregulatenormal.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setReactiveCompensationNormal(isreactivecompensationnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setVoltageRegulateNormal(isvoltageregulatenormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setReactiveCompensationNormal(isreactivecompensationnormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setManufacture(manufacture);
             dataBean.setModel(model);
             dataBean.setPhaseTypeId(phasetypeid);
             dataBean.setCapacity(capacity);
-            dataBean.setCircuitNormal(iscircuitnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setCircuitNormal(iscircuitnormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setInstallAddress(installaddress);
             dataBean.setDeviceTypeId(devicetypeid);
-            dataBean.setState(state.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setState(state.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setCircuitId(circuitid);
             dataBean.setCourts(courts);
-            dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setLocation(location);
             list.add(dataBean);
         }
@@ -425,10 +446,9 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
     }
 
 
-
     //按条件查询
     private static String getQryWhere(int sourceFlag) {
-        String Isinstall ="IsInstalled = 1";
+        String Isinstall = "IsInstalled = 1";
         String IsOnline = "IsOnline = 1";
         String IsUsable = "IsUsable = 1";
         String IsSIMCardOnline = "IsSIMCardOnline = 1";
@@ -455,14 +475,14 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             case Constans.POWEROFF_NUM:
                 return IsPowerFailure;
 
-          default:
-              break;
+            default:
+                break;
         }
         return "";
 
     }
 
-//查询单台设备信息
+    //查询单台设备信息
     public static DataBean queryDeviceInfo(int deviceID) {
         SQLiteDatabase db = instance.getReadableDatabase();
         DataBean dataBean = null;
@@ -470,10 +490,10 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
 //        Cursor cursor = db.execSQL("select * from DeviceData order by DeviceId desc");
         //降序查询
         Cursor cursor;
-        if(deviceID == -1){
-            cursor = db.rawQuery("select * from DeviceData  order by deviceId desc limit 0, 1" ,new String[]{});
-        }else{
-            cursor = db.rawQuery("select * from DeviceData where DeviceId = ? order by deviceId desc",new String[]{String.valueOf(deviceID)});
+        if (deviceID == -1) {
+            cursor = db.rawQuery("select * from DeviceData  order by deviceId desc limit 0, 1", new String[]{});
+        } else {
+            cursor = db.rawQuery("select * from DeviceData where DeviceId = ? order by deviceId desc", new String[]{String.valueOf(deviceID)});
         }
 
         if (cursor.moveToNext()) {
@@ -509,39 +529,40 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             String location = cursor.getString(cursor.getColumnIndex(LOCATION));
 
             dataBean.setDeviceId(devid);
-            Log.i("deviceid",devid+"~~~~~");
+            Log.i("deviceid", devid + "~~~~~");
             dataBean.setDeviceName(devicename);
             dataBean.setCityId(cityid);
             dataBean.setCountyId(countyid);
             dataBean.setPowerSupplyId(powersupplyid);
-            dataBean.setInstalled(isinstalled.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setOnline(isonline.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setUsable(isusable.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setSIMCardOnline(issimcardonline.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setAbnormal(isabnormal.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setPowerFailure(ispowerfailure.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setInstalled(isinstalled.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setOnline(isonline.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setUsable(isusable.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setSIMCardOnline(issimcardonline.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setAbnormal(isabnormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setPowerFailure(ispowerfailure.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setLongitude(longitude);
             dataBean.setLatitude(latitude);
             dataBean.setAdjustTime(adjusttime);
-            dataBean.setVoltageRegulateNormal(isvoltageregulatenormal.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setReactiveCompensationNormal(isreactivecompensationnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setVoltageRegulateNormal(isvoltageregulatenormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setReactiveCompensationNormal(isreactivecompensationnormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setManufacture(manufacture);
             dataBean.setModel(model);
             dataBean.setPhaseTypeId(phasetypeid);
             dataBean.setCapacity(capacity);
-            dataBean.setCircuitNormal(iscircuitnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setCircuitNormal(iscircuitnormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setInstallAddress(installaddress);
             dataBean.setDeviceTypeId(devicetypeid);
-            dataBean.setState(state.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setState(state.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setCircuitId(circuitid);
             dataBean.setCourts(courts);
-            dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setLocation(location);
         }
         return dataBean;
     }
+
     /**
-    /**
+     * /**
      * 设备是否存在
      *
      * @param
@@ -588,8 +609,8 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
 
         //降序查询
         List<DataBean> list = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select * from DeviceData where DeviceName like ?",new String[]{"%"+deviceName +"%"});
-        Log.d("search","size="+cursor.getCount());
+        Cursor cursor = db.rawQuery("select * from DeviceData where DeviceName like ?", new String[]{"%" + deviceName + "%"});
+        Log.d("search", "size=" + cursor.getCount());
         while (cursor.moveToNext()) {
             DataBean dataBean = new DataBean();
 //            String code = cursor.getString(cursor.getColumnIndex(CODE));  //需要确定和添加
@@ -623,33 +644,33 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             String location = cursor.getString(cursor.getColumnIndex(LOCATION));
 
             dataBean.setDeviceId(devid);
-            Log.i("deviceid",devid+"~~~~~");
+            Log.i("deviceid", devid + "~~~~~");
             dataBean.setDeviceName(devicename);
             dataBean.setCityId(cityid);
             dataBean.setCountyId(countyid);
             dataBean.setPowerSupplyId(powersupplyid);
-            dataBean.setInstalled(isinstalled.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setOnline(isonline.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setUsable(isusable.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setSIMCardOnline(issimcardonline.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setAbnormal(isabnormal.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setPowerFailure(ispowerfailure.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setInstalled(isinstalled.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setOnline(isonline.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setUsable(isusable.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setSIMCardOnline(issimcardonline.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setAbnormal(isabnormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setPowerFailure(ispowerfailure.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setLongitude(longitude);
             dataBean.setLatitude(latitude);
             dataBean.setAdjustTime(adjusttime);
-            dataBean.setVoltageRegulateNormal(isvoltageregulatenormal.trim().equalsIgnoreCase("true")?true:false);
-            dataBean.setReactiveCompensationNormal(isreactivecompensationnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setVoltageRegulateNormal(isvoltageregulatenormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setReactiveCompensationNormal(isreactivecompensationnormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setManufacture(manufacture);
             dataBean.setModel(model);
             dataBean.setPhaseTypeId(phasetypeid);
             dataBean.setCapacity(capacity);
-            dataBean.setCircuitNormal(iscircuitnormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setCircuitNormal(iscircuitnormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setInstallAddress(installaddress);
             dataBean.setDeviceTypeId(devicetypeid);
-            dataBean.setState(state.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setState(state.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setCircuitId(circuitid);
             dataBean.setCourts(courts);
-            dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true")?true:false);
+            dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setLocation(location);
             list.add(dataBean);
         }
@@ -657,4 +678,126 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
         db.close();
         return list;
     }
+
+    /**
+     * 查询所有设备信息
+     *
+     * @param
+     * @param
+     * @return
+     */
+    public static List<DataBean> queryDeviceListByTitle(String title) {
+        SQLiteDatabase db = instance.getReadableDatabase();
+//        Cursor cursor = db.query("DeviceData", null, null, null, null, null, null);
+//        Cursor cursor = db.execSQL("select * from DeviceData order by DeviceId desc");
+        //降序查询
+        List<DataBean> list = new ArrayList<>();
+        Cursor cursor;
+        if (title.equalsIgnoreCase("在线数量")) {
+            cursor = db.rawQuery("select * from DeviceData where IsOnline = 1", null);
+        }else if(title.equalsIgnoreCase("安装数量")){
+            cursor = db.rawQuery("select * from DeviceData where IsInstalled = 1", null);}
+         else if(title.equalsIgnoreCase("可用数量")) {
+            cursor = db.rawQuery("select * from DeviceData where IsUsable = 1", null);
+        }
+         else if(title.equalsIgnoreCase("Sim欠费")){
+                    cursor = db.rawQuery("select * from DeviceData where IsSIMCardOnline = 1", null);
+        }  else if(title.equalsIgnoreCase("功能异常")){
+            cursor = db.rawQuery("select * from DeviceData where IsAbnormal = 1", null);
+        }
+        else{
+            cursor = db.rawQuery("select * from DeviceData where IsPowerFailure = 1", null);
+        }
+        while (cursor.moveToNext()) {
+            DataBean dataBean = new DataBean();
+//            String code = cursor.getString(cursor.getColumnIndex(CODE));  //需要确定和添加
+            int devid = cursor.getInt(cursor.getColumnIndex(DEVICEID));
+            String devicename = cursor.getString(cursor.getColumnIndex(DEVICENAME));
+            int cityid = cursor.getInt(cursor.getColumnIndex(CITYID));
+            int countyid = cursor.getInt(cursor.getColumnIndex(COUNTYID));
+            int powersupplyid = cursor.getInt(cursor.getColumnIndex(POWERSUPPLYID));
+            String isinstalled = cursor.getString(cursor.getColumnIndex(ISINSTALLED));
+            String isonline = cursor.getString(cursor.getColumnIndex(ISONLINE));
+            String isusable = cursor.getString(cursor.getColumnIndex(ISUSABLE));
+            String issimcardonline = cursor.getString(cursor.getColumnIndex(ISSIMCARDONLINE));
+            String isabnormal = cursor.getString(cursor.getColumnIndex(ISABNORMAL));
+            String ispowerfailure = cursor.getString(cursor.getColumnIndex(ISPOWERFAILURE));
+            int longitude = cursor.getInt(cursor.getColumnIndex(LONGITUDE));
+            int latitude = cursor.getInt(cursor.getColumnIndex(LATITUDE));
+            int adjusttime = cursor.getInt(cursor.getColumnIndex(ADJUSTTIME));
+            String isvoltageregulatenormal = cursor.getString(cursor.getColumnIndex(ISVOLTAGEREGULATENORMAL));
+            String isreactivecompensationnormal = cursor.getString(cursor.getColumnIndex(ISREACTIVECOMPENSATIONNORMAL));
+            String manufacture = cursor.getString(cursor.getColumnIndex(MANUFACTURE));
+            String model = cursor.getString(cursor.getColumnIndex(MODEL));
+            int phasetypeid = cursor.getInt(cursor.getColumnIndex(PHASETYPEID));
+            int capacity = cursor.getInt(cursor.getColumnIndex(CAPACITY));
+            String iscircuitnormal = cursor.getString(cursor.getColumnIndex(ISCIRCUITNORMAL));
+            String installaddress = cursor.getString(cursor.getColumnIndex(INSTALLADDRESS));
+            int devicetypeid = cursor.getInt(cursor.getColumnIndex(DEVICETYPEID));
+            String state = cursor.getString(cursor.getColumnIndex(STATE));
+            int circuitid = cursor.getInt(cursor.getColumnIndex(CIRCUITID));
+            String courts = cursor.getString(cursor.getColumnIndex(COURTS));
+            String ismanufacturenormal = cursor.getString(cursor.getColumnIndex(ISMANUFACTURENORMAL));
+            String location = cursor.getString(cursor.getColumnIndex(LOCATION));
+
+            dataBean.setDeviceId(devid);
+            Log.i("deviceid", devid + "~~~~~");
+            dataBean.setDeviceName(devicename);
+            dataBean.setCityId(cityid);
+            dataBean.setCountyId(countyid);
+            dataBean.setPowerSupplyId(powersupplyid);
+            dataBean.setInstalled(isinstalled.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setOnline(isonline.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setUsable(isusable.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setSIMCardOnline(issimcardonline.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setAbnormal(isabnormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setPowerFailure(ispowerfailure.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setLongitude(longitude);
+            dataBean.setLatitude(latitude);
+            dataBean.setAdjustTime(adjusttime);
+            dataBean.setVoltageRegulateNormal(isvoltageregulatenormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setReactiveCompensationNormal(isreactivecompensationnormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setManufacture(manufacture);
+            dataBean.setModel(model);
+            dataBean.setPhaseTypeId(phasetypeid);
+            dataBean.setCapacity(capacity);
+            dataBean.setCircuitNormal(iscircuitnormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setInstallAddress(installaddress);
+            dataBean.setDeviceTypeId(devicetypeid);
+            dataBean.setState(state.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setCircuitId(circuitid);
+            dataBean.setCourts(courts);
+            dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true") ? true : false);
+            dataBean.setLocation(location);
+            list.add(dataBean);
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
+
+    /**
+     * 添加单台设备
+     *
+     * @param
+     * @param
+     * @param
+     */
+    public static void addDeviceInfo(DataBean deviceInfo) {
+        SQLiteDatabase db = instance.getWritableDatabase();
+        ContentValues values = new ContentValues();
+//        values.put(DEVICEID, deviceInfo.getDeviceId());
+//        values.put(DEVICENAME, deviceInfo.getDeviceName());
+        values.put(CITYID, deviceInfo.getCityId());
+        values.put(COUNTYID, deviceInfo.getCountyId());
+        values.put(POWERSUPPLYID, deviceInfo.getPowerSupplyId());
+        values.put(DEVICETYPEID, deviceInfo.getDeviceTypeId());
+        values.put(ISSIMCARDONLINE, deviceInfo.getSIMCardOnline());
+        values.put(CIRCUITID, deviceInfo.getCircuitId());
+        values.put(COURTS, deviceInfo.getCourts());
+
+        db.insert("DeviceData", null, values);
+        db.close();
+    }
+
 }

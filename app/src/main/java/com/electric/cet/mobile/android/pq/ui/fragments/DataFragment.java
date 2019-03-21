@@ -133,10 +133,10 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            rlNoData.setVisibility(View.GONE);
+            llContent.setVisibility(View.VISIBLE);
             switch (msg.what) {
                 case 1:
-                    rlNoData.setVisibility(View.GONE);
-                    llContent.setVisibility(View.VISIBLE);
                     //实时数据现在在界面
                     RealTimeBean realTimeBean = (RealTimeBean) msg.obj;
                     Log.d("huangchixing", realTimeBean.getData().getAVoltageInput() + "");
@@ -161,28 +161,40 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                     cet_realtime_out_cpower.setText("C相功率因数：" + realTimeBean.getData().getCPowerFactorOutput() + "");
                     cet_realtime_voltage_adjust.setText("调压档位：" + realTimeBean.getData().getVoltageRegulate() + "");
                     cet_realtime_nopower.setText("无功投入：" + realTimeBean.getData().getReactivePowerInput() + "");
-
-
                     break;
                 case 1002:
                     countRB.setChecked(true);
                     Log.i("devicesId", (int) getActivity().getSharedPreferences("data", 0).getLong("deviceId", -1l) + "datahandler");
                     //还原出统计数据存储的数据并显示在ui
+                    initCountView(countView);
+                    needQueryData = true;
+                    needRequestTimeData = true;
+                    needRequestTrendData = true;
                     refreshCountData((int) getActivity().getSharedPreferences("data", 0).getLong("deviceId", -1l));
                     break;
                 case 1001:
+                    initCountView(countView);
+                    needQueryData = true;
+                    needRequestTimeData = true;
+                    needRequestTrendData = true;
                     refreshCountData(Integer.parseInt(msg.getData().getString("deviceID")));
                     break;
                 case 1003:
+                    initRealtimeView(realtimeView);
+                    needQueryData = true;
+                    needRequestTimeData = true;
+                    needRequestTrendData = true;
                     initRealtimeData(msg.getData().getString("deviceID"));
                     break;
                 case 1004:
+                    initTrendView(trendView);
+                    needQueryData = true;
+                    needRequestTimeData = true;
+                    needRequestTrendData = true;
                     initTrendData(msg.getData().getString("deviceID"));
                     break;
                 case 101:
                     trend_ll.removeAllViews();
-                    rlNoData.setVisibility(View.GONE);
-                    llContent.setVisibility(View.VISIBLE);
                     if (rb == 0) {
                         trend_ll.addView(new GraphicalView(getActivity(), GraphicalUtils.drawDataTrend(getTrendData(), 20, 0)));
                     } else if (rb == 1) {
@@ -191,7 +203,6 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                         trend_ll.addView(new GraphicalView(getActivity(), GraphicalUtils.drawDataTrend(getTrendData(), 15, 0)));
                     }
                     break;
-
                 default:
                     break;
             }
@@ -337,7 +348,6 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     public void initTrendData(String deviceId) {
         OkHttpClient client = new OkHttpClient();
 
-
 //        RequestBody formBody = new FormBody.Builder().add("deviceId","3" ) //deviceId如何传入？
 //                .add("startTime", "2019-02-22")  //参数如何填入？
 ////        bdate_tv.getText().toString().trim().replace("/","-")
@@ -389,6 +399,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
     //请求实时数据
     public void initRealtimeData(String deviceId) {
         OkHttpClient client = new OkHttpClient();
+
 
 //        RequestBody formBody = new FormBody.Builder().add("deviceId", "98").build(); //参数如何填入？
         Log.i("deviceid", dataBean.getDeviceId() + "");
@@ -675,7 +686,6 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String beforeString = bdate_tv.getText().toString().trim().replace("/", "-");
                 Date beforeDate = null;
@@ -792,7 +802,6 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
         super.onActivityResult(requestCode, resultCode, data);
         Log.i("search", "resultCode --" + resultCode);
         Log.i("search", "search --" + data.getStringExtra("search"));
-
         if (resultCode == 1001) {
 
         }

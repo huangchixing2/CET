@@ -162,24 +162,25 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 try {
-                    final String str = response.body().string();
-                    json = str;
-                    System.out.println("cockpit allinfo打印" + json);
-                    System.out.println("---------------test---------");
-                    //使用gson解析json数据
-                    //new一个Gson对象
-                    Gson gson = new Gson();
-                    //将json字符串转为dataBean对象
-                    deviceBean = gson.fromJson(json, DeviceBean.class);
-                    Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(0).getDeviceName());
-                    Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(1).getDeviceId());
-                    Log.d("COCKPITACTIVITY", "------数据解析成功------");
-                    //存入数据库,每次清除上一次数据
-                    SQLhelper_Device.Instance(getActivity()).clearAllUserInfo();
-                    //网络请求到的数据写入数据库
-                    SQLhelper_Device.Instance(getActivity()).insertUserInfo(deviceBean.getData());
-                    //发送消息给主线程
                     if (needRequestData) {
+                        final String str = response.body().string();
+                        json = str;
+                        System.out.println("cockpit allinfo打印" + json);
+                        System.out.println("---------------test---------");
+                        //使用gson解析json数据
+                        //new一个Gson对象
+                        Gson gson = new Gson();
+                        //将json字符串转为dataBean对象
+                        deviceBean = gson.fromJson(json, DeviceBean.class);
+                        Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(0).getDeviceName());
+                        Log.d("COCKPITACTIVITY", "DEVICE ID IS " + deviceBean.getData().get(1).getDeviceId());
+                        Log.d("COCKPITACTIVITY", "------数据解析成功------");
+                        //发送消息给主线程
+
+                        //存入数据库,每次清除上一次数据
+                        SQLhelper_Device.Instance(getActivity()).clearAllUserInfo();
+                        //网络请求到的数据写入数据库
+                        SQLhelper_Device.Instance(getActivity()).insertUserInfo(deviceBean.getData());
                         Message message = handler.obtainMessage();
                         Bundle bundle = new Bundle();
                         bundle.putIntegerArrayList("list", countData(deviceBean.getData()));
@@ -234,7 +235,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 //存入数据库,每次清除上一次数据
 //                SQLhelper_Device.Instance(getActivity()).clearOptionInfo();
                 //网络请求到的数据写入数据库
-                SQLhelper_Device.Instance(getActivity()).insertOptionInfo(optionBean); //如何传参？
+//                SQLhelper_Device.Instance(getActivity()).insertOptionInfo(optionBean.getData()); //如何传参？
 
 
                 //存入数据库的另一个表

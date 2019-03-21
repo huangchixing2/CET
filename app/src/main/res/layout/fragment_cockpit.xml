@@ -201,7 +201,7 @@
                             android:layout_marginBottom="5dp"
                             android:layout_toRightOf="@+id/cockpit_sim_iv"
                             android:gravity="center"
-                            android:text="@string/cet_cockpit_online_num"
+                            android:text="@string/cet_cockpit_sim_arrearage"
                             android:textColor="@color/cet_main_nor_color"
                             android:textSize="14sp" />
                     </RelativeLayout>
