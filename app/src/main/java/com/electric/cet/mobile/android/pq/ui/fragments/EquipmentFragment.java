@@ -2,13 +2,18 @@ package com.electric.cet.mobile.android.pq.ui.fragments;
 
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,10 +49,20 @@ import com.electric.cet.mobile.android.pq.utils.Constans;
 import com.electric.cet.mobile.android.pq.utils.NetWorkUtil;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 import static android.content.Context.MODE_PRIVATE;
+import static com.electric.cet.mobile.android.pq.utils.OkHttpUtils.response;
 
 
 public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageChangeListener, RadioGroup.OnCheckedChangeListener, View.OnClickListener {
@@ -94,6 +109,9 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     private LinearLayout llContent;
     View collectView;
     View workingView;
+    DataBean dataBean;
+    List<DataBean> deleteList = new ArrayList<>();
+    List<Long> deleteIdList = new ArrayList<>();
 
 
     private Handler handler = new Handler() {
@@ -120,6 +138,13 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
                     allDevicesList.addAll(workList);
                     workingAdapter.notifyDataSetChanged();
                     break;
+                case 201:
+                    Toast.makeText(getActivity(), "数据删除成功", Toast.LENGTH_SHORT).show();
+                    //delete stayList in db
+                    allDevicesList.removeAll(deleteList);
+                    collectAdapter.notifyDataSetChanged();
+                    SQLhelper_Device.Instance(getActivity()).delDevices(deleteIdList);
+                    break;
                 default:
                     break;
             }
@@ -130,6 +155,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_equipment, container, false);
+        registerBroadcast();
         initView(view);
         initData(0);
         return view;
@@ -226,11 +252,34 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
 
     }
 
+    protected void registerBroadcast() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Constans.ACTION_EQUIPMENT_ADD_SUCCESS);
+        if (null == getActivity()) return;
+        getActivity().registerReceiver(receiver, intentFilter);
+    }
+
+    protected BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (TextUtils.equals(Constans.ACTION_EQUIPMENT_ADD_SUCCESS, intent.getAction())) {
+                initData(0);
+            }
+        }
+    };
+
     //网络异常
     private void initNoInternetView() {
         if (rlNoData == null || llContent == null) return;
         llContent.setVisibility(View.GONE);
         rlNoData.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (null == getActivity()) return;
+        getActivity().unregisterReceiver(receiver);
     }
 
 
@@ -459,8 +508,8 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                doDelete();
                 //删除
-                deleteSelectedData();
             }
         });
         dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -532,17 +581,61 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         }
     }
 
+
+    //点击保存按钮提交数据到服务器
+    private void doDelete() {
+        //发起post请求给服务器
+        OkHttpClient client = new OkHttpClient();
+
+
+        RequestBody formBody = new FormBody.Builder().
+                add("deviceIds", String.valueOf(deleteIdList)).build();
+        final Request request = new Request.Builder().url(Constans.URL_ADD).delete(formBody).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //请求失败
+                if (!response.isSuccessful()) {
+                    Log.i("请求情况：", "请求失败");
+                    Looper.prepare();
+                    //提示用户无网络
+                    Toast.makeText(getActivity(), "没有网络", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    Log.i("响应状态", "响应成功");
+                    int ResponseCode = response.code();
+                    //无法获取token
+                    //响应成功,判断状态码
+                    if (ResponseCode == 200) {
+                        Log.i("EquipmentCollect", "删除数据成功");
+
+                        deleteSelectedData();
+
+                        handler.sendEmptyMessage(201);
+                    }
+                }
+            }
+        });
+    }
+
+
     private void deleteSelectedData() {
-        List<DataBean> deleteList = new ArrayList<>();
+        dataBean = new DataBean();
+
+        deleteList.clear();
+        deleteIdList.clear();
         for (int i = 0; i < allDevicesList.size(); i++) {
             if (allDevicesList.get(i).isSle()) {
                 deleteList.add(allDevicesList.get(i));
+                deleteIdList.add(allDevicesList.get(i).getDeviceId());
             }
         }
-        allDevicesList.removeAll(deleteList);
-        collectAdapter.notifyDataSetChanged();
-        //delete stayList in db
-//        SQLhelper_Device.Instance(getActivity()).delDevice(deleteList);
     }
 
     private boolean isSelectedItem() {
@@ -562,6 +655,17 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
         }
         collectAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("search", "resultCode --" + resultCode);
+        Log.i("search", "search --" + data.getStringExtra("search"));
+        if (resultCode == 1001) {
+
+        }
+    }
+
 
     public Handler getHandler() {
         return handler;

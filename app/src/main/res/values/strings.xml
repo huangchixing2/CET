@@ -394,9 +394,9 @@
     <string name="cet_equipment_collect_capacity">容量:</string>
     <string name="cet_equipment_collect_online">在线</string>
     <string name="cet_equipment_collect_out">退出</string>
-    <string name="cet_my_collect_update_contact">修改联系方式</string>
+    <string name="cet_my_collect_update_contact">修改用户名</string>
     <string name="cet_my_collect_update_psw">修改密码</string>
-    <string name="cet_my_set_contact">设置联系方式</string>
+    <string name="cet_my_set_contact">设置用户名</string>
     <string name="cet_my_set_complete">完 成</string>
     <string name="cet_my_old_psw">旧密码</string>
     <string name="cet_my_set_old_psw">请填写旧密码</string>
@@ -421,4 +421,6 @@
     <string name="cet_no_network">网络不给力，请检查网络设置</string>
     <string name="cet_collect_add_route">请输入线路</string>
     <string name="cet_collect_add_zonearea">请输入台区</string>
+    <string name="cet_collect_add_vender">请输入厂家</string>
+    <string name="cet_collect_add_model">请输入型号</string>
 </resources>

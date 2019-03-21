@@ -21,6 +21,7 @@ public class Constans {
     public final static String URL_USERDATA = BASE_URL + "/LowLineSys/user/data";  //用户管理接口
     public static final String URL_ADD = BASE_URL + "/LowLineSys/device/data";  //添加设备信息
 
+
     public final static int TYPE_ALL = 0;  //全部类型
     public final static int TYPE_LOW = 1;  //低压调压器
     public final static int TYPE_REACTIVE = 2;  //无功补偿装置
@@ -32,9 +33,10 @@ public class Constans {
 
     public final static int collect_spanner = 101;
     public final static int work_spanner = 102;
+    public final static int add_device = 103;
 
 
-
+    public static final String ACTION_EQUIPMENT_ADD_SUCCESS = "action_equipment_add_success";
 
 //    public static String URL_DEVICEINFO = "http://192.168.2.199/LowLineSys/device/data/all?token=123"; //所有信息接口url
 //    public static String URL_OPTION = "http://192.168.2.199/LowLineSys/device/data/options?token=123";//tree接口url
@@ -50,6 +52,5 @@ public class Constans {
     public final static int TREND_CODE = 1004;
     public final static int COLLECT_CODE = 1005; //台账数据返回码
     public final static int WORKING_CODE = 1006; //工况数据返回码
-
-
+    public static final int ADD_DEVICE = 1007; //添加设备;
 }

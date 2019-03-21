@@ -134,7 +134,7 @@ public class DataBean implements Serializable {
         return Longitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(double longitude) {
         Longitude = longitude;
     }
 
@@ -142,7 +142,7 @@ public class DataBean implements Serializable {
         return Latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         Latitude = latitude;
     }
 

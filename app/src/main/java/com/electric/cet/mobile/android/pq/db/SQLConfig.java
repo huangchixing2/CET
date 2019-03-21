@@ -113,9 +113,9 @@ public interface SQLConfig {
 
 
     // 创建设备的所有信息表
-    public static final String deviceData = "create table DeviceData(id integer primary key autoincrement, DeviceId real, DeviceName text, CityId real, CountyId real, PowerSupplyId real, IsInstalled integer, IsOnline integer, IsUsable integer, IsSIMCardOnline integer, IsAbnormal integer, IsPowerFailure integer, Longitude real, Latitude real, AdjustTime real, IsVoltageRegulateNormal integer, IsReactiveCompensationNormal integer, Manufacture text, Model text, PhaseTypeId real, Capacity real, IsCircuitNormal integer, InstallAddress text, DeviceTypeId integer, State integer, CircuitId real, Courts text, IsManufactureNormal integer, Location text)";
+//    public static final String deviceData = "create table DeviceData(id integer primary key autoincrement, DeviceId real, DeviceName text, CityId real, CountyId real, PowerSupplyId real, IsInstalled integer, IsOnline integer, IsUsable integer, IsSIMCardOnline integer, IsAbnormal integer, IsPowerFailure integer, Longitude real, Latitude real, AdjustTime real, IsVoltageRegulateNormal integer, IsReactiveCompensationNormal integer, Manufacture text, Model text, PhaseTypeId real, Capacity real, IsCircuitNormal integer, InstallAddress text, DeviceTypeId integer, State integer, CircuitId real, Courts text, IsManufactureNormal integer, Location text)";
 
-
+    public static final String deviceData = "create table DeviceData(id integer primary key autoincrement, DeviceId real, DeviceName text, CityId real, CountyId real, PowerSupplyId real, IsInstalled integer, IsOnline integer, IsUsable integer, IsSIMCardOnline integer, IsAbnormal integer, IsPowerFailure integer, Longitude decimal, Latitude decimal, AdjustTime real, IsVoltageRegulateNormal integer, IsReactiveCompensationNormal integer, Manufacture text, Model text, PhaseTypeId real, Capacity real, IsCircuitNormal integer, InstallAddress text, DeviceTypeId integer, State integer, CircuitId real, Courts text, IsManufactureNormal integer, Location text)";
     //创建可选的节点树信息表
     public static final String optionData = "create table OptionData(id integer primary key autoincrement,Cities text, Counties text, PowerSupply text, DeviceType text, SIMCardState text, PhaseType text)";
 

@@ -1,6 +1,7 @@
 package com.electric.cet.mobile.android.pq.ui.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -113,12 +114,18 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
 
     private EditText route_et;  //线路
     private EditText zonearea_et; //台区
+    private EditText vendor_et; //厂家
+    private EditText model_et; //型号
+
+    private int requestCode = 0;
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 100:
+                    Intent intent = new Intent();
+                    setResult(requestCode,intent);
                     Toast.makeText(EquipmentCollectAddActivity.this, "数据提交成功", Toast.LENGTH_SHORT).show();
                     //插入数据到数据库
                     SQLhelper_Device.Instance(EquipmentCollectAddActivity.this).addDeviceInfo(dataBean);
@@ -134,6 +141,7 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
         setContentView(R.layout.activity_equipment_collect_add);
         initView();
         initData();
+        requestCode = getIntent().getIntExtra("requestCode",-1);
     }
 
     private void initView() {
@@ -163,6 +171,9 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
 
         route_et = (EditText) findViewById(R.id.equipment_collect_add_route_et);
         zonearea_et = (EditText) findViewById(R.id.equipment_collect_add_zonearea_et);
+        vendor_et = (EditText) findViewById(R.id.equipment_collect_add_vender_et);
+        model_et = (EditText) findViewById(R.id.equipment_collect_add_model_et);
+
     }
 
     private void initData() {
@@ -175,21 +186,72 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
         optionBean = gson.fromJson(str_tree, OptionBean.class);
     }
 
+
+
+
+
     //点击保存按钮提交数据到服务器
     private void doPost() {
         //发起post请求给服务器
         OkHttpClient client = new OkHttpClient();
 
+        //固定假信息
+        dataBean.setDeviceName("设备3");
+        dataBean.setInstalled(false);
+        dataBean.setOnline(false);
+        dataBean.setUsable(false);
+        dataBean.setAbnormal(false);
+        dataBean.setPowerFailure(false);
+        dataBean.setLongitude(114);
+        dataBean.setLatitude(30);
+        dataBean.setAdjustTime(7);
+        dataBean.setVoltageRegulateNormal(false);
+        dataBean.setReactiveCompensationNormal(false);
+//        dataBean.setManufacture("华为");
+//        dataBean.setModel("型号1");
+        dataBean.setPhaseTypeId(78);
+        dataBean.setCapacity(89);
+        dataBean.setCircuitNormal(false);
+        dataBean.setInstallAddress("北京");
+        dataBean.setState(false);
+        dataBean.setManufactureNormal(false);
+        dataBean.setLocation("北京海淀区西四环");
+        dataBean.setSIMCardOnline(false);
+
         final String routeData = route_et.getText().toString().trim(); //线路输入
         final String zoneData = zonearea_et.getText().toString().trim();//台区输入
+        final String vendorData = vendor_et.getText().toString().trim(); //厂家输入
+        final String modelData = model_et.getText().toString().trim();//型号输入
         RequestBody formBody = new FormBody.Builder().
                 add("CityId", String.valueOf(dataBean.getCityId())).
                 add("CountryId", String.valueOf(dataBean.getCountyId())).
                 add("PowerSupplyId", String.valueOf(dataBean.getPowerSupplyId())).
                 add("DeviceTypeId", String.valueOf(dataBean.getDeviceTypeId())).
-                add("CircuitId", String.valueOf(routeData)).
-                add("Courts", String.valueOf(zoneData)).
-                add("IsSIMCardOnline", String.valueOf(dataBean.getSIMCardOnline())).build();
+                add("CircuitId",TextUtils.isEmpty(routeData)?"11": routeData).
+                add("Courts",TextUtils.isEmpty(zoneData)?"11": zoneData).
+                add("IsSIMCardOnline", String.valueOf(dataBean.getSIMCardOnline())).
+                add("Model", TextUtils.isEmpty(modelData)?"11": modelData).
+                add("Manufacture", TextUtils.isEmpty(vendorData)?"11": vendorData).
+
+                add("IsInstalled ", String.valueOf(dataBean.getInstalled())).
+                add("IsAbnormal",String.valueOf(dataBean.getAbnormal())).
+                add("IsPowerFailure", String.valueOf(dataBean.getPowerFailure())).
+                add("Longitude",String.valueOf(dataBean.getLatitude())).
+                add("Latitude",String.valueOf(dataBean.getLongitude())).
+                add("AdjustTime",String.valueOf(dataBean.getAdjustTime())).
+                add("IsVoltageRegulateNormal",String.valueOf(dataBean.getVoltageRegulateNormal())).
+                add("IsReactiveCompensationNormal", String.valueOf(dataBean.getReactiveCompensationNormal())).
+
+
+                add("PhaseTypeId", String.valueOf(dataBean.getPhaseTypeId())).
+                add("Capacity", String.valueOf(dataBean.getCapacity())).
+                add("IsCircuitNormal", String.valueOf(dataBean.getCircuitNormal())).
+                add("InstallAddress", dataBean.getInstallAddress()).
+                add("State", String.valueOf(dataBean.getState())).
+                add("IsManufactureNormal", String.valueOf(dataBean.getManufactureNormal())).
+                add("Location", dataBean.getLocation()).
+                add("DeviceName", dataBean.getDeviceName()).
+                build();
         final Request request = new Request.Builder().url(Constans.URL_ADD).post(formBody).build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
@@ -214,11 +276,20 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
                     //响应成功,判断状态码
                     if (ResponseCode == 200) {
                         Log.i("EquipmentCollect", "提交数据成功");
+                        //返回选中的数据
                         handler.sendEmptyMessage(100);
+                        sendBroadCast();
                     }
                 }
             }
         });
+    }
+
+    private void sendBroadCast() {
+        Intent intent = new Intent();
+        intent.setAction(Constans.ACTION_EQUIPMENT_ADD_SUCCESS);
+        sendBroadcast(intent);
+        finish();
     }
 
 
@@ -235,6 +306,7 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
                 }
                 //上传服务器
                 if (!TextUtils.isEmpty(city.getText())&&!TextUtils.isEmpty(country.getText())&&!TextUtils.isEmpty(power.getText())&&!TextUtils.isEmpty(type.getText())){
+
                     doPost();
                 } else {
                     Toast.makeText(EquipmentCollectAddActivity.this, "前四项为必填项", Toast.LENGTH_SHORT).show();

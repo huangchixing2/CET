@@ -336,8 +336,7 @@
     <RelativeLayout
         android:id="@+id/equipment_collect_add_vender_rl"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:visibility="gone">
+        android:layout_height="45dp">
 
         <TextView
             android:id="@+id/equipment_collect_add_vender"
@@ -349,23 +348,33 @@
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/equipment_collect_add_vender_tv"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/equipment_collect_add_vender_et"
+            style="@style/input_edit_bg_style"
+            android:hint="@string/cet_collect_add_vender"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/equipment_collect_add_vender"
-            android:textColor="@color/cet_main_nor_color"
-            android:textSize="15sp" />
+            />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:src="@mipmap/arrow_icon" />
+        <!--<TextView-->
+            <!--android:id="@+id/equipment_collect_add_vender_tv"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_toRightOf="@+id/equipment_collect_add_vender"-->
+            <!--android:textColor="@color/cet_main_nor_color"-->
+            <!--android:textSize="15sp" />-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:src="@mipmap/arrow_icon" />-->
 
         <View
             android:layout_width="match_parent"
@@ -377,8 +386,7 @@
     <RelativeLayout
         android:id="@+id/equipment_collect_add_model_rl"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:visibility="gone">
+        android:layout_height="45dp">
 
         <TextView
             android:id="@+id/equipment_collect_add_model"
@@ -390,23 +398,33 @@
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/equipment_collect_add_model_tv"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/equipment_collect_add_model_et"
+            style="@style/input_edit_bg_style"
+            android:hint="@string/cet_collect_add_model"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/equipment_collect_add_model"
-            android:textColor="@color/cet_main_nor_color"
-            android:textSize="15sp" />
+            />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:src="@mipmap/arrow_icon" />
+        <!--<TextView-->
+            <!--android:id="@+id/equipment_collect_add_model_tv"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_toRightOf="@+id/equipment_collect_add_model"-->
+            <!--android:textColor="@color/cet_main_nor_color"-->
+            <!--android:textSize="15sp" />-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:src="@mipmap/arrow_icon" />-->
 
         <View
             android:layout_width="match_parent"

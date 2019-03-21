@@ -222,7 +222,14 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 //用户名长度是否小于6
                 if (username_et.getText().toString().length() < 6) {
                     username_et.setText("");
-                    Toast.makeText(LoginActivity.this, "用户名格式错误", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "用户名不能少于6位", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //用户名长度是否不能大于16
+                if (username_et.getText().toString().length() > 16) {
+                    username_et.setText("");
+                    Toast.makeText(LoginActivity.this, "用户名不能超过16位", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

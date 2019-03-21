@@ -15,7 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
+            android:padding="@dimen/margin_15"
+            android:layout_marginLeft="5dp"
             android:src="@mipmap/arrow_icon_left" />
 
         <TextView
@@ -36,8 +37,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
             android:text="@string/cet_my_collect_update_contact"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="15sp" />

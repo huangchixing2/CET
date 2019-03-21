@@ -94,8 +94,9 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             db.insert("DeviceData", null, values);
             Log.d("huangchixingsq", values + "");
 
-        }
 
+        }
+        db.close();
     }
 
     /**
@@ -139,7 +140,6 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
     public static void clearAllUserInfo() {
         SQLiteDatabase db = instance.getWritableDatabase();
         db.delete("DeviceData", null, null);
-
     }
 //清除可选表格信息
 //    public static void clearOptionInfo() {
@@ -188,6 +188,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
         values.put(ISMANUFACTURENORMAL, deviceInfo.getManufactureNormal());
         values.put(LOCATION, deviceInfo.getLocation());
         db.update(deviceData, values, "userCode=?", new String[]{userCode});
+        db.close();
     }
 
     /**
@@ -558,6 +559,8 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             dataBean.setManufactureNormal(ismanufacturenormal.trim().equalsIgnoreCase("true") ? true : false);
             dataBean.setLocation(location);
         }
+        cursor.close();
+        db.close();
         return dataBean;
     }
 
@@ -586,12 +589,34 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
      * 删除指定设备
      *
      * @param
-     * @param usercode
+     * @param DeviceId
      */
-    public static void delDevice(String usercode) {
-        String sql = "delete from " + deviceData + " where " + usercode + " = ? ";
-        String[] conditions = new String[]{usercode};
-        instance.getWritableDatabase().execSQL(sql, conditions);
+    public static void delDevice(String DeviceId) {
+
+//        String sql = "delete from " + deviceData + " where " + DeviceId + " = ? ";
+//        String[] conditions = new String[]{DeviceId};
+//        instance.getWritableDatabase().execSQL(sql, conditions);
+        SQLiteDatabase db = instance.getWritableDatabase();
+        db.delete("DeviceData", " where " + DeviceId + " = ? ", new String[]{DeviceId});
+        db.close();
+    }
+
+    /**
+     * 删除指定多个设备
+     *
+     * @param
+     * @param DeviceIdList
+     */
+    public static void delDevices(List<Long> DeviceIdList) {
+
+//        String sql = "delete from " + deviceData + " where " + DeviceId + " = ? ";
+//        String[] conditions = new String[]{DeviceId};
+//        instance.getWritableDatabase().execSQL(sql, conditions);
+        SQLiteDatabase db = instance.getWritableDatabase();
+        for (int i = 0; i < DeviceIdList.size(); i++) {
+            db.delete("DeviceData", "DeviceId"+ " = ? ", new String[]{String.valueOf(DeviceIdList.get(i))});
+        }
+        db.close();
     }
 
     /**
@@ -695,17 +720,15 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
         Cursor cursor;
         if (title.equalsIgnoreCase("在线数量")) {
             cursor = db.rawQuery("select * from DeviceData where IsOnline = 1", null);
-        }else if(title.equalsIgnoreCase("安装数量")){
-            cursor = db.rawQuery("select * from DeviceData where IsInstalled = 1", null);}
-         else if(title.equalsIgnoreCase("可用数量")) {
+        } else if (title.equalsIgnoreCase("安装数量")) {
+            cursor = db.rawQuery("select * from DeviceData where IsInstalled = 1", null);
+        } else if (title.equalsIgnoreCase("可用数量")) {
             cursor = db.rawQuery("select * from DeviceData where IsUsable = 1", null);
-        }
-         else if(title.equalsIgnoreCase("Sim欠费")){
-                    cursor = db.rawQuery("select * from DeviceData where IsSIMCardOnline = 1", null);
-        }  else if(title.equalsIgnoreCase("功能异常")){
+        } else if (title.equalsIgnoreCase("Sim欠费")) {
+            cursor = db.rawQuery("select * from DeviceData where IsSIMCardOnline = 1", null);
+        } else if (title.equalsIgnoreCase("功能异常")) {
             cursor = db.rawQuery("select * from DeviceData where IsAbnormal = 1", null);
-        }
-        else{
+        } else {
             cursor = db.rawQuery("select * from DeviceData where IsPowerFailure = 1", null);
         }
         while (cursor.moveToNext()) {
@@ -788,13 +811,43 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
         ContentValues values = new ContentValues();
 //        values.put(DEVICEID, deviceInfo.getDeviceId());
 //        values.put(DEVICENAME, deviceInfo.getDeviceName());
+//        values.put(CITYID, deviceInfo.getCityId());
+//        values.put(COUNTYID, deviceInfo.getCountyId());
+//        values.put(POWERSUPPLYID, deviceInfo.getPowerSupplyId());
+//        values.put(DEVICETYPEID, deviceInfo.getDeviceTypeId());
+//        values.put(ISSIMCARDONLINE, deviceInfo.getSIMCardOnline());
+//        values.put(CIRCUITID, deviceInfo.getCircuitId());
+//        values.put(COURTS, deviceInfo.getCourts());
+
+        values.put(DEVICEID, deviceInfo.getDeviceId());
+        values.put(DEVICENAME, deviceInfo.getDeviceName());
         values.put(CITYID, deviceInfo.getCityId());
         values.put(COUNTYID, deviceInfo.getCountyId());
         values.put(POWERSUPPLYID, deviceInfo.getPowerSupplyId());
-        values.put(DEVICETYPEID, deviceInfo.getDeviceTypeId());
+        values.put(ISINSTALLED, deviceInfo.getInstalled());
+        values.put(ISONLINE, deviceInfo.getOnline());
+        values.put(ISUSABLE, deviceInfo.getUsable());
         values.put(ISSIMCARDONLINE, deviceInfo.getSIMCardOnline());
+        values.put(ISABNORMAL, deviceInfo.getAbnormal());
+        values.put(ISPOWERFAILURE, deviceInfo.getPowerFailure());
+        values.put(LONGITUDE, deviceInfo.getLongitude());
+        values.put(LATITUDE, deviceInfo.getLatitude());
+        values.put(ADJUSTTIME, deviceInfo.getAdjustTime());
+        values.put(ISVOLTAGEREGULATENORMAL, deviceInfo.getVoltageRegulateNormal());
+        values.put(ISREACTIVECOMPENSATIONNORMAL, deviceInfo.getReactiveCompensationNormal());
+        values.put(MANUFACTURE, deviceInfo.getManufacture());
+        values.put(MODEL, deviceInfo.getModel());
+        values.put(PHASETYPEID, deviceInfo.getPhaseTypeId());
+        values.put(CAPACITY, deviceInfo.getCapacity());
+        values.put(ISCIRCUITNORMAL, deviceInfo.getCircuitNormal());
+        values.put(INSTALLADDRESS, deviceInfo.getInstallAddress());
+        values.put(DEVICETYPEID, deviceInfo.getDeviceTypeId());
+        values.put(STATE, deviceInfo.getState());
         values.put(CIRCUITID, deviceInfo.getCircuitId());
         values.put(COURTS, deviceInfo.getCourts());
+        values.put(ISMANUFACTURENORMAL, deviceInfo.getManufactureNormal());
+        values.put(LOCATION, deviceInfo.getLocation());
+
 
         db.insert("DeviceData", null, values);
         db.close();
