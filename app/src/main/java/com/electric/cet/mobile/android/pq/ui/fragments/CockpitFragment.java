@@ -89,7 +89,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cockpit, container, false);
         initView(view);
-        initAllData();
+//        initAllData();
         initTreeData();
 
         return view;
