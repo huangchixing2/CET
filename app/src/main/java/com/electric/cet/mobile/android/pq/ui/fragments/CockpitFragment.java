@@ -1,13 +1,16 @@
 package com.electric.cet.mobile.android.pq.ui.fragments;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,13 +74,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                 case 1:
                     rlNoData.setVisibility(View.GONE);
                     llContent.setVisibility(View.VISIBLE);
-                    ArrayList<Integer> list = (ArrayList<Integer>) msg.getData().getBundle("data").get("list");
-                    install_tv.setText(list.get(0) + ""); // int转换为string，否则报错
-                    online_tv.setText(list.get(1) + "");
-                    usable_tv.setText(list.get(2) + "");
-                    sim_tv.setText(list.get(3) + "");
-                    dysfunction_tv.setText(list.get(4) + "");
-                    power_tv.setText(list.get(5) + "");
+                    setDate();
                     break;
                 default:
                     break;
@@ -88,6 +85,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cockpit, container, false);
+        registerBroadcast();
         initView(view);
 //        initAllData();
         initTreeData();
@@ -183,9 +181,9 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
                         SQLhelper_Device.Instance(getActivity()).insertUserInfo(deviceBean.getData());
                         Message message = handler.obtainMessage();
                         Bundle bundle = new Bundle();
-                        bundle.putIntegerArrayList("list", countData(deviceBean.getData()));
+//                        bundle.putIntegerArrayList("list", countData(deviceBean.getData()));
                         message.what = 1;
-                        message.getData().putBundle("data", bundle);
+//                        message.getData().putBundle("data", bundle);
                         handler.sendMessage(message);
                     }
                     needRequestData = false;
@@ -245,12 +243,53 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
 
     }
 
+    protected void registerBroadcast() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Constans.ACTION_EQUIPMENT_ADD_SUCCESS);
+        intentFilter.addAction(Constans.ACTION_EQUIPMENT_EDIT_SUCCESS);
+        intentFilter.addAction(Constans.ACTION_EQUIPMENT_DELETE_SUCCESS);
+        if (null == getActivity()) return;
+        getActivity().registerReceiver(receiver, intentFilter);
+    }
+
+    //填充数据
+    private void setDate(){
+        List<DataBean> dataBeansOnline = SQLhelper_Device.Instance(getActivity()).queryDeviceListByTitle("在线数量");
+        List<DataBean> dataBeansInstall = SQLhelper_Device.Instance(getActivity()).queryDeviceListByTitle("安装数量");
+        List<DataBean> dataBeansUsable = SQLhelper_Device.Instance(getActivity()).queryDeviceListByTitle("可用数量");
+        List<DataBean> dataBeansSim = SQLhelper_Device.Instance(getActivity()).queryDeviceListByTitle("Sim欠费");
+        List<DataBean> dataBeansAbnormal = SQLhelper_Device.Instance(getActivity()).queryDeviceListByTitle("功能异常");
+        List<DataBean> dataBeansPowerOff = SQLhelper_Device.Instance(getActivity()).queryDeviceListByTitle("停电");
+        install_tv.setText(dataBeansInstall.size() + ""); // int转换为string，否则报错
+        online_tv.setText(dataBeansOnline.size() + "");
+        usable_tv.setText(dataBeansUsable.size() + "");
+        sim_tv.setText(dataBeansSim.size() + "");
+        dysfunction_tv.setText(dataBeansAbnormal.size() + "");
+        power_tv.setText(dataBeansPowerOff.size()+ "");
+    };
+
+    protected BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (TextUtils.equals(Constans.ACTION_EQUIPMENT_ADD_SUCCESS, intent.getAction()) || TextUtils.equals(Constans.ACTION_EQUIPMENT_EDIT_SUCCESS, intent.getAction()) | TextUtils.equals(Constans.ACTION_EQUIPMENT_DELETE_SUCCESS, intent.getAction())) {
+                setDate();
+            }
+        }
+    };
+
     //网络异常
     private void initNoInternetView() {
         needRequestData = true;
         if (rlNoData == null || llContent == null) return;
         llContent.setVisibility(View.GONE);
         rlNoData.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (null == getActivity()) return;
+        getActivity().unregisterReceiver(receiver);
     }
 
 

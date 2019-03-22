@@ -256,6 +256,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     protected void registerBroadcast() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Constans.ACTION_EQUIPMENT_ADD_SUCCESS);
+        intentFilter.addAction(Constans.ACTION_EQUIPMENT_EDIT_SUCCESS);
         if (null == getActivity()) return;
         getActivity().registerReceiver(receiver, intentFilter);
     }
@@ -263,7 +264,7 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
     protected BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (TextUtils.equals(Constans.ACTION_EQUIPMENT_ADD_SUCCESS, intent.getAction())) {
+            if (TextUtils.equals(Constans.ACTION_EQUIPMENT_ADD_SUCCESS, intent.getAction())||TextUtils.equals(Constans.ACTION_EQUIPMENT_EDIT_SUCCESS, intent.getAction())) {
                 initData(0);
             }
         }
@@ -616,14 +617,19 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
                     //响应成功,判断状态码
                     if (ResponseCode == 200) {
                         Log.i("EquipmentCollect", "删除数据成功");
-
                         deleteSelectedData();
-
                         handler.sendEmptyMessage(201);
+                        sendBroadCast();
                     }
                 }
             }
         });
+    }
+
+    private void sendBroadCast() {
+        Intent intent = new Intent();
+        intent.setAction(Constans.ACTION_EQUIPMENT_DELETE_SUCCESS);
+        getActivity().sendBroadcast(intent);
     }
 
 

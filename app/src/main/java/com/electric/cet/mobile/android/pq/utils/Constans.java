@@ -37,6 +37,8 @@ public class Constans {
 
 
     public static final String ACTION_EQUIPMENT_ADD_SUCCESS = "action_equipment_add_success";
+    public static final String ACTION_EQUIPMENT_EDIT_SUCCESS = "action_equipment_edit_success";
+    public static final String ACTION_EQUIPMENT_DELETE_SUCCESS = "action_equipment_delete_success";
 
 //    public static String URL_DEVICEINFO = "http://192.168.2.199/LowLineSys/device/data/all?token=123"; //所有信息接口url
 //    public static String URL_OPTION = "http://192.168.2.199/LowLineSys/device/data/options?token=123";//tree接口url

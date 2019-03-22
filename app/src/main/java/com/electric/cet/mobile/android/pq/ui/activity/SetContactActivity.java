@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.electric.cet.mobile.android.pq.R;
 import com.electric.cet.mobile.android.pq.utils.Constans;
@@ -82,6 +83,12 @@ public class SetContactActivity extends Activity {
         complete_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //用户名长度是否不能大于16
+                if (user_et.getText().toString().length() > 16) {
+                    user_et.setText("");
+                    Toast.makeText(SetContactActivity.this, "用户名不能超过16位", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 postUserData();
                 finish();
             }
