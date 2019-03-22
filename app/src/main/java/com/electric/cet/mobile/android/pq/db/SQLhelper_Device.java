@@ -94,9 +94,8 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             db.insert("DeviceData", null, values);
             Log.d("huangchixingsq", values + "");
 
-
         }
-        db.close();
+
     }
 
     /**
@@ -149,47 +148,6 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
 //    }
 
 
-    /**
-     * 修改设备信息
-     *
-     * @param
-     * @param userCode
-     * @param
-     */
-    public static void updateUserInfo(String userCode, DataBean deviceInfo) {
-        SQLiteDatabase db = instance.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(DEVICEID, deviceInfo.getDeviceId());
-        values.put(DEVICENAME, deviceInfo.getDeviceName());
-        values.put(CITYID, deviceInfo.getCityId());
-        values.put(COUNTYID, deviceInfo.getCountyId());
-        values.put(POWERSUPPLYID, deviceInfo.getPowerSupplyId());
-        values.put(ISINSTALLED, deviceInfo.getInstalled());
-        values.put(ISONLINE, deviceInfo.getOnline());
-        values.put(ISUSABLE, deviceInfo.getUsable());
-        values.put(ISSIMCARDONLINE, deviceInfo.getSIMCardOnline());
-        values.put(ISABNORMAL, deviceInfo.getAbnormal());
-        values.put(ISPOWERFAILURE, deviceInfo.getPowerFailure());
-        values.put(LONGITUDE, deviceInfo.getLongitude());
-        values.put(LATITUDE, deviceInfo.getLatitude());
-        values.put(ADJUSTTIME, deviceInfo.getAdjustTime());
-        values.put(ISVOLTAGEREGULATENORMAL, deviceInfo.getVoltageRegulateNormal());
-        values.put(ISREACTIVECOMPENSATIONNORMAL, deviceInfo.getReactiveCompensationNormal());
-        values.put(MANUFACTURE, deviceInfo.getManufacture());
-        values.put(MODEL, deviceInfo.getModel());
-        values.put(PHASETYPEID, deviceInfo.getPhaseTypeId());
-        values.put(CAPACITY, deviceInfo.getCapacity());
-        values.put(ISCIRCUITNORMAL, deviceInfo.getCircuitNormal());
-        values.put(INSTALLADDRESS, deviceInfo.getInstallAddress());
-        values.put(DEVICETYPEID, deviceInfo.getDeviceTypeId());
-        values.put(STATE, deviceInfo.getState());
-        values.put(CIRCUITID, deviceInfo.getCircuitId());
-        values.put(COURTS, deviceInfo.getCourts());
-        values.put(ISMANUFACTURENORMAL, deviceInfo.getManufactureNormal());
-        values.put(LOCATION, deviceInfo.getLocation());
-        db.update(deviceData, values, "userCode=?", new String[]{userCode});
-        db.close();
-    }
 
     /**
      * 查询所有设备信息
@@ -278,7 +236,6 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
 
 
     public static String getType() {
-
 
         return "";
     }
@@ -616,7 +573,6 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
         for (int i = 0; i < DeviceIdList.size(); i++) {
             db.delete("DeviceData", "DeviceId"+ " = ? ", new String[]{String.valueOf(DeviceIdList.get(i))});
         }
-        db.close();
     }
 
     /**
@@ -717,6 +673,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
 //        Cursor cursor = db.execSQL("select * from DeviceData order by DeviceId desc");
         //降序查询
         List<DataBean> list = new ArrayList<>();
+        list.clear();
         Cursor cursor;
         if (title.equalsIgnoreCase("在线数量")) {
             cursor = db.rawQuery("select * from DeviceData where IsOnline = 1", null);
@@ -745,8 +702,8 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             String issimcardonline = cursor.getString(cursor.getColumnIndex(ISSIMCARDONLINE));
             String isabnormal = cursor.getString(cursor.getColumnIndex(ISABNORMAL));
             String ispowerfailure = cursor.getString(cursor.getColumnIndex(ISPOWERFAILURE));
-            int longitude = cursor.getInt(cursor.getColumnIndex(LONGITUDE));
-            int latitude = cursor.getInt(cursor.getColumnIndex(LATITUDE));
+            double longitude = cursor.getDouble(cursor.getColumnIndex(LONGITUDE));
+            double latitude = cursor.getDouble(cursor.getColumnIndex(LATITUDE));
             int adjusttime = cursor.getInt(cursor.getColumnIndex(ADJUSTTIME));
             String isvoltageregulatenormal = cursor.getString(cursor.getColumnIndex(ISVOLTAGEREGULATENORMAL));
             String isreactivecompensationnormal = cursor.getString(cursor.getColumnIndex(ISREACTIVECOMPENSATIONNORMAL));
@@ -850,7 +807,53 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
 
 
         db.insert("DeviceData", null, values);
-        db.close();
+
     }
+
+
+    /**
+     * 修改设备信息
+     *
+     * @param
+     * @param deviceInfo
+     * @param
+     */
+    public static void updateDeviceInfo(DataBean deviceInfo) {
+        SQLiteDatabase db = instance.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DEVICEID, deviceInfo.getDeviceId());
+        values.put(DEVICENAME, deviceInfo.getDeviceName());
+        values.put(CITYID, deviceInfo.getCityId());
+        values.put(COUNTYID, deviceInfo.getCountyId());
+        values.put(POWERSUPPLYID, deviceInfo.getPowerSupplyId());
+        values.put(ISINSTALLED, deviceInfo.getInstalled());
+        values.put(ISONLINE, deviceInfo.getOnline());
+        values.put(ISUSABLE, deviceInfo.getUsable());
+        values.put(ISSIMCARDONLINE, deviceInfo.getSIMCardOnline());
+        values.put(ISABNORMAL, deviceInfo.getAbnormal());
+        values.put(ISPOWERFAILURE, deviceInfo.getPowerFailure());
+        values.put(LONGITUDE, deviceInfo.getLongitude());
+        values.put(LATITUDE, deviceInfo.getLatitude());
+        values.put(ADJUSTTIME, deviceInfo.getAdjustTime());
+        values.put(ISVOLTAGEREGULATENORMAL, deviceInfo.getVoltageRegulateNormal());
+        values.put(ISREACTIVECOMPENSATIONNORMAL, deviceInfo.getReactiveCompensationNormal());
+        values.put(MANUFACTURE, deviceInfo.getManufacture());
+        values.put(MODEL, deviceInfo.getModel());
+        values.put(PHASETYPEID, deviceInfo.getPhaseTypeId());
+        values.put(CAPACITY, deviceInfo.getCapacity());
+        values.put(ISCIRCUITNORMAL, deviceInfo.getCircuitNormal());
+        values.put(INSTALLADDRESS, deviceInfo.getInstallAddress());
+        values.put(DEVICETYPEID, deviceInfo.getDeviceTypeId());
+        values.put(STATE, deviceInfo.getState());
+        values.put(CIRCUITID, deviceInfo.getCircuitId());
+        values.put(COURTS, deviceInfo.getCourts());
+        values.put(ISMANUFACTURENORMAL, deviceInfo.getManufactureNormal());
+        values.put(LOCATION, deviceInfo.getLocation());
+        db.update("DeviceData",values,"DeviceId = ?" , new String[]{String.valueOf(deviceInfo.getDeviceId())});
+        Log.d("sql33", String.valueOf(values));
+
+    }
+
+
 
 }

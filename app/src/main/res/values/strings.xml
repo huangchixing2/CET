@@ -423,4 +423,6 @@
     <string name="cet_collect_add_zonearea">请输入台区</string>
     <string name="cet_collect_add_vender">请输入厂家</string>
     <string name="cet_collect_add_model">请输入型号</string>
+    <string name="cet_sim_state1">SIM状态1</string>
+    <string name="cet_sim_state2">SIM状态2</string>
 </resources>

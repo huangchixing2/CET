@@ -126,7 +126,7 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
                 case 100:
                     Intent intent = new Intent();
                     setResult(requestCode,intent);
-                    Toast.makeText(EquipmentCollectAddActivity.this, "数据提交成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EquipmentCollectAddActivity.this, "设备增加成功", Toast.LENGTH_SHORT).show();
                     //插入数据到数据库
                     SQLhelper_Device.Instance(EquipmentCollectAddActivity.this).addDeviceInfo(dataBean);
                     finish();

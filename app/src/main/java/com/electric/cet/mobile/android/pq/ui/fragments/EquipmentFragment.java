@@ -40,6 +40,7 @@ import com.electric.cet.mobile.android.pq.db.SQLhelper_Device;
 import com.electric.cet.mobile.android.pq.model.EquipmentWorkingModel;
 import com.electric.cet.mobile.android.pq.ui.activity.CollectDetailActivity;
 import com.electric.cet.mobile.android.pq.ui.activity.EquipmentCollectAddActivity;
+import com.electric.cet.mobile.android.pq.ui.activity.EquipmentCollectEditActivity;
 import com.electric.cet.mobile.android.pq.ui.activity.WorkingDetailActivity;
 import com.electric.cet.mobile.android.pq.ui.adapter.BasePagerAdapter;
 import com.electric.cet.mobile.android.pq.ui.adapter.EquipmentCollectAdapter;
@@ -550,8 +551,8 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
                 startActivity(addIntent);
                 break;
             case R.id.cet_equipment_collect_edit:
-                //如果选中大于1，弹框提示
                 List<DataBean> selectList = new ArrayList<>();
+                //如果选中大于1，弹框提示
                 for (int i = 0; i < allDevicesList.size(); i++) {
                     if (allDevicesList.get(i).isSle()) {
                         selectList.add(allDevicesList.get(i));
@@ -566,7 +567,8 @@ public class EquipmentFragment extends BaseFragment implements ViewPager.OnPageC
                     return;
                 }
                 Intent editIntent = new Intent();
-                editIntent.setClass(getActivity(), EquipmentCollectAddActivity.class);
+                editIntent.setClass(getActivity(), EquipmentCollectEditActivity.class);
+                editIntent.putExtra("updateData", selectList.get(0));
                 startActivity(editIntent);
                 break;
             case R.id.cet_equipment_collect_del:

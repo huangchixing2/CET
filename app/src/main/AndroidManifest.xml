@@ -50,6 +50,7 @@
         </activity>
         <activity android:name=".ui.activity.BaseFragmentActivity" />
         <activity android:name=".ui.activity.EquipmentCollectAddActivity" />
+        <activity android:name=".ui.activity.EquipmentCollectEditActivity" />
         <activity android:name=".ui.activity.AccountManageActivity" />
         <activity android:name=".ui.activity.SetContactActivity" />
         <activity android:name=".ui.activity.UpdatePswActivity" />

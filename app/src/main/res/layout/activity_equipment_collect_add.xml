@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/cet_equipment_add"
+            android:text="@string/cet_equipment_edit"
             android:textColor="@color/cet_main_nor_color"
             android:textSize="18sp" />
 
