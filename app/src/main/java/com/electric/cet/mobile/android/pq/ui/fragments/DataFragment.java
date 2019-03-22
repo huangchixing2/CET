@@ -385,6 +385,7 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                     Looper.prepare();
                     needRequestTrendData = false;
                     //设置五分钟刷新趋势数据
+                    Toast.makeText(getActivity(), "更新数据成功", Toast.LENGTH_LONG).show();
                     trendTimeCount = new TrendTimeCount(300000, 1000);
                     trendTimeCount.start();
                     Looper.loop();
@@ -708,10 +709,16 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                         if (selectBeforeDate.getTime() == beforeDate.getTime()) {
                             return;
                         }
+                        if (selectBeforeDate.getTime()> new Date().getTime()) {
+                            Toast.makeText(getActivity(), "不能选择当前日期之后的日期", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         if (selectBeforeDate.getTime() > afterDate.getTime()) {
-                            Toast.makeText(getActivity(), "开始日期不能大于截止日期", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "开始日期不能大于截止日期", Toast.LENGTH_LONG).show();
+                            bdate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                         } else if (afterDate.getTime() - selectBeforeDate.getTime() >  6 * 24 * 60 * 60 * 1000) {
-                            Toast.makeText(getActivity(), "日期选择范围不能超过七天", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "日期选择范围不能超过七天", Toast.LENGTH_LONG).show();
+                            bdate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                         } else {
                             bdate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                             needRequestTrendData = true;
@@ -727,10 +734,16 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                         if (selectAfterDate.getTime() == afterDate.getTime()) {
                             return;
                         }
+                        if (selectAfterDate.getTime()> new Date().getTime()) {
+                            Toast.makeText(getActivity(), "不能选择当前日期之后的日期", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         if (selectAfterDate.getTime() < beforeDate.getTime()) {
-                            Toast.makeText(getActivity(), "截止日期不能小于开始日期", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "截止日期不能小于开始日期", Toast.LENGTH_LONG).show();
+                            adate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                         } else if (selectAfterDate.getTime() - beforeDate.getTime() > 6 * 24 * 60 * 60 * 1000) {
-                            Toast.makeText(getActivity(), "日期选择范围不能超过七天", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "日期选择范围不能超过七天", Toast.LENGTH_LONG).show();
+                            adate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                         } else {
                             adate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                             needRequestTrendData = true;
