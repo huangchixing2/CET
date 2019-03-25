@@ -36,8 +36,8 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait">
-        </activity>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.activity.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -57,10 +57,9 @@
         <activity android:name=".ui.activity.MyAboutActivity" />
         <activity android:name=".ui.activity.MapViewActivity" />
         <activity android:name=".ui.activity.MyPwdActivity" />
-        <activity android:name=".ui.activity.CollectDetailActivity"/>
-        <activity android:name=".ui.activity.WorkingDetailActivity"/>
-        <activity android:name=".ui.activity.SearchActivity">
-	</activity>
+        <activity android:name=".ui.activity.CollectDetailActivity" />
+        <activity android:name=".ui.activity.WorkingDetailActivity" />
+        <activity android:name=".ui.activity.SearchActivity"></activity>
     </application>
 
 </manifest>

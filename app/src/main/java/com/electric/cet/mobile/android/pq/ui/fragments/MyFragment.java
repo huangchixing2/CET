@@ -7,7 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,21 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private RelativeLayout abount_rl;
     private Button loginout_bt;
     private TextView name_tv;
+
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 101:
+                    getActivity().onBackPressed();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,16 +97,17 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 //                editor.remove(token);
 //                editor.apply();
                 SharedPreferences sp;
-                if (null!=getContext()){
+                if (null != getContext()) {
                     sp = getContext().getSharedPreferences("TokenData", Context.MODE_PRIVATE);
                     sp.edit().clear().apply();
                 }
-                Log.d("logout","退出登录成功");
-                getActivity().onBackPressed();
-        }
-    });
+                Log.d("logout", "退出登录成功");
+                handler.sendEmptyMessage(101);
 
-}
+            }
+        });
+
+    }
 
     private static String token;
 
@@ -116,7 +134,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     }
 
     //退出登录对话框提示用户
-    private void dialog(){
+    private void dialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
