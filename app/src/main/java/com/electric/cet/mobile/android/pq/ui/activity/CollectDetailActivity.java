@@ -76,6 +76,8 @@ public class CollectDetailActivity extends Activity {
             vendor.setText(getResources().getString(R.string.cet_count_abnor));
         }
         model.setText(dataBean.getModel());
+
+
         //phase.setText(dataBean.getPhaseTypeId() + "");
         //capacity.setText(dataBean.getCapacity() + "");
     }

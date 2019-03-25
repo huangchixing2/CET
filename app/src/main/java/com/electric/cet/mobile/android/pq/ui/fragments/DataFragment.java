@@ -1,7 +1,9 @@
 package com.electric.cet.mobile.android.pq.ui.fragments;
 
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -710,14 +712,19 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                             return;
                         }
                         if (selectBeforeDate.getTime()> new Date().getTime()) {
-                            Toast.makeText(getActivity(), "不能选择当前日期之后的日期", Toast.LENGTH_LONG).show();
+                            showWrongDialog("不能选择当前日期之后的日期,请重新选择日期!");
+//                            Toast.makeText(getActivity(), "不能选择当前日期之后的日期", Toast.LENGTH_LONG).show();
+                            //退出登录对话框提示用户
+
                             return;
                         }
                         if (selectBeforeDate.getTime() > afterDate.getTime()) {
-                            Toast.makeText(getActivity(), "开始日期不能大于截止日期", Toast.LENGTH_LONG).show();
+                            showWrongDialog("开始日期不能大于截止日期,请重新选择日期!");
+//                            Toast.makeText(getActivity(), "开始日期不能大于截止日期", Toast.LENGTH_LONG).show();
                             bdate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                         } else if (afterDate.getTime() - selectBeforeDate.getTime() >  6 * 24 * 60 * 60 * 1000) {
-                            Toast.makeText(getActivity(), "日期选择范围不能超过七天", Toast.LENGTH_LONG).show();
+                            showWrongDialog("日期选择范围不能超过七天,请重新选择日期!");
+//                            Toast.makeText(getActivity(), "日期选择范围不能超过七天", Toast.LENGTH_LONG).show();
                             bdate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                         } else {
                             bdate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
@@ -735,14 +742,17 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
                             return;
                         }
                         if (selectAfterDate.getTime()> new Date().getTime()) {
-                            Toast.makeText(getActivity(), "不能选择当前日期之后的日期", Toast.LENGTH_LONG).show();
+                            showWrongDialog("不能选择当前日期之后的日期,请重新选择日期!");
+//                            Toast.makeText(getActivity(), "不能选择当前日期之后的日期", Toast.LENGTH_LONG).show();
                             return;
                         }
                         if (selectAfterDate.getTime() < beforeDate.getTime()) {
-                            Toast.makeText(getActivity(), "截止日期不能小于开始日期", Toast.LENGTH_LONG).show();
+                            showWrongDialog("截止日期不能小于开始日期,请重新选择日期!");
+//                            Toast.makeText(getActivity(), "截止日期不能小于开始日期", Toast.LENGTH_LONG).show();
                             adate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                         } else if (selectAfterDate.getTime() - beforeDate.getTime() > 6 * 24 * 60 * 60 * 1000) {
-                            Toast.makeText(getActivity(), "日期选择范围不能超过七天", Toast.LENGTH_LONG).show();
+                            showWrongDialog("日期选择范围不能超过七天,请重新选择日期!");
+//                            Toast.makeText(getActivity(), "日期选择范围不能超过七天", Toast.LENGTH_LONG).show();
                             adate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
                         } else {
                             adate_tv.setText(year + "/" + (month + 1) + "/" + dayOfMonth);
@@ -772,6 +782,25 @@ public class DataFragment extends BaseFragment implements ViewPager.OnPageChange
             default:
                 break;
         }
+    }
+
+    private void showWrongDialog(String markedWords){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setPositiveButton("好的", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setMessage(markedWords);
+        dialog.setTitle("提示");
+        dialog.show();
     }
 
     class RealTimeCount extends CountDownTimer {

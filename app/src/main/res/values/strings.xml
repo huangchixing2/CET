@@ -425,4 +425,15 @@
     <string name="cet_collect_add_model">请输入型号</string>
     <string name="cet_sim_state1">SIM状态1</string>
     <string name="cet_sim_state2">SIM状态2</string>
+    <string name="cet_equipment_collect_voltage_range">调压范围:</string>
+    <string name="cet_equipment_collect_reactive_groups">无功组数:</string>
+    <string name="cet_equipment_collect_reactive_power_capacity">无功容量:</string>
+    <string name="cet_equipment_collect_span">档距:</string>
+    <string name="cet_equipment_collect_voltage_regulating_range">调压范围:</string>
+    <string name="cet_collect_add_phases">请输入相数</string>
+    <string name="cet_collect_add_capacity">请输入容量</string>
+    <string name="cet_collect_add_voltage_regulating_range">请输入调压范围</string>
+    <string name="cet_collect_add_span">请输入档距</string>
+    <string name="cet_collect_add_reactive_power_capacity">请输入无功容量</string>
+    <string name="cet_collect_add_reactive_groups">请输入无功组数</string>
 </resources>

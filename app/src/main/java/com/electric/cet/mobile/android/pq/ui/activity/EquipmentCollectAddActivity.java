@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -112,10 +113,16 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
     private RelativeLayout sim_rl;
     private List<String> sim_list = new ArrayList<>();
 
-    private EditText route_et;  //线路
-    private EditText zonearea_et; //台区
-    private EditText vendor_et; //厂家
-    private EditText model_et; //型号
+    private EditText routeEt;  //线路
+    private EditText zoneareaEt; //台区
+    private EditText vendorEt; //厂家
+    private EditText modelEt; //型号
+    private EditText phraseEt; //相数
+    private EditText capacityEt; //容量
+    private EditText voltageRegulatingRangeEt; //调压范围
+    private EditText spanEt; //档距
+    private EditText reactivePowerCapacityEt; //无功容量
+    private EditText reactiveGroupsEt; //无功组数
 
     private int requestCode = 0;
 
@@ -125,7 +132,7 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
             switch (msg.what) {
                 case 100:
                     Intent intent = new Intent();
-                    setResult(requestCode,intent);
+                    setResult(requestCode, intent);
                     Toast.makeText(EquipmentCollectAddActivity.this, "设备增加成功", Toast.LENGTH_SHORT).show();
                     //插入数据到数据库
                     SQLhelper_Device.Instance(EquipmentCollectAddActivity.this).addDeviceInfo(dataBean);
@@ -141,7 +148,7 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
         setContentView(R.layout.activity_equipment_collect_add);
         initView();
         initData();
-        requestCode = getIntent().getIntExtra("requestCode",-1);
+        requestCode = getIntent().getIntExtra("requestCode", -1);
     }
 
     private void initView() {
@@ -169,10 +176,17 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
         sim_rl = (RelativeLayout) findViewById(R.id.equipment_collect_add_sim_rl);
         sim_rl.setOnClickListener(this);
 
-        route_et = (EditText) findViewById(R.id.equipment_collect_add_route_et);
-        zonearea_et = (EditText) findViewById(R.id.equipment_collect_add_zonearea_et);
-        vendor_et = (EditText) findViewById(R.id.equipment_collect_add_vender_et);
-        model_et = (EditText) findViewById(R.id.equipment_collect_add_model_et);
+        routeEt = (EditText) findViewById(R.id.equipment_collect_add_route_et);
+        zoneareaEt = (EditText) findViewById(R.id.equipment_collect_add_zonearea_et);
+        vendorEt = (EditText) findViewById(R.id.equipment_collect_add_vender_et);
+        modelEt = (EditText) findViewById(R.id.equipment_collect_add_model_et);
+
+        phraseEt = (EditText) findViewById(R.id.equipment_collect_add_phases_et);
+        capacityEt = (EditText) findViewById(R.id.equipment_collect_add_capacity_et);
+        voltageRegulatingRangeEt = (EditText) findViewById(R.id.equipment_collect_add_voltage_regulating_range_et);
+        spanEt = (EditText) findViewById(R.id.equipment_collect_add_span_et);
+        reactivePowerCapacityEt = (EditText) findViewById(R.id.equipment_collect_add_reactive_power_capacity_et);
+        reactiveGroupsEt = (EditText) findViewById(R.id.equipment_collect_add_reactive_groups_et);
 
     }
 
@@ -187,30 +201,27 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
     }
 
 
-
-
-
     //点击保存按钮提交数据到服务器
     private void doPost() {
         //发起post请求给服务器
         OkHttpClient client = new OkHttpClient();
 
         //固定假信息
-        dataBean.setDeviceName("设备3");
+        dataBean.setDeviceName("设备" + new Random().nextInt(999));
         dataBean.setInstalled(false);
         dataBean.setOnline(false);
         dataBean.setUsable(false);
         dataBean.setAbnormal(false);
         dataBean.setPowerFailure(false);
-        dataBean.setLongitude(114);
-        dataBean.setLatitude(30);
+        dataBean.setLongitude(new Random().nextDouble());
+        dataBean.setLatitude(new Random().nextDouble());
         dataBean.setAdjustTime(7);
         dataBean.setVoltageRegulateNormal(false);
         dataBean.setReactiveCompensationNormal(false);
 //        dataBean.setManufacture("华为");
 //        dataBean.setModel("型号1");
-        dataBean.setPhaseTypeId(78);
-        dataBean.setCapacity(89);
+        dataBean.setPhaseTypeId(new Random().nextInt(999));
+        dataBean.setCapacity(new Random().nextInt(999));
         dataBean.setCircuitNormal(false);
         dataBean.setInstallAddress("北京");
         dataBean.setState(false);
@@ -218,28 +229,28 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
         dataBean.setLocation("北京海淀区西四环");
         dataBean.setSIMCardOnline(false);
 
-        final String routeData = route_et.getText().toString().trim(); //线路输入
-        final String zoneData = zonearea_et.getText().toString().trim();//台区输入
-        final String vendorData = vendor_et.getText().toString().trim(); //厂家输入
-        final String modelData = model_et.getText().toString().trim();//型号输入
+        final String routeData = routeEt.getText().toString().trim(); //线路输入
+        final String zoneData = zoneareaEt.getText().toString().trim();//台区输入
+        final String vendorData = vendorEt.getText().toString().trim(); //厂家输入
+        final String modelData = modelEt.getText().toString().trim();//型号输入
         RequestBody formBody = new FormBody.Builder().
                 add("CityId", String.valueOf(dataBean.getCityId())).
                 add("CountryId", String.valueOf(dataBean.getCountyId())).
                 add("PowerSupplyId", String.valueOf(dataBean.getPowerSupplyId())).
                 add("DeviceTypeId", String.valueOf(dataBean.getDeviceTypeId())).
-                add("CircuitId",TextUtils.isEmpty(routeData)?"11": routeData).
-                add("Courts",TextUtils.isEmpty(zoneData)?"11": zoneData).
+                add("CircuitId", TextUtils.isEmpty(routeData) ? "11" : routeData).
+                add("Courts", TextUtils.isEmpty(zoneData) ? "11" : zoneData).
                 add("IsSIMCardOnline", String.valueOf(dataBean.getSIMCardOnline())).
-                add("Model", TextUtils.isEmpty(modelData)?"11": modelData).
-                add("Manufacture", TextUtils.isEmpty(vendorData)?"11": vendorData).
+                add("Model", TextUtils.isEmpty(modelData) ? "11" : modelData).
+                add("Manufacture", TextUtils.isEmpty(vendorData) ? "11" : vendorData).
 
                 add("IsInstalled ", String.valueOf(dataBean.getInstalled())).
-                add("IsAbnormal",String.valueOf(dataBean.getAbnormal())).
+                add("IsAbnormal", String.valueOf(dataBean.getAbnormal())).
                 add("IsPowerFailure", String.valueOf(dataBean.getPowerFailure())).
-                add("Longitude",String.valueOf(dataBean.getLatitude())).
-                add("Latitude",String.valueOf(dataBean.getLongitude())).
-                add("AdjustTime",String.valueOf(dataBean.getAdjustTime())).
-                add("IsVoltageRegulateNormal",String.valueOf(dataBean.getVoltageRegulateNormal())).
+                add("Longitude", String.valueOf(dataBean.getLatitude())).
+                add("Latitude", String.valueOf(dataBean.getLongitude())).
+                add("AdjustTime", String.valueOf(dataBean.getAdjustTime())).
+                add("IsVoltageRegulateNormal", String.valueOf(dataBean.getVoltageRegulateNormal())).
                 add("IsReactiveCompensationNormal", String.valueOf(dataBean.getReactiveCompensationNormal())).
 
 
@@ -285,6 +296,7 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
         });
     }
 
+    //添加成功，发送广播
     private void sendBroadCast() {
         Intent intent = new Intent();
         intent.setAction(Constans.ACTION_EQUIPMENT_ADD_SUCCESS);
@@ -305,7 +317,7 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
                     return;
                 }
                 //上传服务器
-                if (!TextUtils.isEmpty(city.getText())&&!TextUtils.isEmpty(country.getText())&&!TextUtils.isEmpty(power.getText())&&!TextUtils.isEmpty(type.getText())){
+                if (!TextUtils.isEmpty(city.getText()) && !TextUtils.isEmpty(country.getText()) && !TextUtils.isEmpty(power.getText()) && !TextUtils.isEmpty(type.getText())) {
 
                     doPost();
                 } else {

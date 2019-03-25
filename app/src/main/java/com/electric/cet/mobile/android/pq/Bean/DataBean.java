@@ -6,33 +6,38 @@ public class DataBean implements Serializable {
     //设备信息，共28条
     private boolean isSle; //是否被选中  需要服务器添加是否可选
     private long DeviceId; //设备id
-         private String DeviceName;//设备名称
-         private long CityId; //地市id
-         private long CountyId; //区县id
-         private long PowerSupplyId;//供电所id
-         private Boolean IsInstalled; //是否安装
-         private Boolean IsOnline;//是否在线
-         private Boolean IsUsable;//是否可用
-         private Boolean IsSIMCardOnline;//simcard是否在线
-         private Boolean IsAbnormal; //功能是否异常
-         private Boolean IsPowerFailure;//是否停电
-         private double Longitude; //经度
-         private double Latitude; //纬度
-         private long AdjustTime;//调整次数
-         private Boolean IsVoltageRegulateNormal;//调压是否正常
-         private Boolean IsReactiveCompensationNormal; //无功补偿是否正常
-         private String Manufacture;//厂家信息
-         private String Model; //型号
-         private long PhaseTypeId; //相数
-         private long Capacity; //容量大小
-         private Boolean IsCircuitNormal; //线路是否正常
-         private String InstallAddress;//安装地址
-         private int DeviceTypeId; //设备类型id
-         private Boolean State;//状态是否异常
-         private long CircuitId;//线路ID
-         private String Courts;//台区
-         private Boolean IsManufactureNormal; //厂家是否正常
-         private String Location;//详细位置
+    private String DeviceName;//设备名称
+    private long CityId; //地市id
+    private long CountyId; //区县id
+    private long PowerSupplyId;//供电所id
+    private Boolean IsInstalled; //是否安装
+    private Boolean IsOnline;//是否在线
+    private Boolean IsUsable;//是否可用
+    private Boolean IsSIMCardOnline;//simcard是否在线
+    private Boolean IsAbnormal; //功能是否异常
+    private Boolean IsPowerFailure;//是否停电
+    private double Longitude; //经度
+    private double Latitude; //纬度
+    private long AdjustTime;//调整次数
+    private Boolean IsVoltageRegulateNormal;//调压是否正常
+    private Boolean IsReactiveCompensationNormal; //无功补偿是否正常
+    private String Manufacture;//厂家信息
+    private String Model; //型号
+    private long PhaseTypeId; //相数
+    private long Capacity; //容量大小
+    private Boolean IsCircuitNormal; //线路是否正常
+    private String InstallAddress;//安装地址
+    private int DeviceTypeId; //设备类型id
+    private Boolean State;//状态是否异常
+    private long CircuitId;//线路ID
+    private String Courts;//台区
+    private Boolean IsManufactureNormal; //厂家是否正常
+    private String Location;//详细位置
+
+    private String VoltageRegulatingRange;//调压范围
+    private String Span;//档距
+    private String ReactivePowerCapacity; //无功容量
+    private String ReactiveGroups;//无功组数
 
     public boolean isSle() {
         return isSle;
