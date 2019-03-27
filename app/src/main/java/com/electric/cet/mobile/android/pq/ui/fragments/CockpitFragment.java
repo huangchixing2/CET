@@ -277,7 +277,7 @@ public class CockpitFragment extends BaseFragment implements View.OnClickListene
         }
     };
 
-    //网络异常
+    //网络异常缺省图提示
     private void initNoInternetView() {
         needRequestData = true;
         if (rlNoData == null || llContent == null) return;

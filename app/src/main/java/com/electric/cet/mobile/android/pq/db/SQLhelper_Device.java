@@ -46,7 +46,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
     private static SQLhelper_Device instance;
 
     //使用单例模式
-    public static SQLhelper_Device Instance(Context context) {
+    public static synchronized SQLhelper_Device Instance(Context context) {
         if (instance == null) {
             instance = new SQLhelper_Device(context, SQLConfig.SQLNAME, null, 3);
             Log.i(TAG, "1111");
@@ -230,7 +230,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             list.add(dataBean);
         }
         cursor.close();
-        db.close();
+//        db.close();
         return list;
     }
 
@@ -314,7 +314,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             list.add(dataBean);
         }
         cursor.close();
-        db.close();
+//        db.close();
         return list;
     }
 
@@ -399,7 +399,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             list.add(dataBean);
         }
         cursor.close();
-        db.close();
+//        db.close();
         return list;
     }
 
@@ -517,7 +517,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             dataBean.setLocation(location);
         }
         cursor.close();
-        db.close();
+//        db.close();
         return dataBean;
     }
 
@@ -555,7 +555,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
 //        instance.getWritableDatabase().execSQL(sql, conditions);
         SQLiteDatabase db = instance.getWritableDatabase();
         db.delete("DeviceData", " where " + DeviceId + " = ? ", new String[]{DeviceId});
-        db.close();
+//        db.close();
     }
 
     /**
@@ -656,7 +656,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             list.add(dataBean);
         }
         cursor.close();
-        db.close();
+//        db.close();
         return list;
     }
 
@@ -752,7 +752,7 @@ public class SQLhelper_Device extends SQLiteOpenHelper implements SQLConfig {
             list.add(dataBean);
         }
         cursor.close();
-        db.close();
+//        db.close();
         return list;
     }
 

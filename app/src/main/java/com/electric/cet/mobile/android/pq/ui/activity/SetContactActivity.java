@@ -89,6 +89,12 @@ public class SetContactActivity extends Activity {
                     Toast.makeText(SetContactActivity.this, "用户名不能超过16位", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                //用户名长度是否小于6
+                if (user_et.getText().toString().length() < 6) {
+                    user_et.setText("");
+                    Toast.makeText(SetContactActivity.this, "用户名不能少于6位", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 postUserData();
                 finish();
             }

@@ -480,8 +480,8 @@ public class EquipmentCollectAddActivity extends Activity implements View.OnClic
             public void onClick(View v) {
                 countryPos = countryWV.getCurrentItem();
 
-                if (countries_list.get(cityPos).equalsIgnoreCase(country.getText().toString())) {
-                    cityPop.dismiss();
+                if (countries_list.get(countryPos).equalsIgnoreCase(country.getText().toString())) {
+                    countryPop.dismiss();
                 } else {
                     country.setText(countries_list.get(countryPos));
                     dataBean.setCountyId(countryPos + 1);
